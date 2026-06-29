@@ -1,0 +1,13 @@
+category,item,estimate_jpy,actual_jpy,status,memo
+交通,Toll fee,30000,,見積,
+交通,Gas,30000,,見積,
+交通,Ferry1,51600,,予定,2026/7/31 仙台19:40 -> 苫小牧11:00
+交通,Ferry2,61600,,予定,2026/8/11 苫小牧19:00 -> 仙台10:00
+宿泊,Accommodation1 Green stay Toya,29400,,予定,2026/8/1 - 2026/8/4 バンガローK15
+宿泊,Accommodation2 HOTEL MYSTAYS Sapporo Aspen,18440,,予定,2026/8/4 - 2026/8/5 札幌アスペン
+宿泊,Accommodation3 Sounkyo Auto Camp,22800,,予定,2026/8/5 - 2026/8/7 週末移住コテージ
+宿泊,Accommodation4 Shinrin Koen Camp,24200,,予定,2026/8/7 - 2026/8/11 バンガロー
+食事,Meals & sonota,150000,,見積,
+ペット,YU kun 2026/7/24-2026/8/17,60500,,予定,事前: 狂犬病・混合ワクチン・フィラリア予防薬の3点必要
+予備費,Buffer,20000,,見積,
+合計,Total,498540,,,
