@@ -8,7 +8,7 @@
   - `web/` で管理
   - `itinerary/days/*.md` から表示データを生成
   - 公開URLでスマホ・PCから確認可能
-  - https://hokkaido-family-guide.saito-kazuhiko1983.chatgpt.site
+  - https://inzaikun.github.io/hokkaido-trip-plan/
 - `output/hokkaido-family-travel-guide.pptx`
   - 16:9横長のPowerPoint
   - `python-pptx` で生成

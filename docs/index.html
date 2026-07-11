@@ -1,0 +1,380 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>北海道家族旅行ガイド 2026</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #1f2933;
+      --muted: #5b6773;
+      --line: #d8e1e8;
+      --paper: #fbfaf7;
+      --sky: #dceef7;
+      --lake: #1e7a8a;
+      --leaf: #4f7d43;
+      --sun: #d98b38;
+      --snow: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.7;
+    }
+
+    a {
+      color: var(--lake);
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    .hero {
+      min-height: 64vh;
+      display: grid;
+      align-items: end;
+      padding: 48px clamp(20px, 5vw, 72px);
+      background:
+        linear-gradient(180deg, rgba(15, 45, 54, 0.2), rgba(15, 45, 54, 0.78)),
+        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80") center/cover;
+      color: var(--snow);
+    }
+
+    .hero h1 {
+      margin: 0;
+      max-width: 860px;
+      font-size: clamp(2.3rem, 6vw, 5rem);
+      line-height: 1.04;
+      letter-spacing: 0;
+    }
+
+    .hero p {
+      max-width: 760px;
+      margin: 18px 0 0;
+      font-size: clamp(1rem, 2vw, 1.35rem);
+    }
+
+    main {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 40px 0 72px;
+    }
+
+    section {
+      padding: 38px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h2 {
+      margin: 0 0 18px;
+      font-size: clamp(1.5rem, 3vw, 2.3rem);
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 1.15rem;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      margin: 0;
+      color: var(--muted);
+      max-width: 840px;
+    }
+
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .quick-links a {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 16px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--snow);
+      font-weight: 700;
+    }
+
+    .route {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .route span {
+      min-height: 72px;
+      display: grid;
+      place-items: center;
+      padding: 12px;
+      border-radius: 6px;
+      background: var(--sky);
+      text-align: center;
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+      margin-top: 22px;
+    }
+
+    .card {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--snow);
+      overflow: hidden;
+    }
+
+    .card img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 18px;
+    }
+
+    .card-body p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .schedule {
+      display: grid;
+      gap: 14px;
+      margin-top: 22px;
+    }
+
+    .day {
+      display: grid;
+      grid-template-columns: 124px 1fr;
+      gap: 16px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--snow);
+    }
+
+    .date {
+      font-weight: 800;
+      color: var(--lake);
+    }
+
+    .date small {
+      display: block;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .day ul {
+      margin: 0;
+      padding-left: 1.2em;
+    }
+
+    .day li + li {
+      margin-top: 4px;
+    }
+
+    .note {
+      margin-top: 20px;
+      padding: 18px;
+      border-left: 6px solid var(--sun);
+      background: #fff7ed;
+      border-radius: 6px;
+    }
+
+    footer {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 28px 0 44px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 760px) {
+      .hero {
+        min-height: 56vh;
+      }
+
+      .route,
+      .grid,
+      .day {
+        grid-template-columns: 1fr;
+      }
+
+      .date small {
+        display: inline;
+        margin-left: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div>
+      <h1>北海道家族旅行ガイド 2026</h1>
+      <p>2026年7月31日から8月12日まで。仙台港からフェリーで北海道へ渡り、洞爺湖、札幌、層雲峡、中標津、帯広をめぐる家族旅行の公開ガイドです。</p>
+    </div>
+  </header>
+
+  <main>
+    <section>
+      <h2>公開資料</h2>
+      <p class="lead">最新版のしおりと編集用データをここから確認できます。GitHub Pagesで公開するため、共有URLはシンプルな `github.io` 形式です。</p>
+      <div class="quick-links">
+        <a href="https://github.com/inzaikun/hokkaido-trip-plan/raw/main/output/hokkaido-family-travel-guide.pdf">PDFを見る</a>
+        <a href="https://github.com/inzaikun/hokkaido-trip-plan/raw/main/output/hokkaido-family-travel-guide.pptx">PowerPointを見る</a>
+        <a href="https://github.com/inzaikun/hokkaido-trip-plan">GitHubを開く</a>
+      </div>
+    </section>
+
+    <section>
+      <h2>旅の流れ</h2>
+      <p class="lead">移動負荷を抑えながら、洞爺湖周辺、札幌、層雲峡、中標津の自然、帯広をゆっくり楽しむ構成です。</p>
+      <div class="route" aria-label="旅の主なルート">
+        <span>印西市・仙台港</span>
+        <span>洞爺湖</span>
+        <span>札幌</span>
+        <span>層雲峡・中標津</span>
+        <span>帯広・苫小牧</span>
+      </div>
+    </section>
+
+    <section>
+      <h2>見どころ</h2>
+      <div class="grid">
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80" alt="湖畔の景色">
+          <div class="card-body">
+            <h3>洞爺湖</h3>
+            <p>滞在中は湖畔散策、温泉、周辺ドライブを中心に、1日は洞爺湖から出ずに過ごす日を確保します。</p>
+          </div>
+        </article>
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1519904981063-b0cf448d479e?auto=format&fit=crop&w=1200&q=80" alt="山の景色">
+          <div class="card-body">
+            <h3>層雲峡</h3>
+            <p>大雪山系の景色、滝、ロープウェイ、温泉を組み合わせて、北海道らしい自然を満喫します。</p>
+          </div>
+        </article>
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?auto=format&fit=crop&w=1200&q=80" alt="草原と道">
+          <div class="card-body">
+            <h3>中標津</h3>
+            <p>開陽台、牧場風景、野付半島、摩周湖方面など、道東の広さを感じられる候補を中心にします。</p>
+          </div>
+        </article>
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=80" alt="夕方の街と空">
+          <div class="card-body">
+            <h3>札幌・帯広</h3>
+            <p>札幌では北海道大学と駅前のくしどり、帯広では移動負荷を抑えつつ休息と十勝らしい食を入れます。</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <h2>日程概要</h2>
+      <div class="schedule">
+        <article class="day">
+          <div class="date">7/31<small>金</small></div>
+          <ul>
+            <li>7:00 千葉県印西市の自宅を出発</li>
+            <li>昼ごろ 仙台着、昼食と市内観光</li>
+            <li>夕方 仙台港へ移動</li>
+            <li>19:40 太平洋フェリーで苫小牧へ</li>
+          </ul>
+        </article>
+        <article class="day">
+          <div class="date">8/1<small>土</small></div>
+          <ul>
+            <li>11:00 苫小牧港着</li>
+            <li>昼食後、洞爺湖方面へ移動</li>
+            <li>Green stay Toyaへチェックイン</li>
+            <li>湖畔散策と早めの夕食</li>
+          </ul>
+        </article>
+        <article class="day">
+          <div class="date">8/2-8/3<small>日・月</small></div>
+          <ul>
+            <li>洞爺湖周辺観光</li>
+            <li>1日は洞爺湖から出ず、湖畔・温泉・キャンプ場時間を優先</li>
+            <li>天候に合わせて有珠山、昭和新山、温泉街を調整</li>
+          </ul>
+        </article>
+        <article class="day">
+          <div class="date">8/4<small>火</small></div>
+          <ul>
+            <li>洞爺湖から札幌へ移動</li>
+            <li>北海道大学を散策</li>
+            <li>夜は札幌駅前のくしどりで夕食</li>
+          </ul>
+        </article>
+        <article class="day">
+          <div class="date">8/5<small>水</small></div>
+          <ul>
+            <li>11:00ごろ札幌発</li>
+            <li>富良野周辺を観光しながら層雲峡へ</li>
+            <li>Sounkyo Auto Campに宿泊</li>
+          </ul>
+        </article>
+        <article class="day">
+          <div class="date">8/6<small>木</small></div>
+          <ul>
+            <li>層雲峡周辺で自然観光</li>
+            <li>黒岳ロープウェイ、銀河・流星の滝、温泉を候補に調整</li>
+          </ul>
+        </article>
+        <article class="day">
+          <div class="date">8/7-8/10<small>金-月</small></div>
+          <ul>
+            <li>中標津へ移動して連泊</li>
+            <li>開陽台、野付半島、摩周湖方面など道東の自然を中心に計画</li>
+            <li>8/10付近はコテージ泊の予約状況を見ながら調整</li>
+          </ul>
+        </article>
+        <article class="day">
+          <div class="date">8/11<small>火</small></div>
+          <ul>
+            <li>移動負荷を考慮して帯広に滞在</li>
+            <li>十勝エリアで休憩と食事を優先</li>
+            <li>苫小牧港へ移動し、夜のフェリーへ</li>
+          </ul>
+        </article>
+        <article class="day">
+          <div class="date">8/12<small>水</small></div>
+          <ul>
+            <li>10:00 仙台港着</li>
+            <li>休憩を入れながら印西市の自宅へ帰着</li>
+          </ul>
+        </article>
+      </div>
+      <div class="note">予約メモ: たっこぶはWeb予約化。1か月前からのため、7月10日に再度予約トライ。</div>
+    </section>
+  </main>
+
+  <footer>
+    <p>北海道家族旅行ガイド 2026 / inzaikun/hokkaido-trip-plan</p>
+  </footer>
+</body>
+</html>
