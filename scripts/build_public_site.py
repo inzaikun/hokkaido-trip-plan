@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 ITINERARY_DIR = ROOT / "itinerary" / "days"
 OUT = ROOT / "docs" / "index.html"
 RAW_IMAGE_BASE = "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/"
+COVER_IMAGE_NAME = "cover.png"
 WEEKDAYS = ["月", "火", "水", "木", "金", "土", "日"]
 
 
@@ -353,7 +354,7 @@ def render_page(days: list[Day]) -> str:
       padding: 46px clamp(18px, 5vw, 72px);
       background:
         linear-gradient(180deg, rgba(11, 40, 47, 0.14), rgba(11, 40, 47, 0.78)),
-        url("https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E4%BB%99%E5%8F%B0%E5%9F%8E%E8%B7%A1.jpg") center/cover;
+        url("{image_src(COVER_IMAGE_NAME)}") center/cover;
       color: #fff;
     }}
 

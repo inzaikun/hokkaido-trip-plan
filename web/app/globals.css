@@ -42,8 +42,8 @@ main {
   gap: 32px;
   padding: 64px clamp(20px, 5vw, 72px) 44px;
   background:
-    linear-gradient(135deg, rgba(15, 51, 68, .96), rgba(23, 107, 135, .86)),
-    radial-gradient(circle at top right, #f6d365, transparent 36%);
+    linear-gradient(135deg, rgba(15, 51, 68, .94), rgba(23, 107, 135, .62)),
+    url("/images/cover.png") center/cover;
   color: white;
 }
 

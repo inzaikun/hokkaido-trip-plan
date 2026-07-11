@@ -30,6 +30,7 @@ OUTPUT_DIR = ROOT / "output"
 PPTX_PATH = OUTPUT_DIR / "hokkaido-family-travel-guide.pptx"
 PDF_PATH = OUTPUT_DIR / "hokkaido-family-travel-guide.pdf"
 PLACEHOLDER_DIR = OUTPUT_DIR / "_placeholders"
+COVER_IMAGE_PATH = IMAGES_DIR / "cover.png"
 
 JP_FONT = "Yu Gothic"
 EN_FONT = "Aptos"
@@ -254,6 +255,12 @@ def hero_image(day: DayPlan) -> Path:
     return make_placeholder(day.hero, PLACEHOLDER_DIR / f"{day.date}_{safe}.png")
 
 
+def cover_image(days: list[DayPlan]) -> Path:
+    if COVER_IMAGE_PATH.exists():
+        return COVER_IMAGE_PATH
+    return hero_image(days[0])
+
+
 def photo_image(day: DayPlan, photo: PhotoSpot) -> Path:
     if photo.image:
         explicit = IMAGES_DIR / photo.image
@@ -326,13 +333,13 @@ def build_pptx(days: list[DayPlan]):
 
     cover = prs.slides.add_slide(blank)
     style_background(cover, SAND)
+    cover_img = cover_image(days)
+    add_picture_cover(cover, cover_img, Inches(6.28), Inches(0.68), Inches(6.35), Inches(4.23))
     add_textbox(cover, Inches(0.7), Inches(0.62), Inches(3.0), Inches(0.35), "HOKKAIDO FAMILY TRAVEL GUIDE", 12, BLUE, True)
     add_textbox(cover, Inches(0.68), Inches(1.45), Inches(6.1), Inches(1.0), "北海道家族旅行\nガイドブック", 33, NAVY, True)
     add_textbox(cover, Inches(0.78), Inches(3.1), Inches(5.2), Inches(0.48), "2026年7月31日 - 8月12日", 18, INK, True)
     add_textbox(cover, Inches(0.78), Inches(3.72), Inches(5.6), Inches(0.75), "仙台からフェリーで北海道へ。洞爺湖、札幌、層雲峡、道東方面をめぐる家族旅行。", 15, INK)
-    add_label(cover, Inches(0.78), Inches(4.78), "初回版")
-    cover_img = hero_image(days[0])
-    add_picture_cover(cover, cover_img, Inches(7.05), Inches(0.75), Inches(5.55), Inches(5.95))
+    add_label(cover, Inches(0.78), Inches(4.78), "2026夏版")
 
     for day in days:
         slide = prs.slides.add_slide(blank)
@@ -420,7 +427,9 @@ def build_pdf(days: list[DayPlan]):
         Paragraph("北海道家族旅行ガイドブック", ParagraphStyle("title", parent=h1, alignment=TA_CENTER, fontSize=30, leading=36)),
         Paragraph("2026年7月31日 - 8月12日", ParagraphStyle("sub", parent=center, fontSize=14, leading=18, textColor=colors.HexColor("#66707A"))),
         Spacer(1, 18),
-        p("初回版: 7月31日と8月5日の2日分を完成形に近いデザインで作成", center),
+        PdfImage(str(cover_image(days)), width=210 * mm, height=140 * mm),
+        Spacer(1, 10),
+        p("仙台からフェリーで北海道へ。洞爺湖、札幌、層雲峡、道東方面をめぐる家族旅行。", center),
         PageBreak(),
     ]
 
