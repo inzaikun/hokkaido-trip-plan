@@ -7,20 +7,22 @@
   <style>
     :root {
       color-scheme: light;
-      --ink: #1f2933;
-      --muted: #5b6773;
-      --line: #d8e1e8;
-      --paper: #fbfaf7;
-      --sky: #dceef7;
-      --lake: #1e7a8a;
-      --leaf: #4f7d43;
-      --sun: #d98b38;
-      --snow: #ffffff;
+      --ink: #172026;
+      --muted: #66717c;
+      --line: #d7e0e7;
+      --paper: #f7f4ee;
+      --surface: #ffffff;
+      --mist: #e7f1f4;
+      --lake: #146b7c;
+      --forest: #3f6b45;
+      --berry: #9b3d4e;
+      --sun: #c47a24;
+      --sky: #3e7fa8;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -37,65 +39,107 @@
     }
 
     .hero {
-      min-height: 64vh;
+      min-height: 52vh;
       display: grid;
       align-items: end;
-      padding: 48px clamp(20px, 5vw, 72px);
+      padding: 46px clamp(18px, 5vw, 72px);
       background:
-        linear-gradient(180deg, rgba(15, 45, 54, 0.2), rgba(15, 45, 54, 0.78)),
-        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=80") center/cover;
-      color: var(--snow);
+        linear-gradient(180deg, rgba(11, 40, 47, 0.14), rgba(11, 40, 47, 0.78)),
+        url("https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E4%BB%99%E5%8F%B0%E5%9F%8E%E8%B7%A1.jpg") center/cover;
+      color: #fff;
     }
 
     .hero h1 {
       margin: 0;
-      max-width: 860px;
-      font-size: clamp(2.3rem, 6vw, 5rem);
+      max-width: 980px;
+      font-size: clamp(2.2rem, 6vw, 5rem);
       line-height: 1.04;
       letter-spacing: 0;
     }
 
     .hero p {
-      max-width: 760px;
-      margin: 18px 0 0;
-      font-size: clamp(1rem, 2vw, 1.35rem);
+      max-width: 820px;
+      margin: 16px 0 0;
+      font-size: clamp(1rem, 2vw, 1.25rem);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px;
+    }
+
+    .hero-actions a {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.58);
+      border-radius: 6px;
+      color: #fff;
+      background: rgba(255, 255, 255, 0.12);
+      font-weight: 700;
+      text-decoration: none;
     }
 
     main {
-      width: min(1120px, calc(100% - 32px));
+      width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 40px 0 72px;
+      padding: 34px 0 72px;
     }
 
-    section {
-      padding: 38px 0;
-      border-bottom: 1px solid var(--line);
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      margin: -64px auto 36px;
+      position: relative;
+      z-index: 1;
     }
 
-    h2 {
-      margin: 0 0 18px;
-      font-size: clamp(1.5rem, 3vw, 2.3rem);
+    .stat {
+      min-height: 116px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: 0 18px 42px rgba(23, 32, 38, 0.11);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 2rem;
+      line-height: 1;
+      color: var(--lake);
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .section-title {
+      margin: 0 0 16px;
+      font-size: clamp(1.45rem, 3vw, 2.25rem);
       line-height: 1.2;
       letter-spacing: 0;
     }
 
-    h3 {
-      margin: 0 0 8px;
-      font-size: 1.15rem;
-      letter-spacing: 0;
-    }
-
     .lead {
+      max-width: 860px;
       margin: 0;
       color: var(--muted);
-      max-width: 840px;
     }
 
     .quick-links {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 22px;
+      margin-top: 20px;
     }
 
     .quick-links a {
@@ -106,124 +150,362 @@
       padding: 8px 16px;
       border: 1px solid var(--line);
       border-radius: 6px;
-      background: var(--snow);
+      background: var(--surface);
       font-weight: 700;
+      text-decoration: none;
     }
 
-    .route {
+    .toc {
+      margin: 34px 0;
+      padding: 28px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .day-nav {
       display: grid;
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 10px;
-      margin-top: 20px;
+      margin-top: 18px;
     }
 
-    .route span {
-      min-height: 72px;
-      display: grid;
-      place-items: center;
+    .day-nav a {
+      min-height: 92px;
       padding: 12px;
-      border-radius: 6px;
-      background: var(--sky);
-      text-align: center;
-      font-weight: 700;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px;
-      margin-top: 22px;
-    }
-
-    .card {
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: var(--snow);
-      overflow: hidden;
+      background: var(--surface);
+      text-decoration: none;
     }
 
-    .card img {
+    .day-nav strong,
+    .day-nav span,
+    .day-nav em {
+      display: block;
+    }
+
+    .day-nav strong {
+      color: var(--lake);
+      font-size: 0.9rem;
+    }
+
+    .day-nav span {
+      color: var(--ink);
+      font-weight: 800;
+    }
+
+    .day-nav em {
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 0.85rem;
+      font-style: normal;
+    }
+
+    .day {
+      margin-top: 28px;
+      padding: clamp(18px, 3vw, 30px);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    .day-header {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(260px, 390px);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    .day-label {
+      margin: 0 0 10px;
+      color: var(--lake);
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .day h2 {
+      margin: 0;
+      font-size: clamp(1.55rem, 3vw, 2.4rem);
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    .area {
+      margin: 10px 0 0;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .hero-photo {
+      min-height: 220px;
+      margin: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--mist);
+      position: relative;
+    }
+
+    .hero-photo img {
       width: 100%;
-      aspect-ratio: 16 / 9;
+      height: 100%;
+      min-height: 220px;
       object-fit: cover;
       display: block;
     }
 
-    .card-body {
-      padding: 18px;
+    .hero-photo figcaption {
+      position: absolute;
+      left: 12px;
+      bottom: 12px;
+      padding: 4px 8px;
+      border-radius: 4px;
+      background: rgba(23, 32, 38, 0.72);
+      color: #fff;
+      font-size: 0.9rem;
+      font-weight: 700;
     }
 
-    .card-body p {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .schedule {
+    .placeholder {
       display: grid;
-      gap: 14px;
-      margin-top: 22px;
-    }
-
-    .day {
-      display: grid;
-      grid-template-columns: 124px 1fr;
-      gap: 16px;
-      padding: 18px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--snow);
-    }
-
-    .date {
-      font-weight: 800;
+      place-items: center;
+      text-align: center;
       color: var(--lake);
     }
 
-    .date small {
+    .placeholder span {
+      display: block;
+      font-size: 1.35rem;
+      font-weight: 900;
+    }
+
+    .placeholder small {
       display: block;
       color: var(--muted);
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    .day ul {
+    .summary {
+      margin: 20px 0 0;
+      color: var(--ink);
+      font-size: 1.03rem;
+    }
+
+    .day-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.75fr);
+      gap: 22px;
+      margin-top: 24px;
+      align-items: start;
+    }
+
+    h3 {
+      margin: 0 0 14px;
+      font-size: 1.15rem;
+      letter-spacing: 0;
+    }
+
+    .timeline {
+      display: grid;
+      gap: 10px;
       margin: 0;
-      padding-left: 1.2em;
+      padding: 0;
+      list-style: none;
     }
 
-    .day li + li {
-      margin-top: 4px;
+    .timeline li {
+      display: grid;
+      grid-template-columns: 72px 64px minmax(0, 1fr);
+      gap: 12px;
+      padding: 14px 0;
+      border-top: 1px solid var(--line);
     }
 
-    .note {
-      margin-top: 20px;
+    .timeline li:first-child {
+      border-top: 0;
+      padding-top: 0;
+    }
+
+    .timeline time {
+      font-weight: 900;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .tag {
+      align-self: start;
+      min-width: 54px;
+      padding: 2px 7px;
+      border-radius: 999px;
+      text-align: center;
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    .move { background: var(--sky); }
+    .see { background: var(--forest); }
+    .food { background: var(--sun); }
+    .rest { background: var(--lake); }
+    .prep { background: var(--berry); }
+    .other { background: var(--muted); }
+
+    .timeline strong {
+      display: block;
+      font-size: 1rem;
+    }
+
+    .timeline p {
+      margin: 3px 0;
+      color: var(--muted);
+    }
+
+    .timeline small {
+      color: var(--lake);
+      font-weight: 800;
+    }
+
+    .side-panel {
+      display: grid;
+      gap: 18px;
+    }
+
+    .side-panel section {
       padding: 18px;
-      border-left: 6px solid var(--sun);
-      background: #fff7ed;
-      border-radius: 6px;
+      border-radius: 8px;
+      background: #f3f7f5;
+    }
+
+    .restaurants {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .restaurants li {
+      padding-top: 12px;
+      border-top: 1px solid rgba(63, 107, 69, 0.18);
+    }
+
+    .restaurants li:first-child { border-top: 0; padding-top: 0; }
+
+    .restaurants span {
+      display: inline-block;
+      margin-bottom: 3px;
+      color: var(--berry);
+      font-size: 0.84rem;
+      font-weight: 900;
+    }
+
+    .restaurants strong {
+      display: block;
+    }
+
+    .restaurants p,
+    .empty {
+      margin: 3px 0 0;
+      color: var(--muted);
+    }
+
+    .notes ul {
+      margin: 0;
+      padding-left: 1.1em;
+      color: var(--muted);
+    }
+
+    .notes li + li {
+      margin-top: 6px;
+    }
+
+    .photo-spots {
+      margin-top: 24px;
+      padding: 20px;
+      border-radius: 8px;
+      background: #f8f2e8;
+    }
+
+    .spot-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .spot-grid figure {
+      margin: 0;
+      border-radius: 8px;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .spot-grid img,
+    .spot-placeholder {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      display: grid;
+      place-items: center;
+      padding: 14px;
+      background: var(--mist);
+      color: var(--lake);
+      text-align: center;
+      font-weight: 900;
+    }
+
+    .spot-grid figcaption {
+      display: grid;
+      gap: 4px;
+      padding: 12px;
+    }
+
+    .spot-grid span,
+    .spot-grid small {
+      color: var(--muted);
     }
 
     footer {
-      width: min(1120px, calc(100% - 32px));
+      width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 28px 0 44px;
+      padding: 26px 0 44px;
       color: var(--muted);
-      font-size: 0.95rem;
+      font-size: 0.94rem;
     }
 
-    @media (max-width: 760px) {
-      .hero {
-        min-height: 56vh;
-      }
-
-      .route,
-      .grid,
-      .day {
+    @media (max-width: 900px) {
+      .stats,
+      .day-nav,
+      .day-header,
+      .day-layout,
+      .spot-grid {
         grid-template-columns: 1fr;
       }
 
-      .date small {
-        display: inline;
-        margin-left: 8px;
+      .stats {
+        margin-top: -36px;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .hero {
+        min-height: 46vh;
+        padding: 34px 18px;
+      }
+
+      main {
+        width: min(100% - 20px, 1180px);
+      }
+
+      .timeline li {
+        grid-template-columns: 64px minmax(0, 1fr);
+      }
+
+      .timeline .tag {
+        grid-column: 2;
+        justify-self: start;
+      }
+
+      .timeline li > div {
+        grid-column: 1 / -1;
       }
     }
   </style>
@@ -232,144 +514,621 @@
   <header class="hero">
     <div>
       <h1>北海道家族旅行ガイド 2026</h1>
-      <p>2026年7月31日から8月12日まで。仙台港からフェリーで北海道へ渡り、洞爺湖、札幌、層雲峡、中標津、帯広をめぐる家族旅行の公開ガイドです。</p>
+      <p>2026年7月31日から8月12日まで。印西市から仙台港へ向かい、フェリーで北海道へ渡る家族旅行の時刻ベースしおりです。</p>
+      <div class="hero-actions">
+        <a href="#days">全日程を見る</a>
+        <a href="https://github.com/inzaikun/hokkaido-trip-plan/raw/main/output/hokkaido-family-travel-guide.pdf">PDF</a>
+        <a href="https://github.com/inzaikun/hokkaido-trip-plan/raw/main/output/hokkaido-family-travel-guide.pptx">PowerPoint</a>
+      </div>
     </div>
   </header>
 
   <main>
+    <section class="stats" aria-label="旅程の概要">
+      <div class="stat"><strong>13</strong><span>日分の旅程</span></div>
+      <div class="stat"><strong>119</strong><span>時刻ベース予定</span></div>
+      <div class="stat"><strong>54</strong><span>食事候補</span></div>
+    </section>
+
     <section>
-      <h2>公開資料</h2>
-      <p class="lead">最新版のしおりと編集用データをここから確認できます。GitHub Pagesで公開するため、共有URLはシンプルな `github.io` 形式です。</p>
+      <h2 class="section-title">公開資料</h2>
+      <p class="lead">日程は `itinerary/days/*.md` を元にしています。更新時はMarkdownを直して、この公開ページとPowerPoint/PDFを再生成します。</p>
       <div class="quick-links">
-        <a href="https://github.com/inzaikun/hokkaido-trip-plan/raw/main/output/hokkaido-family-travel-guide.pdf">PDFを見る</a>
-        <a href="https://github.com/inzaikun/hokkaido-trip-plan/raw/main/output/hokkaido-family-travel-guide.pptx">PowerPointを見る</a>
-        <a href="https://github.com/inzaikun/hokkaido-trip-plan">GitHubを開く</a>
+        <a href="https://github.com/inzaikun/hokkaido-trip-plan/tree/main/itinerary/days">日別Markdown</a>
+        <a href="https://github.com/inzaikun/hokkaido-trip-plan">GitHub</a>
       </div>
     </section>
 
-    <section>
-      <h2>旅の流れ</h2>
-      <p class="lead">移動負荷を抑えながら、洞爺湖周辺、札幌、層雲峡、中標津の自然、帯広をゆっくり楽しむ構成です。</p>
-      <div class="route" aria-label="旅の主なルート">
-        <span>印西市・仙台港</span>
-        <span>洞爺湖</span>
-        <span>札幌</span>
-        <span>層雲峡・中標津</span>
-        <span>帯広・苫小牧</span>
-      </div>
+    <section class="toc">
+      <h2 class="section-title">日別インデックス</h2>
+      <p class="lead">各日を選ぶと、移動、昼食、夕食、観光、休憩を含む詳細スケジュールへ移動します。</p>
+      <nav class="day-nav" aria-label="日別リンク">
+        <a href="#day-2026-07-31"><strong>Day 1</strong><span>7/31（金）</span><em>千葉県印西市 / 仙台 / 太平洋フェリー</em></a>
+<a href="#day-2026-08-01"><strong>Day 2</strong><span>8/1（土）</span><em>苫小牧 / 支笏湖 / 洞爺湖</em></a>
+<a href="#day-2026-08-02"><strong>Day 3</strong><span>8/2（日）</span><em>洞爺湖</em></a>
+<a href="#day-2026-08-03"><strong>Day 4</strong><span>8/3（月）</span><em>洞爺湖 / 有珠山 / 壮瞥</em></a>
+<a href="#day-2026-08-04"><strong>Day 5</strong><span>8/4（火）</span><em>洞爺湖 / 札幌駅前 / 北海道大学</em></a>
+<a href="#day-2026-08-05"><strong>Day 6</strong><span>8/5（水）</span><em>札幌 / 富良野 / 美瑛 / 層雲峡</em></a>
+<a href="#day-2026-08-06"><strong>Day 7</strong><span>8/6（木）</span><em>層雲峡 / 黒岳 / 銀河・流星の滝</em></a>
+<a href="#day-2026-08-07"><strong>Day 8</strong><span>8/7（金）</span><em>層雲峡 / 阿寒 / 摩周 / 中標津</em></a>
+<a href="#day-2026-08-08"><strong>Day 9</strong><span>8/8（土）</span><em>中標津 / 開陽台 / 養老牛</em></a>
+<a href="#day-2026-08-09"><strong>Day 10</strong><span>8/9（日）</span><em>中標津 / 標津 / 野付半島</em></a>
+<a href="#day-2026-08-10"><strong>Day 11</strong><span>8/10（月）</span><em>中標津 / 釧路湿原 / 達古武</em></a>
+<a href="#day-2026-08-11"><strong>Day 12</strong><span>8/11（火）</span><em>中標津 / 弟子屈 / 足寄 / 帯広</em></a>
+<a href="#day-2026-08-12"><strong>Day 13</strong><span>8/12（水）</span><em>帯広 / 十勝 / 苫小牧 / 太平洋フェリー</em></a>
+      </nav>
     </section>
 
-    <section>
-      <h2>見どころ</h2>
-      <div class="grid">
-        <article class="card">
-          <img src="https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80" alt="湖畔の景色">
-          <div class="card-body">
-            <h3>洞爺湖</h3>
-            <p>滞在中は湖畔散策、温泉、周辺ドライブを中心に、1日は洞爺湖から出ずに過ごす日を確保します。</p>
+    <section id="days">
+      <h2 class="section-title">全日程 詳細スケジュール</h2>
+      
+      <article class="day" id="day-2026-07-31">
+        <header class="day-header">
+          <div>
+            <p class="day-label">DAY 1 / 7/31（金）</p>
+            <h2>印西から仙台観光、フェリーで北海道へ</h2>
+            <p class="area">千葉県印西市 / 仙台 / 太平洋フェリー</p>
           </div>
-        </article>
-        <article class="card">
-          <img src="https://images.unsplash.com/photo-1519904981063-b0cf448d479e?auto=format&fit=crop&w=1200&q=80" alt="山の景色">
-          <div class="card-body">
-            <h3>層雲峡</h3>
-            <p>大雪山系の景色、滝、ロープウェイ、温泉を組み合わせて、北海道らしい自然を満喫します。</p>
-          </div>
-        </article>
-        <article class="card">
-          <img src="https://images.unsplash.com/photo-1470240731273-7821a6eeb6bd?auto=format&fit=crop&w=1200&q=80" alt="草原と道">
-          <div class="card-body">
-            <h3>中標津</h3>
-            <p>開陽台、牧場風景、野付半島、摩周湖方面など、道東の広さを感じられる候補を中心にします。</p>
-          </div>
-        </article>
-        <article class="card">
-          <img src="https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=80" alt="夕方の街と空">
-          <div class="card-body">
-            <h3>札幌・帯広</h3>
-            <p>札幌では北海道大学と駅前のくしどり、帯広では移動負荷を抑えつつ休息と十勝らしい食を入れます。</p>
-          </div>
-        </article>
-      </div>
-    </section>
+          <figure class="hero-photo"><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E4%BB%99%E5%8F%B0%E5%9F%8E%E8%B7%A1.jpg" alt="仙台城跡"><figcaption>仙台城跡</figcaption></figure>
+        </header>
+        <p class="summary">北海道家族旅行の出発日。千葉県印西市の自宅を7:00に出発し、昼ごろ仙台に到着して市内観光を楽しんでから仙台港へ向かいます。長距離移動の疲れをためないよう、サービスエリア休憩と昼食を早めに挟み、夕方は余裕を持って太平洋フェリーの乗船手続きに入ります。</p>
+        <section class="photo-spots"><h3>写真で見る立ち寄り名所</h3><div class="spot-grid"><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E4%BB%99%E5%8F%B0%E5%9F%8E%E8%B7%A1.jpg" alt="仙台城跡"><figcaption><strong>仙台城跡</strong><span>伊達政宗ゆかりの城跡。仙台市街を見渡す初日の記念写真スポット</span><small>Wikimedia Commons</small></figcaption></figure>
+<figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E7%91%9E%E9%B3%B3%E6%AE%BF.jpg" alt="瑞鳳殿"><figcaption><strong>瑞鳳殿</strong><span>桃山文化の装飾が美しい伊達政宗公の霊屋。午後の短時間観光に組み込みやすい</span><small>Wikimedia Commons</small></figcaption></figure>
+<figure><div class="spot-placeholder">仙台港フェリーターミナル</div><figcaption><strong>仙台港フェリーターミナル</strong><span>北海道へ向かう船旅の入口。乗船前に家族写真を撮る候補</span><small>写真未設定</small></figcaption></figure></div></section>
+        <div class="day-layout">
+          <section class="timeline-wrap">
+            <h3>時刻ベース詳細スケジュール</h3>
+            <ol class="timeline">
+              <li><time>06:30</time><span class="tag prep">準備</span><div><strong>自宅</strong><p>荷物、チケット、身分証、船内バッグ、酔い止めを最終確認</p><small>30分</small></div></li>
+<li><time>07:00</time><span class="tag move">移動</span><div><strong>千葉県印西市 → 仙台方面</strong><p>常磐道または東北道方面で仙台へ。渋滞を見て休憩地点を調整</p><small>約4時間30分</small></div></li>
+<li><time>09:30</time><span class="tag rest">休憩</span><div><strong>SA/PA</strong><p>トイレ、給油、飲み物補充。子どもは軽く体を動かす</p><small>20分</small></div></li>
+<li><time>12:00</time><span class="tag food">昼食</span><div><strong>仙台市内</strong><p>牛たん、海鮮、駅周辺ランチなどから当日の混雑で選択</p><small>60分</small></div></li>
+<li><time>13:15</time><span class="tag see">観光</span><div><strong>仙台城跡</strong><p>伊達政宗像、仙台市街の眺望、記念写真</p><small>60分</small></div></li>
+<li><time>14:30</time><span class="tag see">観光</span><div><strong>瑞鳳殿</strong><p>伊達政宗公の霊屋を見学。坂道があるので水分補給を忘れずに</p><small>60分</small></div></li>
+<li><time>15:45</time><span class="tag rest">休憩</span><div><strong>定禅寺通周辺</strong><p>ケヤキ並木を散策。カフェ休憩またはおやつ購入</p><small>45分</small></div></li>
+<li><time>16:45</time><span class="tag move">移動</span><div><strong>仙台市内 → 仙台港</strong><p>フェリー乗船に向けて港へ移動。夕方渋滞を見込んで早めに出発</p><small>約35分</small></div></li>
+<li><time>17:30</time><span class="tag prep">手続き</span><div><strong>仙台港フェリーターミナル</strong><p>乗船手続き、車両乗船準備、船内バッグを手元に分ける</p><small>60分</small></div></li>
+<li><time>18:30</time><span class="tag food">夕食</span><div><strong>フェリー船内</strong><p>船内レストランまたは仙台市内で買った持ち込み軽食</p><small>45分</small></div></li>
+<li><time>19:40</time><span class="tag move">移動</span><div><strong>太平洋フェリー</strong><p>仙台港を出港。船内探検と入浴</p><small>一晩</small></div></li>
+<li><time>21:30</time><span class="tag rest">休憩</span><div><strong>客室</strong><p>翌日の苫小牧到着に備えて早めに就寝</p><small>-</small></div></li>
+            </ol>
+          </section>
+          <aside class="side-panel">
+            <section>
+              <h3>レストラン候補</h3>
+              <ul class="restaurants">
+                <li><span>昼食</span><strong>牛たん炭焼 利久 仙台駅周辺</strong><p>仙台駅周辺 / 仙台らしい昼食の第一候補。混雑時は近隣店舗に切替</p></li>
+<li><span>昼食</span><strong>伊達の牛たん本舗</strong><p>仙台駅周辺 / 牛たん候補その2。子どもの食べやすさも見て選ぶ</p></li>
+<li><span>休憩</span><strong>定禅寺通周辺カフェ</strong><p>仙台市中心部 / 観光後の涼み休憩。飲み物とおやつを確保</p></li>
+<li><span>夕食</span><strong>太平洋フェリー船内レストラン</strong><p>船内 / 出港前後に利用しやすい第一候補</p></li>
+<li><span>夕食</span><strong>仙台市内でテイクアウト</strong><p>仙台市内 / 仙台港 / 船内レストラン混雑時のバックアップ</p></li>
+              </ul>
+            </section>
+            <section class="notes"><h3>メモ</h3><ul><li>フェリーWi-Fiは有料1,500円。使うか当日判断。</li>
+<li>船内用バッグに、着替え、洗面具、充電器、酔い止めを分ける。</li>
+<li>苫小牧到着は翌日11:00予定。</li>
+<li>印西市から仙台までは長距離なので、到着時刻は渋滞次第。観光は仙台城跡と瑞鳳殿を優先し、時間が押したら定禅寺通散策を短縮する。</li></ul></section>
+          </aside>
+        </div>
+      </article>
 
-    <section>
-      <h2>日程概要</h2>
-      <div class="schedule">
-        <article class="day">
-          <div class="date">7/31<small>金</small></div>
-          <ul>
-            <li>7:00 千葉県印西市の自宅を出発</li>
-            <li>昼ごろ 仙台着、昼食と市内観光</li>
-            <li>夕方 仙台港へ移動</li>
-            <li>19:40 太平洋フェリーで苫小牧へ</li>
-          </ul>
-        </article>
-        <article class="day">
-          <div class="date">8/1<small>土</small></div>
-          <ul>
-            <li>11:00 苫小牧港着</li>
-            <li>昼食後、洞爺湖方面へ移動</li>
-            <li>Green stay Toyaへチェックイン</li>
-            <li>湖畔散策と早めの夕食</li>
-          </ul>
-        </article>
-        <article class="day">
-          <div class="date">8/2-8/3<small>日・月</small></div>
-          <ul>
-            <li>洞爺湖周辺観光</li>
-            <li>1日は洞爺湖から出ず、湖畔・温泉・キャンプ場時間を優先</li>
-            <li>天候に合わせて有珠山、昭和新山、温泉街を調整</li>
-          </ul>
-        </article>
-        <article class="day">
-          <div class="date">8/4<small>火</small></div>
-          <ul>
-            <li>洞爺湖から札幌へ移動</li>
-            <li>北海道大学を散策</li>
-            <li>夜は札幌駅前のくしどりで夕食</li>
-          </ul>
-        </article>
-        <article class="day">
-          <div class="date">8/5<small>水</small></div>
-          <ul>
-            <li>11:00ごろ札幌発</li>
-            <li>富良野周辺を観光しながら層雲峡へ</li>
-            <li>Sounkyo Auto Campに宿泊</li>
-          </ul>
-        </article>
-        <article class="day">
-          <div class="date">8/6<small>木</small></div>
-          <ul>
-            <li>層雲峡周辺で自然観光</li>
-            <li>黒岳ロープウェイ、銀河・流星の滝、温泉を候補に調整</li>
-          </ul>
-        </article>
-        <article class="day">
-          <div class="date">8/7-8/10<small>金-月</small></div>
-          <ul>
-            <li>中標津へ移動して連泊</li>
-            <li>開陽台、野付半島、摩周湖方面など道東の自然を中心に計画</li>
-            <li>8/10付近はコテージ泊の予約状況を見ながら調整</li>
-          </ul>
-        </article>
-        <article class="day">
-          <div class="date">8/11<small>火</small></div>
-          <ul>
-            <li>移動負荷を考慮して帯広に滞在</li>
-            <li>十勝エリアで休憩と食事を優先</li>
-            <li>苫小牧港へ移動し、夜のフェリーへ</li>
-          </ul>
-        </article>
-        <article class="day">
-          <div class="date">8/12<small>水</small></div>
-          <ul>
-            <li>10:00 仙台港着</li>
-            <li>休憩を入れながら印西市の自宅へ帰着</li>
-          </ul>
-        </article>
-      </div>
-      <div class="note">予約メモ: たっこぶはWeb予約化。1か月前からのため、7月10日に再度予約トライ。</div>
+
+      <article class="day" id="day-2026-08-01">
+        <header class="day-header">
+          <div>
+            <p class="day-label">DAY 2 / 8/1（土）</p>
+            <h2>苫小牧到着から洞爺湖へ</h2>
+            <p class="area">苫小牧 / 支笏湖 / 洞爺湖</p>
+          </div>
+          <div class="hero-photo placeholder"><span>洞爺湖</span><small>写真準備中</small></div>
+        </header>
+        <p class="summary">フェリーで苫小牧に到着し、北海道ドライブを開始。初日は無理に詰め込まず、昼食と休憩を挟みながら洞爺湖のキャンプ拠点へ入ります。夜は湖畔でゆっくり過ごします。</p>
+        
+        <div class="day-layout">
+          <section class="timeline-wrap">
+            <h3>時刻ベース詳細スケジュール</h3>
+            <ol class="timeline">
+              <li><time>07:30</time><span class="tag food">朝食</span><div><strong>フェリー船内</strong><p>下船前に朝食。荷物整理も済ませる</p><small>45分</small></div></li>
+<li><time>10:30</time><span class="tag prep">準備</span><div><strong>フェリー船内</strong><p>車両甲板へ向かう準備、忘れ物確認</p><small>30分</small></div></li>
+<li><time>11:00</time><span class="tag move">移動</span><div><strong>苫小牧港</strong><p>下船。北海道ドライブ開始</p><small>30分</small></div></li>
+<li><time>11:45</time><span class="tag food">昼食</span><div><strong>苫小牧市内</strong><p>海鮮、定食、または道の駅系で軽めに昼食</p><small>60分</small></div></li>
+<li><time>13:00</time><span class="tag move">移動</span><div><strong>苫小牧 → 洞爺湖</strong><p>支笏湖方面または高速利用で洞爺湖へ</p><small>約2時間15分</small></div></li>
+<li><time>15:15</time><span class="tag rest">休憩</span><div><strong>サイロ展望台周辺</strong><p>洞爺湖を見下ろす短時間休憩、写真撮影</p><small>30分</small></div></li>
+<li><time>16:00</time><span class="tag prep">手続き</span><div><strong>Green stay Toya</strong><p>バンガローK15へチェックイン、荷下ろし</p><small>60分</small></div></li>
+<li><time>17:30</time><span class="tag food">夕食</span><div><strong>キャンプ場 / 洞爺湖温泉街</strong><p>初日は簡単キャンプ飯か温泉街で外食</p><small>90分</small></div></li>
+<li><time>20:30</time><span class="tag see">観光</span><div><strong>洞爺湖湖畔</strong><p>余力があれば湖畔散歩、花火開催日は湖畔で鑑賞</p><small>45分</small></div></li>
+            </ol>
+          </section>
+          <aside class="side-panel">
+            <section>
+              <h3>レストラン候補</h3>
+              <ul class="restaurants">
+                <li><span>昼食</span><strong>苫小牧海鮮系食堂</strong><p>苫小牧 / 下船後の第一候補。混雑なら回避</p></li>
+<li><span>昼食</span><strong>道の駅ウトナイ湖</strong><p>苫小牧 / 休憩と軽食を兼ねる候補</p></li>
+<li><span>夕食</span><strong>洞爺湖温泉街の食堂</strong><p>洞爺湖 / 外食にする場合の候補</p></li>
+<li><span>夕食</span><strong>バンガローで簡単調理</strong><p>Green stay Toya / 移動疲れがある場合の安全策</p></li>
+              </ul>
+            </section>
+            <section class="notes"><h3>メモ</h3><ul><li>初日は北海道到着の余韻を優先し、観光を詰め込みすぎない。</li>
+<li>バンガロー滞在中の食材・飲み物をこの日に少し補充する。</li></ul></section>
+          </aside>
+        </div>
+      </article>
+
+
+      <article class="day" id="day-2026-08-02">
+        <header class="day-header">
+          <div>
+            <p class="day-label">DAY 3 / 8/2（日）</p>
+            <h2>洞爺湖から出ない湖畔の日</h2>
+            <p class="area">洞爺湖</p>
+          </div>
+          <div class="hero-photo placeholder"><span>洞爺湖湖畔</span><small>写真準備中</small></div>
+        </header>
+        <p class="summary">洞爺湖滞在中の「湖から出ない日」。移動を最小限にして、湖畔散歩、遊覧船、温泉街、キャンプ場での休憩を中心にゆっくり過ごします。</p>
+        
+        <div class="day-layout">
+          <section class="timeline-wrap">
+            <h3>時刻ベース詳細スケジュール</h3>
+            <ol class="timeline">
+              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>Green stay Toya</strong><p>バンガローで朝食。洗濯と片付けも少し進める</p><small>60分</small></div></li>
+<li><time>09:30</time><span class="tag see">観光</span><div><strong>洞爺湖湖畔</strong><p>湖畔散歩。水辺、彫刻公園、写真撮影</p><small>90分</small></div></li>
+<li><time>11:15</time><span class="tag rest">休憩</span><div><strong>洞爺湖温泉街</strong><p>カフェ休憩、お土産下見</p><small>45分</small></div></li>
+<li><time>12:15</time><span class="tag food">昼食</span><div><strong>洞爺湖温泉街</strong><p>湖畔の食堂またはカフェで昼食</p><small>60分</small></div></li>
+<li><time>13:30</time><span class="tag see">観光</span><div><strong>洞爺湖汽船</strong><p>遊覧船で湖上から中島方面を眺める</p><small>60分</small></div></li>
+<li><time>15:00</time><span class="tag rest">休憩</span><div><strong>キャンプ場</strong><p>昼寝、読書、子どもの自由時間</p><small>120分</small></div></li>
+<li><time>17:30</time><span class="tag food">夕食</span><div><strong>キャンプ場</strong><p>バンガローでキャンプ飯。翌日の天気を確認</p><small>90分</small></div></li>
+<li><time>20:30</time><span class="tag see">観光</span><div><strong>洞爺湖湖畔</strong><p>花火開催日は湖畔で鑑賞。無理なら早寝</p><small>45分</small></div></li>
+            </ol>
+          </section>
+          <aside class="side-panel">
+            <section>
+              <h3>レストラン候補</h3>
+              <ul class="restaurants">
+                <li><span>昼食</span><strong>洞爺湖温泉街の湖畔カフェ</strong><p>洞爺湖 / 湖から出ない日の第一候補</p></li>
+<li><span>昼食</span><strong>洞爺湖温泉街の食堂</strong><p>洞爺湖 / 子ども連れで入りやすい店を現地確認</p></li>
+<li><span>夕食</span><strong>バンガローでキャンプ飯</strong><p>Green stay Toya / この日の本命。移動しない</p></li>
+<li><span>甘味</span><strong>湖畔カフェ / ソフトクリーム</strong><p>洞爺湖 / 散歩の途中で休憩</p></li>
+              </ul>
+            </section>
+            <section class="notes"><h3>メモ</h3><ul><li>この日は洞爺湖エリアから出ない。</li>
+<li>天気が悪い場合は温泉街、カフェ、早めの休憩に切り替える。</li></ul></section>
+          </aside>
+        </div>
+      </article>
+
+
+      <article class="day" id="day-2026-08-03">
+        <header class="day-header">
+          <div>
+            <p class="day-label">DAY 4 / 8/3（月）</p>
+            <h2>有珠山と洞爺湖周辺ジオパーク</h2>
+            <p class="area">洞爺湖 / 有珠山 / 壮瞥</p>
+          </div>
+          <div class="hero-photo placeholder"><span>有珠山ロープウェイ</span><small>写真準備中</small></div>
+        </header>
+        <p class="summary">洞爺湖周辺観光の日。有珠山ロープウェイ、サイロ展望台、壮瞥方面を無理なく回り、火山と湖の景色を楽しみます。夕方はキャンプ場へ戻って休みます。</p>
+        
+        <div class="day-layout">
+          <section class="timeline-wrap">
+            <h3>時刻ベース詳細スケジュール</h3>
+            <ol class="timeline">
+              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>Green stay Toya</strong><p>朝食と出発準備</p><small>60分</small></div></li>
+<li><time>09:15</time><span class="tag move">移動</span><div><strong>洞爺湖 → 有珠山</strong><p>有珠山ロープウェイ方面へ移動</p><small>約30分</small></div></li>
+<li><time>10:00</time><span class="tag see">観光</span><div><strong>有珠山ロープウェイ</strong><p>ロープウェイと展望台。天候が悪ければ短縮</p><small>90分</small></div></li>
+<li><time>11:45</time><span class="tag food">昼食</span><div><strong>昭和新山周辺</strong><p>軽食、レストハウス、または周辺食堂</p><small>60分</small></div></li>
+<li><time>13:00</time><span class="tag see">観光</span><div><strong>サイロ展望台</strong><p>洞爺湖を見下ろす定番写真スポット</p><small>45分</small></div></li>
+<li><time>14:00</time><span class="tag see">観光</span><div><strong>壮瞥方面</strong><p>果物直売所、道の駅、湖畔ドライブ</p><small>90分</small></div></li>
+<li><time>15:45</time><span class="tag rest">休憩</span><div><strong>洞爺湖温泉街</strong><p>カフェまたは日帰り温泉候補</p><small>60分</small></div></li>
+<li><time>17:00</time><span class="tag move">移動</span><div><strong>洞爺湖温泉街 → キャンプ場</strong><p>夕食前に戻る</p><small>30分</small></div></li>
+<li><time>18:00</time><span class="tag food">夕食</span><div><strong>キャンプ場</strong><p>キャンプ飯。翌日の札幌移動準備</p><small>90分</small></div></li>
+            </ol>
+          </section>
+          <aside class="side-panel">
+            <section>
+              <h3>レストラン候補</h3>
+              <ul class="restaurants">
+                <li><span>昼食</span><strong>昭和新山周辺レストハウス</strong><p>有珠山 / ロープウェイ後に使いやすい</p></li>
+<li><span>昼食</span><strong>道の駅そうべつ情報館i</strong><p>壮瞥 / 休憩と買い物を兼ねる候補</p></li>
+<li><span>夕食</span><strong>バンガローでキャンプ飯</strong><p>Green stay Toya / 翌日の移動に備えて早めに済ませる</p></li>
+<li><span>休憩</span><strong>洞爺湖温泉街カフェ</strong><p>洞爺湖 / 天候調整用</p></li>
+              </ul>
+            </section>
+            <section class="notes"><h3>メモ</h3><ul><li>有珠山ロープウェイは天候と運行状況を当日確認。</li>
+<li>翌日は札幌移動なので、夜に荷物を少しまとめる。</li></ul></section>
+          </aside>
+        </div>
+      </article>
+
+
+      <article class="day" id="day-2026-08-04">
+        <header class="day-header">
+          <div>
+            <p class="day-label">DAY 5 / 8/4（火）</p>
+            <h2>洞爺湖から札幌へ、北大散策と串鳥</h2>
+            <p class="area">洞爺湖 / 札幌駅前 / 北海道大学</p>
+          </div>
+          <div class="hero-photo placeholder"><span>北海道大学</span><small>写真準備中</small></div>
+        </header>
+        <p class="summary">洞爺湖のキャンプ滞在を終えて札幌へ。ホテルに入り、北海道大学の緑の多いキャンパスを散策します。夜は札幌駅前の串鳥で夕食予定です。</p>
+        
+        <div class="day-layout">
+          <section class="timeline-wrap">
+            <h3>時刻ベース詳細スケジュール</h3>
+            <ol class="timeline">
+              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>Green stay Toya</strong><p>朝食、片付け、チェックアウト準備</p><small>75分</small></div></li>
+<li><time>09:30</time><span class="tag move">移動</span><div><strong>洞爺湖 → 中山峠方面</strong><p>札幌へ移動。途中で休憩を入れる</p><small>約2時間</small></div></li>
+<li><time>11:30</time><span class="tag rest">休憩</span><div><strong>中山峠 / 定山渓方面</strong><p>トイレ、軽食、天気確認</p><small>30分</small></div></li>
+<li><time>12:30</time><span class="tag food">昼食</span><div><strong>札幌市内</strong><p>駐車しやすい場所で昼食</p><small>60分</small></div></li>
+<li><time>14:00</time><span class="tag prep">手続き</span><div><strong>HOTEL MYSTAYS Sapporo Aspen</strong><p>荷物預けまたはチェックイン</p><small>45分</small></div></li>
+<li><time>15:00</time><span class="tag see">観光</span><div><strong>北海道大学</strong><p>ポプラ並木、総合博物館周辺、キャンパス散策</p><small>120分</small></div></li>
+<li><time>17:30</time><span class="tag rest">休憩</span><div><strong>ホテル</strong><p>夕食前に休憩、着替え、洗濯</p><small>60分</small></div></li>
+<li><time>19:00</time><span class="tag food">夕食</span><div><strong>串鳥 札幌駅前</strong><p>札幌駅前の串鳥で夜ご飯</p><small>90分</small></div></li>
+<li><time>21:00</time><span class="tag rest">休憩</span><div><strong>ホテル</strong><p>翌日の富良野・層雲峡移動に備えて早寝</p><small>-</small></div></li>
+            </ol>
+          </section>
+          <aside class="side-panel">
+            <section>
+              <h3>レストラン候補</h3>
+              <ul class="restaurants">
+                <li><span>昼食</span><strong>札幌駅周辺ランチ</strong><p>札幌駅 / ホテル近くで駐車しやすい店を選ぶ</p></li>
+<li><span>夕食</span><strong>串鳥 札幌駅前</strong><p>札幌駅前 / この日の予約・本命候補</p></li>
+<li><span>休憩</span><strong>北大カフェ / 札幌駅カフェ</strong><p>北海道大学 / 札幌駅 / 散策中の休憩候補</p></li>
+<li><span>予備</span><strong>ホテル近くのテイクアウト</strong><p>札幌駅北口 / 疲れた場合のバックアップ</p></li>
+              </ul>
+            </section>
+            <section class="notes"><h3>メモ</h3><ul><li>北海道大学は歩く距離が長くなりやすいので、子どもの疲れを見て短縮する。</li>
+<li>串鳥は混雑する可能性があるため、できれば事前予約または早め入店。</li></ul></section>
+          </aside>
+        </div>
+      </article>
+
+
+      <article class="day" id="day-2026-08-05">
+        <header class="day-header">
+          <div>
+            <p class="day-label">DAY 6 / 8/5（水）</p>
+            <h2>札幌11時発、富良野・美瑛を抜けて層雲峡へ</h2>
+            <p class="area">札幌 / 富良野 / 美瑛 / 層雲峡</p>
+          </div>
+          <div class="hero-photo placeholder"><span>ファーム富田</span><small>写真準備中</small></div>
+        </header>
+        <p class="summary">札幌を11時ごろ出発し、富良野周辺の花畑や美瑛の景色を楽しみながら層雲峡へ向かいます。観光を入れつつも移動日なので、夕方のチェックインを優先します。</p>
+        
+        <div class="day-layout">
+          <section class="timeline-wrap">
+            <h3>時刻ベース詳細スケジュール</h3>
+            <ol class="timeline">
+              <li><time>08:30</time><span class="tag food">朝食</span><div><strong>札幌駅周辺</strong><p>ゆっくり朝食。車内飲み物と軽食を補充</p><small>60分</small></div></li>
+<li><time>10:00</time><span class="tag prep">準備</span><div><strong>HOTEL MYSTAYS Sapporo Aspen</strong><p>チェックアウト、荷物積み込み</p><small>45分</small></div></li>
+<li><time>11:00</time><span class="tag move">移動</span><div><strong>札幌 → 富良野</strong><p>高速と一般道で富良野方面へ</p><small>約2時間15分</small></div></li>
+<li><time>13:15</time><span class="tag food">昼食</span><div><strong>富良野市内</strong><p>富良野オムカレー、カフェ、道の駅系候補</p><small>60分</small></div></li>
+<li><time>14:30</time><span class="tag see">観光</span><div><strong>ファーム富田周辺</strong><p>花畑、カフェ、写真撮影。混雑時は短縮</p><small>75分</small></div></li>
+<li><time>15:45</time><span class="tag see">観光</span><div><strong>美瑛方面</strong><p>青い池または丘の景色を1か所だけ選ぶ</p><small>60分</small></div></li>
+<li><time>16:45</time><span class="tag move">移動</span><div><strong>美瑛 → 層雲峡</strong><p>大雪山方面へ移動。途中休憩を挟む</p><small>約2時間</small></div></li>
+<li><time>18:45</time><span class="tag prep">手続き</span><div><strong>Sounkyo Auto Camp</strong><p>チェックイン、コテージ確認、荷下ろし</p><small>45分</small></div></li>
+<li><time>19:30</time><span class="tag food">夕食</span><div><strong>層雲峡 / コテージ</strong><p>外食または簡単調理。遅くなる前提で軽め</p><small>60分</small></div></li>
+<li><time>21:00</time><span class="tag rest">休憩</span><div><strong>コテージ</strong><p>翌日の黒岳・滝観光に備えて休む</p><small>-</small></div></li>
+            </ol>
+          </section>
+          <aside class="side-panel">
+            <section>
+              <h3>レストラン候補</h3>
+              <ul class="restaurants">
+                <li><span>昼食</span><strong>富良野オムカレー候補</strong><p>富良野 / 富良野らしさを入れる第一候補</p></li>
+<li><span>昼食</span><strong>フラノマルシェ周辺</strong><p>富良野 / 駐車と買い物を兼ねやすい</p></li>
+<li><span>休憩</span><strong>ファーム富田カフェ</strong><p>中富良野 / 花畑観光中の軽食候補</p></li>
+<li><span>夕食</span><strong>層雲峡温泉街の食堂</strong><p>層雲峡 / 到着が遅くなった場合は営業確認</p></li>
+<li><span>夕食</span><strong>コテージで簡単調理</strong><p>Sounkyo Auto Camp / 移動疲れがある場合の安全策</p></li>
+              </ul>
+            </section>
+            <section class="notes"><h3>メモ</h3><ul><li>「フラ」は富良野方面として扱う。</li>
+<li>富良野・美瑛は寄り道を増やしすぎず、花畑か青い池のどちらかを優先。</li>
+<li>層雲峡到着が遅くなるので、夕食は軽めのバックアップを持つ。</li></ul></section>
+          </aside>
+        </div>
+      </article>
+
+
+      <article class="day" id="day-2026-08-06">
+        <header class="day-header">
+          <div>
+            <p class="day-label">DAY 7 / 8/6（木）</p>
+            <h2>層雲峡で大雪山の自然を満喫</h2>
+            <p class="area">層雲峡 / 黒岳 / 銀河・流星の滝</p>
+          </div>
+          <div class="hero-photo placeholder"><span>黒岳ロープウェイ</span><small>写真準備中</small></div>
+        </header>
+        <p class="summary">層雲峡滞在日。黒岳ロープウェイ、銀河・流星の滝、温泉街散策を組み合わせ、大雪山の自然を無理なく楽しみます。天候が悪い場合は温泉と短時間散策に切り替えます。</p>
+        
+        <div class="day-layout">
+          <section class="timeline-wrap">
+            <h3>時刻ベース詳細スケジュール</h3>
+            <ol class="timeline">
+              <li><time>07:30</time><span class="tag food">朝食</span><div><strong>コテージ</strong><p>朝食、山の天気とロープウェイ運行状況を確認</p><small>60分</small></div></li>
+<li><time>09:00</time><span class="tag move">移動</span><div><strong>コテージ → 黒岳ロープウェイ</strong><p>駐車場へ移動</p><small>15分</small></div></li>
+<li><time>09:30</time><span class="tag see">観光</span><div><strong>黒岳ロープウェイ</strong><p>ロープウェイで展望。余力があれば散策路へ</p><small>120分</small></div></li>
+<li><time>11:45</time><span class="tag food">昼食</span><div><strong>層雲峡温泉街</strong><p>食堂、カフェ、または軽食</p><small>60分</small></div></li>
+<li><time>13:00</time><span class="tag rest">休憩</span><div><strong>コテージ</strong><p>午後に備えて休憩、洗濯、荷物整理</p><small>90分</small></div></li>
+<li><time>14:45</time><span class="tag see">観光</span><div><strong>銀河・流星の滝</strong><p>滝見学と写真撮影。歩く距離は短め</p><small>75分</small></div></li>
+<li><time>16:15</time><span class="tag see">観光</span><div><strong>大函 / 層雲峡散策</strong><p>天候と体力に応じて短時間散策</p><small>60分</small></div></li>
+<li><time>17:30</time><span class="tag rest">休憩</span><div><strong>温泉街 / コテージ</strong><p>温泉または早めの休憩</p><small>60分</small></div></li>
+<li><time>18:45</time><span class="tag food">夕食</span><div><strong>コテージ</strong><p>キャンプ飯。翌日の道東移動準備</p><small>90分</small></div></li>
+            </ol>
+          </section>
+          <aside class="side-panel">
+            <section>
+              <h3>レストラン候補</h3>
+              <ul class="restaurants">
+                <li><span>昼食</span><strong>層雲峡温泉街の食堂</strong><p>層雲峡 / 黒岳後に使いやすい</p></li>
+<li><span>休憩</span><strong>温泉街カフェ</strong><p>層雲峡 / 雨天時の休憩候補</p></li>
+<li><span>夕食</span><strong>コテージでキャンプ飯</strong><p>Sounkyo Auto Camp / 翌日の移動に備えて早めに済ませる</p></li>
+<li><span>予備</span><strong>コンビニ・売店で軽食</strong><p>上川 / 層雲峡 / 営業時間に注意</p></li>
+              </ul>
+            </section>
+            <section class="notes"><h3>メモ</h3><ul><li>黒岳は天候優先。風や雨が強ければ滝と温泉中心にする。</li>
+<li>翌日は中標津方面へ長距離移動のため、夜に荷物をまとめる。</li></ul></section>
+          </aside>
+        </div>
+      </article>
+
+
+      <article class="day" id="day-2026-08-07">
+        <header class="day-header">
+          <div>
+            <p class="day-label">DAY 8 / 8/7（金）</p>
+            <h2>層雲峡から阿寒・摩周を経て中標津へ</h2>
+            <p class="area">層雲峡 / 阿寒 / 摩周 / 中標津</p>
+          </div>
+          <div class="hero-photo placeholder"><span>摩周湖</span><small>写真準備中</small></div>
+        </header>
+        <p class="summary">層雲峡から道東へ大きく移動する日。阿寒湖または摩周湖周辺で休憩と観光を挟み、中標津の拠点へ入ります。移動負荷が高いので、観光は1〜2か所に絞ります。</p>
+        
+        <div class="day-layout">
+          <section class="timeline-wrap">
+            <h3>時刻ベース詳細スケジュール</h3>
+            <ol class="timeline">
+              <li><time>07:30</time><span class="tag food">朝食</span><div><strong>コテージ</strong><p>朝食、チェックアウト準備</p><small>60分</small></div></li>
+<li><time>08:45</time><span class="tag move">移動</span><div><strong>層雲峡 → 北見方面</strong><p>道東方面へ移動開始。途中休憩を必ず入れる</p><small>約2時間</small></div></li>
+<li><time>10:45</time><span class="tag rest">休憩</span><div><strong>北見 / 道の駅周辺</strong><p>トイレ、給油、飲み物補充</p><small>30分</small></div></li>
+<li><time>11:15</time><span class="tag move">移動</span><div><strong>北見 → 阿寒湖方面</strong><p>阿寒方面へ移動</p><small>約2時間</small></div></li>
+<li><time>13:15</time><span class="tag food">昼食</span><div><strong>阿寒湖周辺</strong><p>湖畔で昼食。時間がなければ軽食</p><small>60分</small></div></li>
+<li><time>14:30</time><span class="tag see">観光</span><div><strong>阿寒湖 / 摩周湖候補</strong><p>天候に合わせて湖畔散策または展望台</p><small>75分</small></div></li>
+<li><time>16:00</time><span class="tag move">移動</span><div><strong>阿寒・摩周 → 中標津</strong><p>中標津方面へ移動</p><small>約90分</small></div></li>
+<li><time>17:30</time><span class="tag prep">手続き</span><div><strong>Shinrin Koen Camp</strong><p>バンガローへチェックイン、荷下ろし</p><small>60分</small></div></li>
+<li><time>18:45</time><span class="tag food">夕食</span><div><strong>中標津市街 / キャンプ場</strong><p>外食または簡単調理</p><small>90分</small></div></li>
+            </ol>
+          </section>
+          <aside class="side-panel">
+            <section>
+              <h3>レストラン候補</h3>
+              <ul class="restaurants">
+                <li><span>昼食</span><strong>阿寒湖温泉街の食堂</strong><p>阿寒湖 / 湖畔休憩とセットにしやすい</p></li>
+<li><span>昼食</span><strong>道の駅・ドライブイン</strong><p>北見 / 阿寒方面 / 移動優先のバックアップ</p></li>
+<li><span>夕食</span><strong>中標津市街の回転寿司・定食</strong><p>中標津 / 到着後に外食する場合の候補</p></li>
+<li><span>夕食</span><strong>バンガローで簡単調理</strong><p>Shinrin Koen Camp / 疲れている場合の安全策</p></li>
+              </ul>
+            </section>
+            <section class="notes"><h3>メモ</h3><ul><li>この日は長距離移動日。眠気対策で休憩を多めに取る。</li>
+<li>阿寒湖と摩周湖を両方詰め込まず、天気が良い方を選ぶ。</li></ul></section>
+          </aside>
+        </div>
+      </article>
+
+
+      <article class="day" id="day-2026-08-08">
+        <header class="day-header">
+          <div>
+            <p class="day-label">DAY 9 / 8/8（土）</p>
+            <h2>開陽台とミルクロードで道東の広さを感じる</h2>
+            <p class="area">中標津 / 開陽台 / 養老牛</p>
+          </div>
+          <div class="hero-photo placeholder"><span>開陽台</span><small>写真準備中</small></div>
+        </header>
+        <p class="summary">中標津滞在の自然満喫日。開陽台、ミルクロード、牧場風景、養老牛方面をゆっくり回り、道東らしい広さと空を楽しみます。夜は星空も候補です。</p>
+        
+        <div class="day-layout">
+          <section class="timeline-wrap">
+            <h3>時刻ベース詳細スケジュール</h3>
+            <ol class="timeline">
+              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>バンガロー</strong><p>朝食、天気確認、カメラ準備</p><small>60分</small></div></li>
+<li><time>09:30</time><span class="tag move">移動</span><div><strong>中標津市街 → 開陽台</strong><p>ミルクロードを走りながら展望台へ</p><small>約30分</small></div></li>
+<li><time>10:00</time><span class="tag see">観光</span><div><strong>開陽台</strong><p>展望台、カフェ、牧場ふれあい広場を楽しむ</p><small>120分</small></div></li>
+<li><time>12:15</time><span class="tag food">昼食</span><div><strong>中標津市街</strong><p>洋食、定食、カフェ候補</p><small>60分</small></div></li>
+<li><time>13:30</time><span class="tag see">観光</span><div><strong>養老牛方面</strong><p>温泉、渓流、牧場風景をゆっくり見る</p><small>120分</small></div></li>
+<li><time>15:45</time><span class="tag rest">休憩</span><div><strong>バンガロー</strong><p>昼寝、洗濯、車内整理</p><small>90分</small></div></li>
+<li><time>17:30</time><span class="tag food">夕食</span><div><strong>中標津市街 / キャンプ場</strong><p>外食またはキャンプ飯</p><small>90分</small></div></li>
+<li><time>20:00</time><span class="tag see">観光</span><div><strong>開陽台 / キャンプ場周辺</strong><p>晴れていれば星空観察。寒さ対策をする</p><small>45分</small></div></li>
+            </ol>
+          </section>
+          <aside class="side-panel">
+            <section>
+              <h3>レストラン候補</h3>
+              <ul class="restaurants">
+                <li><span>昼食</span><strong>中標津市街カフェ</strong><p>中標津 / 開陽台後に戻って昼食</p></li>
+<li><span>昼食</span><strong>ラ・レトリなかしべつ周辺候補</strong><p>中標津 / 乳製品・軽食の候補</p></li>
+<li><span>夕食</span><strong>中標津市街の定食店</strong><p>中標津 / 子ども連れで入りやすい店を現地確認</p></li>
+<li><span>甘味</span><strong>カフェ・カイヨウダイ</strong><p>開陽台 / はちみつソフトなど休憩候補</p></li>
+              </ul>
+            </section>
+            <section class="notes"><h3>メモ</h3><ul><li>開陽台は晴天優先。曇天なら午前午後を入れ替える。</li>
+<li>夜の開陽台は暗いので、安全最優先で短時間にする。</li></ul></section>
+          </aside>
+        </div>
+      </article>
+
+
+      <article class="day" id="day-2026-08-09">
+        <header class="day-header">
+          <div>
+            <p class="day-label">DAY 10 / 8/9（日）</p>
+            <h2>野付半島と海辺の道東自然ドライブ</h2>
+            <p class="area">中標津 / 標津 / 野付半島</p>
+          </div>
+          <div class="hero-photo placeholder"><span>野付半島</span><small>写真準備中</small></div>
+        </header>
+        <p class="summary">中標津から標津・野付半島方面へ。海、湿原、野鳥、立ち枯れたトドワラの風景など、道東らしい自然を味わいます。移動はあるものの、日帰りで戻れる範囲にします。</p>
+        
+        <div class="day-layout">
+          <section class="timeline-wrap">
+            <h3>時刻ベース詳細スケジュール</h3>
+            <ol class="timeline">
+              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>バンガロー</strong><p>朝食、飲み物準備、双眼鏡や上着を用意</p><small>60分</small></div></li>
+<li><time>09:15</time><span class="tag move">移動</span><div><strong>中標津 → 標津</strong><p>海沿い方面へ移動</p><small>約45分</small></div></li>
+<li><time>10:00</time><span class="tag see">観光</span><div><strong>標津周辺</strong><p>海辺散策、資料館や道の駅候補</p><small>60分</small></div></li>
+<li><time>11:15</time><span class="tag move">移動</span><div><strong>標津 → 野付半島</strong><p>半島方面へ移動。景色の良い場所で休憩</p><small>約45分</small></div></li>
+<li><time>12:15</time><span class="tag food">昼食</span><div><strong>野付半島 / 尾岱沼方面</strong><p>海鮮または軽食。混雑時は標津へ戻る</p><small>60分</small></div></li>
+<li><time>13:30</time><span class="tag see">観光</span><div><strong>野付半島ネイチャーセンター周辺</strong><p>トドワラ、野鳥、湿原風景を短時間散策</p><small>120分</small></div></li>
+<li><time>15:45</time><span class="tag move">移動</span><div><strong>野付半島 → 中標津</strong><p>バンガローへ戻る</p><small>約90分</small></div></li>
+<li><time>17:30</time><span class="tag rest">休憩</span><div><strong>バンガロー</strong><p>休憩、洗濯、翌日の天気確認</p><small>60分</small></div></li>
+<li><time>18:45</time><span class="tag food">夕食</span><div><strong>中標津市街 / キャンプ場</strong><p>外食またはキャンプ飯</p><small>90分</small></div></li>
+            </ol>
+          </section>
+          <aside class="side-panel">
+            <section>
+              <h3>レストラン候補</h3>
+              <ul class="restaurants">
+                <li><span>昼食</span><strong>尾岱沼・標津の海鮮候補</strong><p>別海 / 標津 / 海辺の日らしい第一候補</p></li>
+<li><span>昼食</span><strong>道の駅・軽食</strong><p>標津 / 混雑時のバックアップ</p></li>
+<li><span>夕食</span><strong>中標津市街のレストラン</strong><p>中標津 / 戻ってからゆっくり食べる候補</p></li>
+<li><span>夕食</span><strong>バンガローでキャンプ飯</strong><p>Shinrin Koen Camp / 疲れている場合の安全策</p></li>
+              </ul>
+            </section>
+            <section class="notes"><h3>メモ</h3><ul><li>野付半島は風が強いことがあるので上着を持つ。</li>
+<li>野生動物や鳥との距離を守り、立入禁止エリアに入らない。</li></ul></section>
+          </aside>
+        </div>
+      </article>
+
+
+      <article class="day" id="day-2026-08-10">
+        <header class="day-header">
+          <div>
+            <p class="day-label">DAY 11 / 8/10（月）</p>
+            <h2>釧路湿原・達古武方面の自然予備日</h2>
+            <p class="area">中標津 / 釧路湿原 / 達古武</p>
+          </div>
+          <div class="hero-photo placeholder"><span>釧路湿原</span><small>写真準備中</small></div>
+        </header>
+        <p class="summary">中標津滞在の最終日。天候と体力が合えば、釧路湿原・達古武湖方面へ足を伸ばします。無理に遠出しない場合は、中標津周辺で休養と自然観光に切り替えます。</p>
+        
+        <div class="day-layout">
+          <section class="timeline-wrap">
+            <h3>時刻ベース詳細スケジュール</h3>
+            <ol class="timeline">
+              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>バンガロー</strong><p>朝食、釧路方面の天気と体力を確認</p><small>60分</small></div></li>
+<li><time>09:15</time><span class="tag move">移動</span><div><strong>中標津 → 釧路湿原方面</strong><p>釧路湿原・達古武方面へ移動</p><small>約2時間</small></div></li>
+<li><time>11:15</time><span class="tag see">観光</span><div><strong>達古武湖 / 釧路湿原</strong><p>湖畔、展望、短時間散策。水辺と湿原の景色を楽しむ</p><small>90分</small></div></li>
+<li><time>12:45</time><span class="tag food">昼食</span><div><strong>釧路町 / 釧路市内</strong><p>海鮮、定食、または道の駅系で昼食</p><small>60分</small></div></li>
+<li><time>14:00</time><span class="tag see">観光</span><div><strong>細岡展望台候補</strong><p>湿原を見渡す展望スポット。天気優先</p><small>75分</small></div></li>
+<li><time>15:30</time><span class="tag move">移動</span><div><strong>釧路湿原 → 中標津</strong><p>翌日の帯広移動に備えて戻る</p><small>約2時間</small></div></li>
+<li><time>17:30</time><span class="tag rest">休憩</span><div><strong>バンガロー</strong><p>荷物整理、車内整理、洗濯</p><small>60分</small></div></li>
+<li><time>18:45</time><span class="tag food">夕食</span><div><strong>中標津市街</strong><p>中標津最後の夕食。早めに済ませる</p><small>90分</small></div></li>
+            </ol>
+          </section>
+          <aside class="side-panel">
+            <section>
+              <h3>レストラン候補</h3>
+              <ul class="restaurants">
+                <li><span>昼食</span><strong>釧路市内の海鮮・炉端候補</strong><p>釧路 / 湿原方面へ行けた場合の候補</p></li>
+<li><span>昼食</span><strong>道の駅・軽食</strong><p>釧路町方面 / 移動優先のバックアップ</p></li>
+<li><span>夕食</span><strong>中標津市街の定食店</strong><p>中標津 / 翌日の移動に備えて早めに</p></li>
+<li><span>予備</span><strong>バンガローで簡単調理</strong><p>Shinrin Koen Camp / 疲れた場合の安全策</p></li>
+              </ul>
+            </section>
+            <section class="notes"><h3>メモ</h3><ul><li>釧路方面に行く場合も、翌日の帯広移動を考えて早めに戻る。</li>
+<li>天候が悪い場合は中標津周辺の休養日に切り替える。</li></ul></section>
+          </aside>
+        </div>
+      </article>
+
+
+      <article class="day" id="day-2026-08-11">
+        <header class="day-header">
+          <div>
+            <p class="day-label">DAY 12 / 8/11（火）</p>
+            <h2>中標津から帯広へ、移動負荷を下げる日</h2>
+            <p class="area">中標津 / 弟子屈 / 足寄 / 帯広</p>
+          </div>
+          <div class="hero-photo placeholder"><span>十勝平野</span><small>写真準備中</small></div>
+        </header>
+        <p class="summary">当初の苫小牧直行ではなく、移動負荷を考慮して帯広に滞在する日。道東から十勝へ移動し、途中は休憩を多めに取ります。夜は帯広で豚丼など十勝グルメを楽しみます。</p>
+        
+        <div class="day-layout">
+          <section class="timeline-wrap">
+            <h3>時刻ベース詳細スケジュール</h3>
+            <ol class="timeline">
+              <li><time>07:30</time><span class="tag food">朝食</span><div><strong>バンガロー</strong><p>朝食、チェックアウト、忘れ物確認</p><small>75分</small></div></li>
+<li><time>09:00</time><span class="tag move">移動</span><div><strong>中標津 → 弟子屈方面</strong><p>摩周・阿寒方面を抜けて十勝へ</p><small>約90分</small></div></li>
+<li><time>10:30</time><span class="tag rest">休憩</span><div><strong>弟子屈 / 道の駅候補</strong><p>トイレ、飲み物、天気確認</p><small>30分</small></div></li>
+<li><time>11:00</time><span class="tag move">移動</span><div><strong>弟子屈 → 足寄</strong><p>休憩を挟みながら移動</p><small>約90分</small></div></li>
+<li><time>12:30</time><span class="tag food">昼食</span><div><strong>足寄 / 道の駅</strong><p>軽めの昼食、給油、休憩</p><small>60分</small></div></li>
+<li><time>13:30</time><span class="tag move">移動</span><div><strong>足寄 → 帯広</strong><p>十勝平野へ移動</p><small>約90分</small></div></li>
+<li><time>15:00</time><span class="tag rest">休憩</span><div><strong>帯広市内</strong><p>ホテルチェックイン前後に休憩</p><small>60分</small></div></li>
+<li><time>16:30</time><span class="tag see">観光</span><div><strong>帯広市内</strong><p>六花亭、ばんえい競馬周辺、真鍋庭園など体力で選択</p><small>90分</small></div></li>
+<li><time>18:30</time><span class="tag food">夕食</span><div><strong>帯広市内</strong><p>豚丼または十勝グルメ</p><small>90分</small></div></li>
+<li><time>20:30</time><span class="tag rest">休憩</span><div><strong>帯広宿泊先</strong><p>翌日の苫小牧移動に備えて休む</p><small>-</small></div></li>
+            </ol>
+          </section>
+          <aside class="side-panel">
+            <section>
+              <h3>レストラン候補</h3>
+              <ul class="restaurants">
+                <li><span>昼食</span><strong>道の駅あしょろ銀河ホール21周辺</strong><p>足寄 / 移動途中で休みやすい</p></li>
+<li><span>夕食</span><strong>帯広豚丼候補</strong><p>帯広 / この日の本命。混雑時は時間をずらす</p></li>
+<li><span>甘味</span><strong>六花亭 帯広本店候補</strong><p>帯広 / お土産と休憩候補</p></li>
+<li><span>予備</span><strong>ホテル周辺のテイクアウト</strong><p>帯広 / 疲れている場合の安全策</p></li>
+              </ul>
+            </section>
+            <section class="notes"><h3>メモ</h3><ul><li>8/11は帯広泊に変更し、苫小牧まで一気に走らない。</li>
+<li>宿泊先は帯広駅周辺または駐車しやすいホテルを優先。</li></ul></section>
+          </aside>
+        </div>
+      </article>
+
+
+      <article class="day" id="day-2026-08-12">
+        <header class="day-header">
+          <div>
+            <p class="day-label">DAY 13 / 8/12（水）</p>
+            <h2>帯広から苫小牧へ、フェリーで仙台へ</h2>
+            <p class="area">帯広 / 十勝 / 苫小牧 / 太平洋フェリー</p>
+          </div>
+          <div class="hero-photo placeholder"><span>苫小牧港</span><small>写真準備中</small></div>
+        </header>
+        <p class="summary">帯広で朝を迎え、十勝で軽く観光・買い物をしてから苫小牧へ移動します。夕方に苫小牧港へ入り、夜のフェリーで仙台へ向かいます。仙台到着は翌朝想定です。</p>
+        
+        <div class="day-layout">
+          <section class="timeline-wrap">
+            <h3>時刻ベース詳細スケジュール</h3>
+            <ol class="timeline">
+              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>帯広宿泊先</strong><p>朝食、荷物整理、フェリー用バッグを分ける</p><small>60分</small></div></li>
+<li><time>09:30</time><span class="tag see">観光</span><div><strong>帯広市内</strong><p>六花亭、真鍋庭園、十勝牧場方面のどれかを短時間</p><small>90分</small></div></li>
+<li><time>11:15</time><span class="tag food">昼食</span><div><strong>帯広市内</strong><p>豚丼、カフェ、または軽食。早めに済ませる</p><small>60分</small></div></li>
+<li><time>12:30</time><span class="tag move">移動</span><div><strong>帯広 → 苫小牧</strong><p>道東道で苫小牧方面へ。途中休憩を必ず入れる</p><small>約3時間</small></div></li>
+<li><time>15:30</time><span class="tag rest">休憩</span><div><strong>占冠PA / 由仁PAなど</strong><p>トイレ、給油、眠気対策</p><small>30分</small></div></li>
+<li><time>17:00</time><span class="tag prep">手続き</span><div><strong>苫小牧港</strong><p>乗船手続き、車両乗船準備</p><small>75分</small></div></li>
+<li><time>18:15</time><span class="tag food">夕食</span><div><strong>苫小牧港 / 船内</strong><p>乗船前後で夕食。船内レストランも候補</p><small>60分</small></div></li>
+<li><time>19:00</time><span class="tag move">移動</span><div><strong>太平洋フェリー</strong><p>苫小牧港を出港。仙台へ</p><small>一晩</small></div></li>
+<li><time>21:00</time><span class="tag rest">休憩</span><div><strong>客室</strong><p>旅の写真整理、早めに就寝</p><small>-</small></div></li>
+            </ol>
+          </section>
+          <aside class="side-panel">
+            <section>
+              <h3>レストラン候補</h3>
+              <ul class="restaurants">
+                <li><span>昼食</span><strong>帯広豚丼候補</strong><p>帯広 / 前日に食べられなかった場合の候補</p></li>
+<li><span>昼食</span><strong>六花亭・カフェ系</strong><p>帯広 / 軽めに済ませる場合</p></li>
+<li><span>夕食</span><strong>太平洋フェリー船内レストラン</strong><p>船内 / 乗船後の第一候補</p></li>
+<li><span>夕食</span><strong>苫小牧でテイクアウト</strong><p>苫小牧 / 乗船前のバックアップ</p></li>
+              </ul>
+            </section>
+            <section class="notes"><h3>メモ</h3><ul><li>8/12はフェリー出港日。仙台到着は翌朝想定。</li>
+<li>帯広観光は1か所だけに絞り、苫小牧到着を優先する。</li></ul></section>
+          </aside>
+        </div>
+      </article>
+
     </section>
   </main>
 

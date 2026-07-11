@@ -7,6 +7,7 @@
 - 旅程内容とレイアウトコードを分けて管理する。
 - 旅程は `itinerary/days/*.md` に日別で追加・編集する。
 - PowerPointの見た目や生成ロジックは `scripts/build_guide.py` に集約する。
+- GitHub Pages用の公開HTMLは `scripts/build_public_site.py` で `docs/index.html` に生成する。
 - 写真は `images/` に置き、スクリプトから読み込む。
 - 画像がない場合でもビルドが失敗しないよう、場所名入りプレースホルダーを出す。
 - 生成物は `output/` に置く。
@@ -41,12 +42,15 @@
 
 ```bash
 python scripts/build_guide.py
+python scripts/build_web_data.py
+python scripts/build_public_site.py
 ```
 
 確認対象:
 
 - `output/hokkaido-family-travel-guide.pptx` が生成されること
 - `output/hokkaido-family-travel-guide.pdf` が生成されること
+- `docs/index.html` に全日程の時刻ベーススケジュールが生成されること
 - PowerPointが開けること
 - PDFが開けること
 
@@ -55,4 +59,3 @@ python scripts/build_guide.py
 - 旅程変更とレイアウト変更は、できるだけ別コミットに分ける。
 - レストラン・宿泊・交通の予約状況が変わった場合は、該当日のMarkdownも更新する。
 - 生成物を更新した場合は、READMEや変更概要に反映する。
-

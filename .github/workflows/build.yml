@@ -30,6 +30,7 @@ jobs:
         run: |
           python scripts/build_guide.py
           python scripts/build_web_data.py
+          python scripts/build_public_site.py
 
       - name: Convert PowerPoint to PDF with LibreOffice
         run: |
@@ -50,11 +51,14 @@ jobs:
           pptx = Path("output/hokkaido-family-travel-guide.pptx")
           pdf = Path("output/hokkaido-family-travel-guide.pdf")
           web_data = Path("web/app/itinerary-data.ts")
+          public_html = Path("docs/index.html")
           assert pptx.exists() and pptx.stat().st_size > 0
           assert pdf.exists() and pdf.stat().st_size > 0
           assert web_data.exists() and web_data.stat().st_size > 0
+          assert public_html.exists() and public_html.stat().st_size > 0
           prs = Presentation(pptx)
           assert len(prs.slides) >= 5
+          assert "時刻ベース詳細スケジュール" in public_html.read_text(encoding="utf-8")
           print(f"slides={len(prs.slides)} pdf_bytes={pdf.stat().st_size}")
           PY
 

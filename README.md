@@ -69,6 +69,7 @@ source .venv/bin/activate
 pip install -r requirements.txt
 python scripts/build_guide.py
 python scripts/build_web_data.py
+python scripts/build_public_site.py
 ```
 
 生成後、以下を確認してください。
@@ -76,6 +77,7 @@ python scripts/build_web_data.py
 ```text
 output/hokkaido-family-travel-guide.pptx
 output/hokkaido-family-travel-guide.pdf
+docs/index.html
 ```
 
 HTML版をローカル確認する場合:
@@ -86,6 +88,9 @@ npm ci
 npm run build
 npm run dev
 ```
+
+GitHub Pagesで公開しているHTMLは `docs/index.html` です。
+日別Markdownを更新したら、`python scripts/build_public_site.py` を実行して公開HTMLも再生成します。
 
 ## PDF生成について
 
@@ -117,4 +122,5 @@ pushまたはpull request時に以下を実行します。
 1. Python依存関係のインストール
 2. PowerPoint生成
 3. LibreOfficeでPowerPointからPDF生成
-4. `output/` をartifactとして保存
+4. 公開HTML生成
+5. `output/` をartifactとして保存
