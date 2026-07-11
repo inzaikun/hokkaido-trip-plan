@@ -4,6 +4,10 @@
 
 ## 成果物
 
+- HTML版ガイド
+  - `web/` で管理
+  - `itinerary/days/*.md` から表示データを生成
+  - 公開URLでスマホ・PCから確認可能
 - `output/hokkaido-family-travel-guide.pptx`
   - 16:9横長のPowerPoint
   - `python-pptx` で生成
@@ -63,6 +67,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 python scripts/build_guide.py
+python scripts/build_web_data.py
 ```
 
 生成後、以下を確認してください。
@@ -70,6 +75,15 @@ python scripts/build_guide.py
 ```text
 output/hokkaido-family-travel-guide.pptx
 output/hokkaido-family-travel-guide.pdf
+```
+
+HTML版をローカル確認する場合:
+
+```bash
+cd web
+npm ci
+npm run build
+npm run dev
 ```
 
 ## PDF生成について
@@ -103,4 +117,3 @@ pushまたはpull request時に以下を実行します。
 2. PowerPoint生成
 3. LibreOfficeでPowerPointからPDF生成
 4. `output/` をartifactとして保存
-

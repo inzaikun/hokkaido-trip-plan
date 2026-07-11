@@ -1,0 +1,380 @@
+:root {
+  --ink: #17212b;
+  --muted: #637083;
+  --line: #d8e2ea;
+  --paper: #fffaf0;
+  --blue: #176b87;
+  --deep: #0f3344;
+  --teal: #4aa3a2;
+  --coral: #d86352;
+  --green: #3d7b59;
+  --gold: #b7791f;
+  --bg: #f4f7f8;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Hiragino Sans", "Yu Gothic", "Noto Sans JP", system-ui, sans-serif;
+  line-height: 1.7;
+}
+
+a {
+  color: inherit;
+}
+
+main {
+  min-height: 100vh;
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+  gap: 32px;
+  padding: 64px clamp(20px, 5vw, 72px) 44px;
+  background:
+    linear-gradient(135deg, rgba(15, 51, 68, .96), rgba(23, 107, 135, .86)),
+    radial-gradient(circle at top right, #f6d365, transparent 36%);
+  color: white;
+}
+
+.eyebrow {
+  margin: 0 0 18px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .08em;
+}
+
+h1 {
+  max-width: 780px;
+  margin: 0;
+  font-size: clamp(42px, 7vw, 84px);
+  line-height: 1.02;
+}
+
+.period {
+  margin: 22px 0 0;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.lead {
+  max-width: 760px;
+  margin: 18px 0 0;
+  color: rgba(255, 255, 255, .86);
+  font-size: 17px;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.hero__actions a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  border: 1px solid rgba(255, 255, 255, .42);
+  border-radius: 999px;
+  padding: 0 18px;
+  background: rgba(255, 255, 255, .12);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.hero__panel {
+  align-self: end;
+  display: grid;
+  gap: 12px;
+}
+
+.hero__panel div {
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 8px;
+  padding: 20px;
+  background: rgba(255, 255, 255, .12);
+  backdrop-filter: blur(12px);
+}
+
+.hero__panel span {
+  display: block;
+  font-size: 40px;
+  font-weight: 900;
+}
+
+.hero__panel p {
+  margin: 2px 0 0;
+  color: rgba(255, 255, 255, .76);
+  text-transform: uppercase;
+}
+
+.route,
+.days {
+  padding: 36px clamp(18px, 5vw, 72px);
+}
+
+.route h2 {
+  margin: 0 0 16px;
+  color: var(--deep);
+  font-size: 28px;
+}
+
+.route__rail {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.route__rail a {
+  min-height: 88px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: white;
+  text-decoration: none;
+}
+
+.route__rail strong,
+.route__rail span {
+  display: block;
+}
+
+.route__rail strong {
+  color: var(--blue);
+}
+
+.route__rail span {
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.days {
+  display: grid;
+  gap: 28px;
+  padding-top: 0;
+}
+
+.day {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 18px 40px rgba(17, 24, 39, .08);
+}
+
+.day__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 420px);
+  gap: 24px;
+  padding: 28px;
+  background: var(--paper);
+}
+
+.day__meta {
+  margin: 0 0 8px;
+  color: var(--coral);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.day h2 {
+  margin: 0;
+  color: var(--deep);
+  font-size: clamp(28px, 4vw, 44px);
+  line-height: 1.18;
+}
+
+.area {
+  margin: 12px 0 0;
+  color: var(--blue);
+  font-weight: 800;
+}
+
+.photo {
+  min-height: 220px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  border: 1px solid #c4dbe6;
+  background:
+    linear-gradient(135deg, rgba(23, 107, 135, .18), rgba(74, 163, 162, .08)),
+    repeating-linear-gradient(-35deg, #dff0f5, #dff0f5 18px, #edf7fa 18px, #edf7fa 36px);
+  color: var(--deep);
+  font-size: 26px;
+  font-weight: 900;
+  text-align: center;
+}
+
+.summary {
+  margin: 0;
+  padding: 22px 28px 0;
+  color: #2f3d4b;
+  font-size: 16px;
+}
+
+.day__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 22px;
+  padding: 24px 28px 30px;
+}
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px;
+  background: #fff;
+}
+
+.card h3 {
+  margin: 0 0 14px;
+  color: var(--deep);
+  font-size: 19px;
+}
+
+.timeline {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.timeline li {
+  display: grid;
+  grid-template-columns: 96px 62px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  border-top: 1px solid #edf2f6;
+  padding-top: 10px;
+}
+
+.timeline li:first-child {
+  border-top: 0;
+  padding-top: 0;
+}
+
+time {
+  color: var(--blue);
+  font-weight: 900;
+}
+
+.tag {
+  display: inline-flex;
+  justify-content: center;
+  border-radius: 999px;
+  padding: 2px 8px;
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.tag.move { background: var(--blue); }
+.tag.see { background: var(--green); }
+.tag.food { background: var(--coral); }
+.tag.rest { background: var(--gold); }
+.tag.prep { background: #64748b; }
+.tag.other { background: var(--teal); }
+
+.timeline strong {
+  display: block;
+  color: #263544;
+}
+
+.timeline p {
+  margin: 2px 0 0;
+  color: #39495a;
+}
+
+.timeline small {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+}
+
+.side {
+  display: grid;
+  align-content: start;
+  gap: 16px;
+}
+
+.restaurants {
+  display: grid;
+  gap: 12px;
+}
+
+.restaurants div {
+  border-left: 4px solid var(--coral);
+  padding-left: 12px;
+}
+
+.restaurants span {
+  display: block;
+  color: var(--coral);
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.restaurants strong {
+  display: block;
+  color: var(--deep);
+}
+
+.restaurants p,
+.memo li {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.memo ul {
+  margin: 0;
+  padding-left: 18px;
+}
+
+@media (max-width: 900px) {
+  .hero,
+  .day__header,
+  .day__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .day__grid {
+    padding-inline: 18px;
+  }
+
+  .timeline li {
+    grid-template-columns: 76px 56px minmax(0, 1fr);
+  }
+}
+
+@media (max-width: 560px) {
+  .hero {
+    padding: 42px 18px 32px;
+  }
+
+  .route,
+  .days {
+    padding-inline: 14px;
+  }
+
+  .day__header {
+    padding: 20px;
+  }
+
+  .timeline li {
+    grid-template-columns: 1fr;
+  }
+}

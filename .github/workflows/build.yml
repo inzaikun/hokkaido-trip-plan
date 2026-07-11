@@ -27,12 +27,20 @@ jobs:
           sudo apt-get install -y libreoffice fonts-noto-cjk
 
       - name: Build PowerPoint and fallback PDF
-        run: python scripts/build_guide.py
+        run: |
+          python scripts/build_guide.py
+          python scripts/build_web_data.py
 
       - name: Convert PowerPoint to PDF with LibreOffice
         run: |
           libreoffice --headless --convert-to pdf --outdir output output/hokkaido-family-travel-guide.pptx
           test -f output/hokkaido-family-travel-guide.pdf
+
+      - name: Build HTML guide
+        working-directory: web
+        run: |
+          npm ci --ignore-scripts --no-audit --no-fund
+          npm run build
 
       - name: Verify generated files
         run: |
@@ -41,8 +49,10 @@ jobs:
           from pptx import Presentation
           pptx = Path("output/hokkaido-family-travel-guide.pptx")
           pdf = Path("output/hokkaido-family-travel-guide.pdf")
+          web_data = Path("web/app/itinerary-data.ts")
           assert pptx.exists() and pptx.stat().st_size > 0
           assert pdf.exists() and pdf.stat().st_size > 0
+          assert web_data.exists() and web_data.stat().st_size > 0
           prs = Presentation(pptx)
           assert len(prs.slides) >= 5
           print(f"slides={len(prs.slides)} pdf_bytes={pdf.stat().st_size}")
@@ -53,4 +63,3 @@ jobs:
         with:
           name: hokkaido-family-travel-guide
           path: output/
-
