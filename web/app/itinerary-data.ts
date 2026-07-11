@@ -6,44 +6,79 @@ export const itinerary = {
     {
       "date": "2026-07-31",
       "day": "1",
-      "title": "仙台からフェリーで北海道へ",
-      "area": "仙台 / 太平洋フェリー",
-      "hero": "仙台港",
-      "summary": "北海道家族旅行の出発日。仙台港から太平洋フェリーに乗り、翌朝の苫小牧到着を目指します。初日は移動そのものを旅の始まりとして楽しみ、船内で夕食と休憩をしっかり取ります。",
+      "title": "印西から仙台観光、フェリーで北海道へ",
+      "area": "千葉県印西市 / 仙台 / 太平洋フェリー",
+      "hero": "仙台城跡",
+      "summary": "北海道家族旅行の出発日。千葉県印西市の自宅を7:00に出発し、昼ごろ仙台に到着して市内観光を楽しんでから仙台港へ向かいます。長距離移動の疲れをためないよう、サービスエリア休憩と昼食を早めに挟み、夕方は余裕を持って太平洋フェリーの乗船手続きに入ります。",
       "timeline": [
         {
-          "time": "15:30",
+          "time": "06:30",
           "type": "準備",
           "place": "自宅",
-          "detail": "荷物、チケット、身分証、船内バッグを最終確認",
+          "detail": "荷物、チケット、身分証、船内バッグ、酔い止めを最終確認",
           "duration": "30分"
         },
         {
-          "time": "16:00",
+          "time": "07:00",
           "type": "移動",
-          "place": "自宅 → 仙台港",
-          "detail": "余裕を持って仙台港へ移動。途中で飲み物と軽食を購入",
-          "duration": "約60分"
+          "place": "千葉県印西市 → 仙台方面",
+          "detail": "常磐道または東北道方面で仙台へ。渋滞を見て休憩地点を調整",
+          "duration": "約4時間30分"
         },
         {
-          "time": "17:00",
+          "time": "09:30",
           "type": "休憩",
-          "place": "仙台港周辺",
-          "detail": "乗船前のトイレ、軽食、写真撮影",
-          "duration": "30分"
+          "place": "SA/PA",
+          "detail": "トイレ、給油、飲み物補充。子どもは軽く体を動かす",
+          "duration": "20分"
+        },
+        {
+          "time": "12:00",
+          "type": "昼食",
+          "place": "仙台市内",
+          "detail": "牛たん、海鮮、駅周辺ランチなどから当日の混雑で選択",
+          "duration": "60分"
+        },
+        {
+          "time": "13:15",
+          "type": "観光",
+          "place": "仙台城跡",
+          "detail": "伊達政宗像、仙台市街の眺望、記念写真",
+          "duration": "60分"
+        },
+        {
+          "time": "14:30",
+          "type": "観光",
+          "place": "瑞鳳殿",
+          "detail": "伊達政宗公の霊屋を見学。坂道があるので水分補給を忘れずに",
+          "duration": "60分"
+        },
+        {
+          "time": "15:45",
+          "type": "休憩",
+          "place": "定禅寺通周辺",
+          "detail": "ケヤキ並木を散策。カフェ休憩またはおやつ購入",
+          "duration": "45分"
+        },
+        {
+          "time": "16:45",
+          "type": "移動",
+          "place": "仙台市内 → 仙台港",
+          "detail": "フェリー乗船に向けて港へ移動。夕方渋滞を見込んで早めに出発",
+          "duration": "約35分"
         },
         {
           "time": "17:30",
           "type": "手続き",
           "place": "仙台港フェリーターミナル",
-          "detail": "乗船手続き、車両乗船準備",
+          "detail": "乗船手続き、車両乗船準備、船内バッグを手元に分ける",
           "duration": "60分"
         },
         {
           "time": "18:30",
           "type": "夕食",
           "place": "フェリー船内",
-          "detail": "船内レストランまたは持ち込み軽食",
+          "detail": "船内レストランまたは仙台市内で買った持ち込み軽食",
           "duration": "45分"
         },
         {
@@ -61,7 +96,45 @@ export const itinerary = {
           "duration": "-"
         }
       ],
+      "photos": [
+        {
+          "place": "仙台城跡",
+          "image": "仙台城跡.jpg",
+          "caption": "伊達政宗ゆかりの城跡。仙台市街を見渡す初日の記念写真スポット",
+          "credit": "Wikimedia Commons"
+        },
+        {
+          "place": "瑞鳳殿",
+          "image": "瑞鳳殿.jpg",
+          "caption": "桃山文化の装飾が美しい伊達政宗公の霊屋。午後の短時間観光に組み込みやすい",
+          "credit": "Wikimedia Commons"
+        },
+        {
+          "place": "仙台港フェリーターミナル",
+          "image": "",
+          "caption": "北海道へ向かう船旅の入口。乗船前に家族写真を撮る候補",
+          "credit": "写真未設定"
+        }
+      ],
       "restaurants": [
+        {
+          "meal": "昼食",
+          "name": "牛たん炭焼 利久 仙台駅周辺",
+          "area": "仙台駅周辺",
+          "memo": "仙台らしい昼食の第一候補。混雑時は近隣店舗に切替"
+        },
+        {
+          "meal": "昼食",
+          "name": "伊達の牛たん本舗",
+          "area": "仙台駅周辺",
+          "memo": "牛たん候補その2。子どもの食べやすさも見て選ぶ"
+        },
+        {
+          "meal": "休憩",
+          "name": "定禅寺通周辺カフェ",
+          "area": "仙台市中心部",
+          "memo": "観光後の涼み休憩。飲み物とおやつを確保"
+        },
         {
           "meal": "夕食",
           "name": "太平洋フェリー船内レストラン",
@@ -70,21 +143,16 @@ export const itinerary = {
         },
         {
           "meal": "夕食",
-          "name": "仙台港周辺でテイクアウト",
-          "area": "仙台港",
-          "memo": "混雑時のバックアップ"
-        },
-        {
-          "meal": "軽食",
-          "name": "コンビニ事前購入",
-          "area": "仙台市内",
-          "memo": "子ども用のおやつ、飲み物を確保"
+          "name": "仙台市内でテイクアウト",
+          "area": "仙台市内 / 仙台港",
+          "memo": "船内レストラン混雑時のバックアップ"
         }
       ],
       "notes": [
         "フェリーWi-Fiは有料1,500円。使うか当日判断。",
         "船内用バッグに、着替え、洗面具、充電器、酔い止めを分ける。",
-        "苫小牧到着は翌日11:00予定。"
+        "苫小牧到着は翌日11:00予定。",
+        "印西市から仙台までは長距離なので、到着時刻は渋滞次第。観光は仙台城跡と瑞鳳殿を優先し、時間が押したら定禅寺通散策を短縮する。"
       ]
     },
     {
@@ -159,6 +227,7 @@ export const itinerary = {
           "duration": "45分"
         }
       ],
+      "photos": [],
       "restaurants": [
         {
           "meal": "昼食",
@@ -255,6 +324,7 @@ export const itinerary = {
           "duration": "45分"
         }
       ],
+      "photos": [],
       "restaurants": [
         {
           "meal": "昼食",
@@ -358,6 +428,7 @@ export const itinerary = {
           "duration": "90分"
         }
       ],
+      "photos": [],
       "restaurants": [
         {
           "meal": "昼食",
@@ -461,6 +532,7 @@ export const itinerary = {
           "duration": "-"
         }
       ],
+      "photos": [],
       "restaurants": [
         {
           "meal": "昼食",
@@ -571,6 +643,7 @@ export const itinerary = {
           "duration": "-"
         }
       ],
+      "photos": [],
       "restaurants": [
         {
           "meal": "昼食",
@@ -681,6 +754,7 @@ export const itinerary = {
           "duration": "90分"
         }
       ],
+      "photos": [],
       "restaurants": [
         {
           "meal": "昼食",
@@ -784,6 +858,7 @@ export const itinerary = {
           "duration": "90分"
         }
       ],
+      "photos": [],
       "restaurants": [
         {
           "meal": "昼食",
@@ -880,6 +955,7 @@ export const itinerary = {
           "duration": "45分"
         }
       ],
+      "photos": [],
       "restaurants": [
         {
           "meal": "昼食",
@@ -983,6 +1059,7 @@ export const itinerary = {
           "duration": "90分"
         }
       ],
+      "photos": [],
       "restaurants": [
         {
           "meal": "昼食",
@@ -1079,6 +1156,7 @@ export const itinerary = {
           "duration": "90分"
         }
       ],
+      "photos": [],
       "restaurants": [
         {
           "meal": "昼食",
@@ -1189,6 +1267,7 @@ export const itinerary = {
           "duration": "-"
         }
       ],
+      "photos": [],
       "restaurants": [
         {
           "meal": "昼食",
@@ -1292,6 +1371,7 @@ export const itinerary = {
           "duration": "-"
         }
       ],
+      "photos": [],
       "restaurants": [
         {
           "meal": "昼食",

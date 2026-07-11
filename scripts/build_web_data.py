@@ -52,6 +52,7 @@ def parse_day(path: Path) -> dict:
 
     timeline_rows = parse_table(section(raw, "Timeline").splitlines())
     restaurants_rows = parse_table(section(raw, "Restaurants").splitlines())
+    photo_rows = parse_table(section(raw, "Photos").splitlines())
     notes = [
         line.strip()[2:].strip()
         for line in section(raw, "Notes").splitlines()
@@ -75,6 +76,16 @@ def parse_day(path: Path) -> dict:
             }
             for row in timeline_rows[1:]
             if len(row) >= 5
+        ],
+        "photos": [
+            {
+                "place": row[0],
+                "image": row[1],
+                "caption": row[2],
+                "credit": row[3],
+            }
+            for row in photo_rows[1:]
+            if len(row) >= 4
         ],
         "restaurants": [
             {

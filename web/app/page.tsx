@@ -69,10 +69,36 @@ export default function Page() {
                 <p className="area">{day.area}</p>
               </div>
               <div className="photo">
-                <span>{day.hero}</span>
+                {day.photos[0]?.image ? (
+                  <img src={`/images/${day.photos[0].image}`} alt={day.hero} />
+                ) : (
+                  <span>{day.hero}</span>
+                )}
               </div>
             </header>
             <p className="summary">{day.summary}</p>
+
+            {day.photos.length > 0 ? (
+              <section className="photoSpots">
+                <h3>写真で見る立ち寄り名所</h3>
+                <div className="photoSpots__grid">
+                  {day.photos.map((photo) => (
+                    <figure key={`${day.date}-${photo.place}`}>
+                      {photo.image ? (
+                        <img src={`/images/${photo.image}`} alt={photo.place} />
+                      ) : (
+                        <div className="photoSpots__placeholder">{photo.place}</div>
+                      )}
+                      <figcaption>
+                        <strong>{photo.place}</strong>
+                        <span>{photo.caption}</span>
+                        <small>{photo.credit}</small>
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </section>
+            ) : null}
 
             <div className="day__grid">
               <section className="card">

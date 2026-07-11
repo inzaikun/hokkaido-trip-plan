@@ -203,6 +203,7 @@ h1 {
 }
 
 .photo {
+  overflow: hidden;
   min-height: 220px;
   display: grid;
   place-items: center;
@@ -217,11 +218,87 @@ h1 {
   text-align: center;
 }
 
+.photo img {
+  width: 100%;
+  height: 100%;
+  min-height: 220px;
+  object-fit: cover;
+}
+
 .summary {
   margin: 0;
   padding: 22px 28px 0;
   color: #2f3d4b;
   font-size: 16px;
+}
+
+.photoSpots {
+  padding: 22px 28px 0;
+}
+
+.photoSpots h3 {
+  margin: 0 0 14px;
+  color: var(--deep);
+  font-size: 20px;
+}
+
+.photoSpots__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.photoSpots figure {
+  overflow: hidden;
+  min-height: 100%;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.photoSpots img,
+.photoSpots__placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: block;
+}
+
+.photoSpots img {
+  object-fit: cover;
+}
+
+.photoSpots__placeholder {
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background:
+    linear-gradient(135deg, rgba(23, 107, 135, .18), rgba(74, 163, 162, .08)),
+    repeating-linear-gradient(-35deg, #dff0f5, #dff0f5 18px, #edf7fa 18px, #edf7fa 36px);
+  color: var(--deep);
+  font-weight: 900;
+  text-align: center;
+}
+
+.photoSpots figcaption {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+}
+
+.photoSpots figcaption strong {
+  color: var(--deep);
+}
+
+.photoSpots figcaption span {
+  color: #3a4a58;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.photoSpots figcaption small {
+  color: var(--muted);
+  font-size: 12px;
 }
 
 .day__grid {
@@ -352,6 +429,10 @@ time {
   }
 
   .day__grid {
+    padding-inline: 18px;
+  }
+
+  .photoSpots {
     padding-inline: 18px;
   }
 

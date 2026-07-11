@@ -19,6 +19,7 @@ from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
+from reportlab.platypus import Image as PdfImage
 from reportlab.platypus import PageBreak, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
 
@@ -62,6 +63,14 @@ class Restaurant:
 
 
 @dataclass
+class PhotoSpot:
+    place: str
+    image: str
+    caption: str
+    credit: str
+
+
+@dataclass
 class DayPlan:
     date: str
     day: str
@@ -70,6 +79,7 @@ class DayPlan:
     hero: str
     summary: str
     timeline: list[TimelineItem]
+    photos: list[PhotoSpot]
     restaurants: list[Restaurant]
     notes: list[str]
 
@@ -130,6 +140,13 @@ def parse_day(path: Path) -> DayPlan:
         if len(row) >= 4
     ]
 
+    photo_rows = parse_table(section(raw, "Photos").splitlines())
+    photos = [
+        PhotoSpot(*row[:4])
+        for row in photo_rows[1:]
+        if len(row) >= 4
+    ]
+
     notes = [
         line.strip()[2:].strip()
         for line in section(raw, "Notes").splitlines()
@@ -144,6 +161,7 @@ def parse_day(path: Path) -> DayPlan:
         hero=meta.get("hero", meta.get("title", path.stem)),
         summary=summary,
         timeline=timeline,
+        photos=photos,
         restaurants=restaurants,
         notes=notes,
     )
@@ -236,6 +254,15 @@ def hero_image(day: DayPlan) -> Path:
     return make_placeholder(day.hero, PLACEHOLDER_DIR / f"{day.date}_{safe}.png")
 
 
+def photo_image(day: DayPlan, photo: PhotoSpot) -> Path:
+    if photo.image:
+        explicit = IMAGES_DIR / photo.image
+        if explicit.exists():
+            return explicit
+    safe = re.sub(r"[^0-9A-Za-zぁ-んァ-ヶ一-龠ー_-]+", "_", photo.place)[:50] or day.date
+    return make_placeholder(photo.place, PLACEHOLDER_DIR / f"{day.date}_{safe}.png")
+
+
 def add_picture_cover(slide, image_path: Path, x, y, w, h):
     slide.shapes.add_picture(str(image_path), x, y, width=w, height=h)
 
@@ -276,6 +303,20 @@ def add_restaurants(slide, restaurants: list[Restaurant], x=Inches(7.82), y=Inch
         y += Inches(0.55)
 
 
+def add_photo_spots(slide, day: DayPlan, x=Inches(7.82), y=Inches(0.35), max_items=3):
+    if not day.photos:
+        return
+    add_textbox(slide, x, y, Inches(4.75), Inches(0.32), "写真で見る立ち寄り名所", 15, NAVY, True)
+    y += Inches(0.42)
+    photo_w = Inches(1.46)
+    gap = Inches(0.18)
+    for index, photo in enumerate(day.photos[:max_items]):
+        px = x + index * (photo_w + gap)
+        add_picture_cover(slide, photo_image(day, photo), px, y, photo_w, Inches(1.02))
+        add_textbox(slide, px, y + Inches(1.05), photo_w, Inches(0.24), photo.place, 7.8, NAVY, True, PP_ALIGN.CENTER)
+        add_textbox(slide, px, y + Inches(1.28), photo_w, Inches(0.34), photo.caption, 6.2, MUTED, False, PP_ALIGN.CENTER)
+
+
 def build_pptx(days: list[DayPlan]):
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     prs = Presentation()
@@ -313,7 +354,11 @@ def build_pptx(days: list[DayPlan]):
         add_textbox(slide2, Inches(0.55), Inches(0.78), Inches(6.8), Inches(0.42), "時刻ベース詳細スケジュール", 22, NAVY, True)
         add_timeline(slide2, day.timeline, start_y=Inches(1.45), max_items=10)
         add_picture_cover(slide2, hero_image(day), Inches(8.05), Inches(0.55), Inches(4.55), Inches(2.55))
-        add_restaurants(slide2, day.restaurants, x=Inches(8.05), y=Inches(3.35))
+        if day.photos:
+            add_photo_spots(slide2, day, x=Inches(8.05), y=Inches(3.35))
+            add_restaurants(slide2, day.restaurants, x=Inches(8.05), y=Inches(5.45))
+        else:
+            add_restaurants(slide2, day.restaurants, x=Inches(8.05), y=Inches(3.35))
 
     prs.save(PPTX_PATH)
 
@@ -350,6 +395,9 @@ def build_pdf(days: list[DayPlan]):
 
     def p(text, style=base):
         return Paragraph(str(text).replace("&", "&amp;"), style)
+
+    def photo_caption(photo: PhotoSpot):
+        return p(f"{photo.place}<br/>{photo.caption}<br/>{photo.credit}", center)
 
     def pdf_table(rows, widths, header=colors.HexColor("#E2F1F8"), size=7.8):
         body = ParagraphStyle(f"tbl{size}", parent=base, fontSize=size, leading=size + 2.6, wordWrap="CJK")
@@ -389,6 +437,19 @@ def build_pdf(days: list[DayPlan]):
                 [24 * mm, 22 * mm, 42 * mm, 132 * mm, 26 * mm],
                 size=7.2,
             ),
+        ]
+        if day.photos:
+            image_cells = []
+            caption_cells = []
+            for photo in day.photos[:3]:
+                image_cells.append(PdfImage(str(photo_image(day, photo)), width=55 * mm, height=32 * mm))
+                caption_cells.append(photo_caption(photo))
+            story += [
+                Paragraph("写真で見る立ち寄り名所", h2),
+                Table([image_cells, caption_cells], colWidths=[62 * mm] * len(image_cells)),
+                Spacer(1, 4),
+            ]
+        story += [
             Paragraph("レストラン候補", h2),
             pdf_table(
                 [["Meal", "Name", "Area", "Memo"]] + [[r.meal, r.name, r.area, r.memo] for r in day.restaurants],
@@ -437,4 +498,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
