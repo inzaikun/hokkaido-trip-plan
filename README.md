@@ -1,43 +1,99 @@
-# 北海道旅行計画
+# 北海道家族旅行ガイド
 
-2026年7月31日から8月12日までの北海道旅行をGitHubで管理するためのリポジトリです。
-日程、候補地、予算、持ち物、予約状況、検討事項をひとまとめにして、変更履歴を残しながら育てていきます。
+2026年7月31日から8月12日までの北海道家族旅行を、書店の旅行ガイドブック風PowerPointとして管理するリポジトリです。
 
-## 使い方
+## 成果物
 
-1. `trip-overview.md` に旅行の前提をまとめる
-2. `itinerary.md` に日別の予定を書く
-3. `places.md` に行きたい場所や飲食店の候補を追加する
-4. `budget.csv` で費用見積もりを更新する
-5. `checklist.md` で予約・準備・持ち物を確認する
-6. 決めたいことはGitHub Issuesに登録する
+- `output/hokkaido-family-travel-guide.pptx`
+  - 16:9横長のPowerPoint
+  - `python-pptx` で生成
+  - 日本語フォント指定あり
+- `output/hokkaido-family-travel-guide.pdf`
+  - ローカルでは同じ旅程データから確認用PDFを生成
+  - GitHub ActionsではLibreOfficeでPowerPointからPDFへ変換
+- `itinerary/days/*.md`
+  - 日別に編集できる旅程Markdown
 
-## ファイル構成
+## 初回に作成済みの日程
 
-| ファイル | 用途 |
-| --- | --- |
-| `trip-overview.md` | 旅行の目的、期間、人数、移動方針 |
-| `itinerary.md` | 日別スケジュール |
-| `schedule.csv` | 表計算ソフトで扱いやすい日程表 |
-| `places.md` | 観光地、飲食店、宿泊候補 |
-| `budget.csv` | 予算と実績 |
-| `checklist.md` | 予約、準備、持ち物 |
-| `decisions.md` | 決定事項と未決事項 |
+- `2026-07-31`: 仙台からフェリーで苫小牧へ
+- `2026-08-05`: 札幌から層雲峡へ
 
-## GitHubでの管理ルール
+## ディレクトリ構成
 
-- 大きな変更はPull Requestで確認する
-- 予約が必要な作業はIssueにする
-- 決定した内容は `decisions.md` に残す
-- 旅程変更の理由はコミットメッセージに短く書く
+```text
+README.md
+AGENTS.md
+requirements.txt
+itinerary/
+  days/
+images/
+maps/
+scripts/
+output/
+.github/workflows/
+```
 
-## Issue例
+## 画像の置き方
 
-- 航空券を予約する
-- 札幌のホテル候補を3つ比較する
-- レンタカーが必要な日を決める
-- 雨の日の代替案を作る
+写真は `images/` フォルダに置きます。
 
-## 現在の費用見積もり
+ビルド時は、日付や場所名から以下のようなファイルを探します。
 
-合計: 498,540円
+```text
+images/2026-07-31.jpg
+images/2026-07-31.png
+images/仙台港.jpg
+images/苫小牧港.png
+```
+
+画像が見つからない場合は、スライド上に場所名入りのプレースホルダーを表示します。
+
+## ローカルでの生成方法
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+python scripts/build_guide.py
+```
+
+生成後、以下を確認してください。
+
+```text
+output/hokkaido-family-travel-guide.pptx
+output/hokkaido-family-travel-guide.pdf
+```
+
+## PDF生成について
+
+ローカルの `scripts/build_guide.py` はPowerPointと同じ旅程データから確認用PDFを生成します。
+
+GitHub Actionsでは、LibreOfficeを使って次の形式でPowerPointからPDFを生成します。
+
+```bash
+libreoffice --headless --convert-to pdf --outdir output output/hokkaido-family-travel-guide.pptx
+```
+
+## 日程の編集方法
+
+日程は `itinerary/days/` 配下のMarkdownを編集します。
+
+- `## Summary`: その日の概要
+- `## Timeline`: 時刻ベースの予定
+- `## Restaurants`: レストラン候補
+- `## Notes`: 補足メモ
+
+レイアウトや色、フォントを変えたい場合は `scripts/build_guide.py` を編集します。
+
+## GitHub Actions
+
+`.github/workflows/build.yml` に自動ビルドを用意しています。
+
+pushまたはpull request時に以下を実行します。
+
+1. Python依存関係のインストール
+2. PowerPoint生成
+3. LibreOfficeでPowerPointからPDF生成
+4. `output/` をartifactとして保存
+
