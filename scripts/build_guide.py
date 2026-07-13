@@ -281,25 +281,30 @@ def style_background(slide, color=RGBColor(255, 255, 255)):
     fill.fore_color.rgb = color
 
 
-def add_timeline(slide, items: list[TimelineItem], start_y=Inches(1.55), max_items=8):
+def add_timeline(slide, items: list[TimelineItem], start_y=Inches(1.55), max_items=8, compact=False):
     y = start_y
+    card_h = Inches(0.49 if compact else 0.55)
+    step = Inches(0.54 if compact else 0.62)
+    time_size = 8.8 if compact else 9.5
+    place_size = 8.4 if compact else 9.0
+    detail_size = 7.6 if compact else 8.3
     for item in items[:max_items]:
-        card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.55), y, Inches(7.0), Inches(0.55))
+        card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, Inches(0.55), y, Inches(7.0), card_h)
         card.fill.solid()
         card.fill.fore_color.rgb = PALE
         card.line.color.rgb = RGBColor(222, 228, 234)
-        add_textbox(slide, Inches(0.68), y + Inches(0.08), Inches(0.9), Inches(0.28), item.time, 9.5, BLUE, True, PP_ALIGN.CENTER)
-        add_textbox(slide, Inches(1.55), y + Inches(0.08), Inches(0.75), Inches(0.28), item.type, 9.5, CORAL, True, PP_ALIGN.CENTER)
-        add_textbox(slide, Inches(2.28), y + Inches(0.07), Inches(1.35), Inches(0.30), item.place, 9.0, NAVY, True)
-        add_textbox(slide, Inches(3.55), y + Inches(0.06), Inches(3.35), Inches(0.34), item.detail, 8.3, INK)
-        add_textbox(slide, Inches(6.95), y + Inches(0.08), Inches(0.45), Inches(0.28), item.duration, 8.3, MUTED, False, PP_ALIGN.RIGHT)
-        y += Inches(0.62)
+        add_textbox(slide, Inches(0.68), y + Inches(0.07), Inches(0.9), Inches(0.25), item.time, time_size, BLUE, True, PP_ALIGN.CENTER)
+        add_textbox(slide, Inches(1.55), y + Inches(0.07), Inches(0.75), Inches(0.25), item.type, time_size, CORAL, True, PP_ALIGN.CENTER)
+        add_textbox(slide, Inches(2.28), y + Inches(0.06), Inches(1.35), Inches(0.28), item.place, place_size, NAVY, True)
+        add_textbox(slide, Inches(3.55), y + Inches(0.05), Inches(3.35), Inches(0.32), item.detail, detail_size, INK)
+        add_textbox(slide, Inches(6.95), y + Inches(0.07), Inches(0.45), Inches(0.25), item.duration, detail_size, MUTED, False, PP_ALIGN.RIGHT)
+        y += step
 
 
-def add_restaurants(slide, restaurants: list[Restaurant], x=Inches(7.82), y=Inches(4.65)):
+def add_restaurants(slide, restaurants: list[Restaurant], x=Inches(7.82), y=Inches(4.65), max_items=4):
     add_textbox(slide, x, y, Inches(4.75), Inches(0.32), "レストラン候補", 15, NAVY, True)
     y += Inches(0.42)
-    for r in restaurants[:4]:
+    for r in restaurants[:max_items]:
         card = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, Inches(4.75), Inches(0.48))
         card.fill.solid()
         card.fill.fore_color.rgb = RGBColor(255, 255, 255)
@@ -350,7 +355,8 @@ def build_pptx(days: list[DayPlan]):
         add_textbox(slide, Inches(0.58), Inches(1.35), Inches(6.55), Inches(0.42), day.area, 13, BLUE, True)
         add_textbox(slide, Inches(0.58), Inches(1.88), Inches(6.65), Inches(0.98), day.summary, 12.3, INK)
         add_textbox(slide, Inches(0.58), Inches(3.12), Inches(6.7), Inches(0.32), "この日の流れ", 15, NAVY, True)
-        add_timeline(slide, day.timeline, start_y=Inches(3.55), max_items=5)
+        intro_items = 6 if len(day.timeline) > 10 else 5
+        add_timeline(slide, day.timeline, start_y=Inches(3.55), max_items=intro_items)
         add_restaurants(slide, day.restaurants)
         if day.notes:
             add_textbox(slide, Inches(7.82), Inches(6.78), Inches(4.6), Inches(0.25), "MEMO  " + " / ".join(day.notes[:2]), 7.8, MUTED)
@@ -359,11 +365,12 @@ def build_pptx(days: list[DayPlan]):
         style_background(slide2, RGBColor(252, 252, 250))
         add_label(slide2, Inches(0.55), Inches(0.35), f"DAY {day.day}")
         add_textbox(slide2, Inches(0.55), Inches(0.78), Inches(6.8), Inches(0.42), "時刻ベース詳細スケジュール", 22, NAVY, True)
-        add_timeline(slide2, day.timeline, start_y=Inches(1.45), max_items=10)
+        detail_items = day.timeline[intro_items:] if len(day.timeline) > 10 else day.timeline
+        add_timeline(slide2, detail_items, start_y=Inches(1.45), max_items=10, compact=True)
         add_picture_cover(slide2, hero_image(day), Inches(8.05), Inches(0.55), Inches(4.55), Inches(2.55))
         if day.photos:
             add_photo_spots(slide2, day, x=Inches(8.05), y=Inches(3.35))
-            add_restaurants(slide2, day.restaurants, x=Inches(8.05), y=Inches(5.45))
+            add_restaurants(slide2, day.restaurants, x=Inches(8.05), y=Inches(5.45), max_items=3)
         else:
             add_restaurants(slide2, day.restaurants, x=Inches(8.05), y=Inches(3.35))
 
