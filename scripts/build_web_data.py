@@ -4,12 +4,23 @@ import json
 import re
 from pathlib import Path
 
-from guidebook_common import guide_spots, meal_recommendations, route_map_points, route_map_url, route_points, today_theme, todays_tips
+from guidebook_common import (
+    guide_spots,
+    meal_recommendations,
+    route_map_filename,
+    route_map_points,
+    route_map_url,
+    route_points,
+    today_theme,
+    todays_tips,
+)
+from route_map_renderer import render_route_map
 
 
 ROOT = Path(__file__).resolve().parents[1]
 ITINERARY_DIR = ROOT / "itinerary" / "days"
 OUT = ROOT / "web" / "app" / "itinerary-data.ts"
+RAW_MAP_BASE = "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/"
 
 
 def clean_cell(value: str) -> str:
@@ -104,6 +115,8 @@ def parse_day(path: Path) -> dict:
     day["route"] = route_points(day, max_points=8)
     day["routeMapPoints"] = route_map_points(day, max_points=8)
     day["routeMapUrl"] = route_map_url(day)
+    render_route_map(day, ROOT)
+    day["routeMapImage"] = RAW_MAP_BASE + route_map_filename(day)
     day["todayTheme"] = today_theme(day)
     day["mealRecommendations"] = meal_recommendations(day)
     day["todaysTips"] = todays_tips(day)

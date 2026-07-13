@@ -110,10 +110,10 @@ export const itinerary = {
           "credit": "Wikimedia Commons"
         },
         {
-          "place": "仙台港フェリーターミナル",
-          "image": "",
-          "caption": "北海道へ向かう船旅の入口。乗船前に家族写真を撮る候補",
-          "credit": "写真未設定"
+          "place": "太平洋フェリー",
+          "image": "太平洋フェリー.jpg",
+          "caption": "北海道へ向かう船旅のイメージ。乗船前から旅気分が上がる移動パート",
+          "credit": "Wikimedia Commons / CC BY-SA"
         }
       ],
       "restaurants": [
@@ -279,6 +279,7 @@ export const itinerary = {
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82&destination=%E4%BB%99%E5%8F%B0%E6%B8%AF%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB&travelmode=driving&waypoints=%E4%BB%99%E5%8F%B0|%E4%BB%99%E5%8F%B0%E5%B8%82%E5%86%85|%E4%BB%99%E5%8F%B0%E5%9F%8E%E8%B7%A1|%E7%91%9E%E9%B3%B3%E6%AE%BF|%E4%BB%99%E5%8F%B0%E6%B8%AF",
+      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-07-31.png",
       "todayTheme": "北海道家族旅行の出発日。千葉県印西市の自宅を7:00に出発し、昼ごろ仙台に到着して市内観光を楽しんでから仙台港へ向かいます。",
       "mealRecommendations": [
         {
@@ -398,7 +399,26 @@ export const itinerary = {
           "duration": "45分"
         }
       ],
-      "photos": [],
+      "photos": [
+        {
+          "place": "洞爺湖",
+          "image": "洞爺湖.jpg",
+          "caption": "北海道到着後の最初の拠点。湖と中島を望むゆったりした景色",
+          "credit": "Wikimedia Commons / CC BY"
+        },
+        {
+          "place": "サイロ展望台",
+          "image": "サイロ展望台.jpg",
+          "caption": "洞爺湖を高台から見下ろす、到着日の短時間休憩に使いやすい展望スポット",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        },
+        {
+          "place": "苫小牧港",
+          "image": "苫小牧港.jpg",
+          "caption": "フェリー下船後に北海道ドライブが始まる港",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        }
+      ],
       "restaurants": [
         {
           "meal": "昼食",
@@ -524,6 +544,7 @@ export const itinerary = {
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E8%8B%AB%E5%B0%8F%E7%89%A7%E5%B8%82%E5%86%85&destination=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B9%96%E7%95%94&travelmode=driving&waypoints=%E8%8B%AB%E5%B0%8F%E7%89%A7|%E6%B4%9E%E7%88%BA%E6%B9%96|Green+stay+Toya|%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%97%E5%A0%B4+%2F+%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B8%A9%E6%B3%89%E8%A1%97",
+      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-01.png",
       "todayTheme": "フェリーで苫小牧に到着し、北海道ドライブを開始。初日は無理に詰め込まず、昼食と休憩を挟みながら洞爺湖のキャンプ拠点へ入ります。夜は湖畔でゆっくり過ごします。",
       "mealRecommendations": [
         {
@@ -552,13 +573,22 @@ export const itinerary = {
       ],
       "guideSpots": [
         {
-          "place": "洞爺湖湖畔",
-          "image": "",
-          "caption": "余力があれば湖畔散歩、花火開催日は湖畔で鑑賞",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
-          "stay": "45分",
-          "map_url": "https://www.google.com/maps/search/?api=1&query=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B9%96%E7%95%94+%E8%8B%AB%E5%B0%8F%E7%89%A7+%2F+%E6%94%AF%E7%AC%8F%E6%B9%96+%2F+%E6%B4%9E%E7%88%BA%E6%B9%96"
+          "place": "洞爺湖",
+          "image": "洞爺湖.jpg",
+          "caption": "北海道到着後の最初の拠点。湖と中島を望むゆったりした景色",
+          "credit": "Wikimedia Commons / CC BY",
+          "parking": "周辺駐車場を現地確認",
+          "stay": "約2時間15分",
+          "map_url": "https://www.google.com/maps/search/?api=1&query=%E6%B4%9E%E7%88%BA%E6%B9%96+%E8%8B%AB%E5%B0%8F%E7%89%A7+%2F+%E6%94%AF%E7%AC%8F%E6%B9%96+%2F+%E6%B4%9E%E7%88%BA%E6%B9%96"
+        },
+        {
+          "place": "サイロ展望台",
+          "image": "サイロ展望台.jpg",
+          "caption": "洞爺湖を高台から見下ろす、到着日の短時間休憩に使いやすい展望スポット",
+          "credit": "Wikimedia Commons / CC BY-SA",
+          "parking": "周辺駐車場を現地確認",
+          "stay": "30分",
+          "map_url": "https://www.google.com/maps/search/?api=1&query=%E3%82%B5%E3%82%A4%E3%83%AD%E5%B1%95%E6%9C%9B%E5%8F%B0+%E8%8B%AB%E5%B0%8F%E7%89%A7+%2F+%E6%94%AF%E7%AC%8F%E6%B9%96+%2F+%E6%B4%9E%E7%88%BA%E6%B9%96"
         }
       ]
     },
@@ -627,7 +657,20 @@ export const itinerary = {
           "duration": "45分"
         }
       ],
-      "photos": [],
+      "photos": [
+        {
+          "place": "洞爺湖湖畔",
+          "image": "洞爺湖.jpg",
+          "caption": "湖畔散歩と遊覧船の日に使いたい、洞爺湖らしい水辺の風景",
+          "credit": "Wikimedia Commons / CC BY"
+        },
+        {
+          "place": "洞爺湖温泉街",
+          "image": "サイロ展望台.jpg",
+          "caption": "湖を眺める休憩候補。天気が良ければ写真時間を多めに取りたい",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        }
+      ],
       "restaurants": [
         {
           "meal": "昼食",
@@ -738,6 +781,7 @@ export const itinerary = {
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B9%96%E7%95%94&destination=%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%97%E5%A0%B4&travelmode=driving&waypoints=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B8%A9%E6%B3%89%E8%A1%97|%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B1%BD%E8%88%B9",
+      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-02.png",
       "todayTheme": "洞爺湖滞在中の「湖から出ない日」。移動を最小限にして、湖畔散歩、遊覧船、温泉街、キャンプ場での休憩を中心にゆっくり過ごします。 洞爺湖から出ない湖畔の日をテーマに、洞爺湖の見どころを無理なく巡ります。",
       "mealRecommendations": [
         {
@@ -767,21 +811,21 @@ export const itinerary = {
       "guideSpots": [
         {
           "place": "洞爺湖湖畔",
-          "image": "",
-          "caption": "湖畔散歩。水辺、彫刻公園、写真撮影",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
+          "image": "洞爺湖.jpg",
+          "caption": "湖畔散歩と遊覧船の日に使いたい、洞爺湖らしい水辺の風景",
+          "credit": "Wikimedia Commons / CC BY",
+          "parking": "周辺駐車場を現地確認",
           "stay": "90分",
           "map_url": "https://www.google.com/maps/search/?api=1&query=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B9%96%E7%95%94+%E6%B4%9E%E7%88%BA%E6%B9%96"
         },
         {
-          "place": "洞爺湖汽船",
-          "image": "",
-          "caption": "遊覧船で湖上から中島方面を眺める",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
-          "stay": "60分",
-          "map_url": "https://www.google.com/maps/search/?api=1&query=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B1%BD%E8%88%B9+%E6%B4%9E%E7%88%BA%E6%B9%96"
+          "place": "洞爺湖温泉街",
+          "image": "サイロ展望台.jpg",
+          "caption": "湖を眺める休憩候補。天気が良ければ写真時間を多めに取りたい",
+          "credit": "Wikimedia Commons / CC BY-SA",
+          "parking": "周辺駐車場を現地確認",
+          "stay": "45分",
+          "map_url": "https://www.google.com/maps/search/?api=1&query=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B8%A9%E6%B3%89%E8%A1%97+%E6%B4%9E%E7%88%BA%E6%B9%96"
         }
       ]
     },
@@ -857,7 +901,26 @@ export const itinerary = {
           "duration": "90分"
         }
       ],
-      "photos": [],
+      "photos": [
+        {
+          "place": "有珠山ロープウェイ",
+          "image": "有珠山ロープウェイ.jpg",
+          "caption": "有珠山・昭和新山・洞爺湖をまとめて楽しめるジオパークらしい展望",
+          "credit": "Wikimedia Commons / CC BY"
+        },
+        {
+          "place": "昭和新山",
+          "image": "昭和新山.jpg",
+          "caption": "火山活動の迫力を近くで感じる、洞爺湖周辺観光の定番スポット",
+          "credit": "Wikimedia Commons / CC BY"
+        },
+        {
+          "place": "サイロ展望台",
+          "image": "サイロ展望台.jpg",
+          "caption": "洞爺湖を一望する写真スポット。短時間でも立ち寄りやすい",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        }
+      ],
       "restaurants": [
         {
           "meal": "昼食",
@@ -1013,6 +1076,7 @@ export const itinerary = {
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E6%B4%9E%E7%88%BA%E6%B9%96&destination=%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%97%E5%A0%B4&travelmode=driving&waypoints=%E6%9C%89%E7%8F%A0%E5%B1%B1|%E6%9C%89%E7%8F%A0%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4|%E6%98%AD%E5%92%8C%E6%96%B0%E5%B1%B1|%E3%82%B5%E3%82%A4%E3%83%AD%E5%B1%95%E6%9C%9B%E5%8F%B0|%E5%A3%AE%E7%9E%A5|%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B8%A9%E6%B3%89%E8%A1%97",
+      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-03.png",
       "todayTheme": "洞爺湖周辺観光の日。有珠山ロープウェイ、サイロ展望台、壮瞥方面を無理なく回り、火山と湖の景色を楽しみます。夕方はキャンプ場へ戻って休みます。",
       "mealRecommendations": [
         {
@@ -1042,21 +1106,21 @@ export const itinerary = {
       "guideSpots": [
         {
           "place": "有珠山ロープウェイ",
-          "image": "",
-          "caption": "ロープウェイと展望台。天候が悪ければ短縮",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
+          "image": "有珠山ロープウェイ.jpg",
+          "caption": "有珠山・昭和新山・洞爺湖をまとめて楽しめるジオパークらしい展望",
+          "credit": "Wikimedia Commons / CC BY",
+          "parking": "周辺駐車場を現地確認",
           "stay": "90分",
           "map_url": "https://www.google.com/maps/search/?api=1&query=%E6%9C%89%E7%8F%A0%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%89%E7%8F%A0%E5%B1%B1+%2F+%E5%A3%AE%E7%9E%A5"
         },
         {
-          "place": "サイロ展望台",
-          "image": "",
-          "caption": "洞爺湖を見下ろす定番写真スポット",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
-          "stay": "45分",
-          "map_url": "https://www.google.com/maps/search/?api=1&query=%E3%82%B5%E3%82%A4%E3%83%AD%E5%B1%95%E6%9C%9B%E5%8F%B0+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%89%E7%8F%A0%E5%B1%B1+%2F+%E5%A3%AE%E7%9E%A5"
+          "place": "昭和新山",
+          "image": "昭和新山.jpg",
+          "caption": "火山活動の迫力を近くで感じる、洞爺湖周辺観光の定番スポット",
+          "credit": "Wikimedia Commons / CC BY",
+          "parking": "周辺駐車場を現地確認",
+          "stay": "60分",
+          "map_url": "https://www.google.com/maps/search/?api=1&query=%E6%98%AD%E5%92%8C%E6%96%B0%E5%B1%B1+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%89%E7%8F%A0%E5%B1%B1+%2F+%E5%A3%AE%E7%9E%A5"
         }
       ]
     },
@@ -1132,7 +1196,14 @@ export const itinerary = {
           "duration": "-"
         }
       ],
-      "photos": [],
+      "photos": [
+        {
+          "place": "北海道大学",
+          "image": "北海道大学.jpg",
+          "caption": "札幌駅近くで緑を感じられるキャンパス散策。ポプラ並木周辺が写真候補",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        }
+      ],
       "restaurants": [
         {
           "meal": "昼食",
@@ -1243,6 +1314,7 @@ export const itinerary = {
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E6%B4%9E%E7%88%BA%E6%B9%96&destination=%E5%8C%97%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%A6&travelmode=driving&waypoints=%E4%B8%AD%E5%B1%B1%E5%B3%A0|%E6%9C%AD%E5%B9%8C%E5%B8%82%E5%86%85|HOTEL+MYSTAYS+Sapporo+Aspen",
+      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-04.png",
       "todayTheme": "洞爺湖のキャンプ滞在を終えて札幌へ。ホテルに入り、北海道大学の緑の多いキャンパスを散策します。夜は札幌駅前の串鳥で夕食予定です。",
       "mealRecommendations": [
         {
@@ -1272,10 +1344,10 @@ export const itinerary = {
       "guideSpots": [
         {
           "place": "北海道大学",
-          "image": "",
-          "caption": "ポプラ並木、総合博物館周辺、キャンパス散策",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
+          "image": "北海道大学.jpg",
+          "caption": "札幌駅近くで緑を感じられるキャンパス散策。ポプラ並木周辺が写真候補",
+          "credit": "Wikimedia Commons / CC BY-SA",
+          "parking": "周辺駐車場を現地確認",
           "stay": "120分",
           "map_url": "https://www.google.com/maps/search/?api=1&query=%E5%8C%97%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%A6+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%AD%E5%B9%8C%E9%A7%85%E5%89%8D+%2F+%E5%8C%97%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%A6"
         }
@@ -1360,7 +1432,20 @@ export const itinerary = {
           "duration": "-"
         }
       ],
-      "photos": [],
+      "photos": [
+        {
+          "place": "ファーム富田",
+          "image": "ファーム富田.jpg",
+          "caption": "富良野らしい花畑を楽しむ、移動日の華やかな寄り道",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        },
+        {
+          "place": "美瑛",
+          "image": "美瑛.jpg",
+          "caption": "丘と畑の景色が広がる、美瑛方面の短時間観光イメージ",
+          "credit": "Wikimedia Commons / CC BY"
+        }
+      ],
       "restaurants": [
         {
           "meal": "昼食",
@@ -1508,6 +1593,7 @@ export const itinerary = {
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E6%9C%AD%E5%B9%8C&destination=Sounkyo+Auto+Camp&travelmode=driving&waypoints=%E5%AF%8C%E8%89%AF%E9%87%8E|%E5%AF%8C%E8%89%AF%E9%87%8E%E5%B8%82%E5%86%85|%E3%83%95%E3%82%A1%E3%83%BC%E3%83%A0%E5%AF%8C%E7%94%B0|%E7%BE%8E%E7%91%9B|%E5%B1%A4%E9%9B%B2%E5%B3%A1",
+      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-05.png",
       "todayTheme": "札幌を11時ごろ出発し、富良野周辺の花畑や美瑛の景色を楽しみながら層雲峡へ向かいます。観光を入れつつも移動日なので、夕方のチェックインを優先します。",
       "mealRecommendations": [
         {
@@ -1536,20 +1622,20 @@ export const itinerary = {
       ],
       "guideSpots": [
         {
-          "place": "ファーム富田周辺",
-          "image": "",
-          "caption": "花畑、カフェ、写真撮影。混雑時は短縮",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
+          "place": "ファーム富田",
+          "image": "ファーム富田.jpg",
+          "caption": "富良野らしい花畑を楽しむ、移動日の華やかな寄り道",
+          "credit": "Wikimedia Commons / CC BY-SA",
+          "parking": "周辺駐車場を現地確認",
           "stay": "75分",
           "map_url": "https://www.google.com/maps/search/?api=1&query=%E3%83%95%E3%82%A1%E3%83%BC%E3%83%A0%E5%AF%8C%E7%94%B0+%E6%9C%AD%E5%B9%8C+%2F+%E5%AF%8C%E8%89%AF%E9%87%8E+%2F+%E7%BE%8E%E7%91%9B+%2F+%E5%B1%A4%E9%9B%B2%E5%B3%A1"
         },
         {
-          "place": "美瑛方面",
-          "image": "",
-          "caption": "青い池または丘の景色を1か所だけ選ぶ",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
+          "place": "美瑛",
+          "image": "美瑛.jpg",
+          "caption": "丘と畑の景色が広がる、美瑛方面の短時間観光イメージ",
+          "credit": "Wikimedia Commons / CC BY",
+          "parking": "周辺駐車場を現地確認",
           "stay": "60分",
           "map_url": "https://www.google.com/maps/search/?api=1&query=%E7%BE%8E%E7%91%9B+%E6%9C%AD%E5%B9%8C+%2F+%E5%AF%8C%E8%89%AF%E9%87%8E+%2F+%E7%BE%8E%E7%91%9B+%2F+%E5%B1%A4%E9%9B%B2%E5%B3%A1"
         }
@@ -1627,7 +1713,20 @@ export const itinerary = {
           "duration": "90分"
         }
       ],
-      "photos": [],
+      "photos": [
+        {
+          "place": "黒岳ロープウェイ",
+          "image": "黒岳ロープウェイ.jpg",
+          "caption": "層雲峡から大雪山の展望へ上がる、この日のメイン観光",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        },
+        {
+          "place": "銀河・流星の滝",
+          "image": "銀河・流星の滝.jpg",
+          "caption": "層雲峡らしい柱状節理と滝を短時間で楽しめる名所",
+          "credit": "Wikimedia Commons / Public domain"
+        }
+      ],
       "restaurants": [
         {
           "meal": "昼食",
@@ -1738,6 +1837,7 @@ export const itinerary = {
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E3%82%B3%E3%83%86%E3%83%BC%E3%82%B8&destination=%E5%A4%A7%E5%87%BD+%2F+%E5%B1%A4%E9%9B%B2%E5%B3%A1%E6%95%A3%E7%AD%96&travelmode=driving&waypoints=%E9%BB%92%E5%B2%B3%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4|%E5%B1%A4%E9%9B%B2%E5%B3%A1%E6%B8%A9%E6%B3%89%E8%A1%97|%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D",
+      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-06.png",
       "todayTheme": "層雲峡滞在日。黒岳ロープウェイ、銀河・流星の滝、温泉街散策を組み合わせ、大雪山の自然を無理なく楽しみます。天候が悪い場合は温泉と短時間散策に切り替えます。",
       "mealRecommendations": [
         {
@@ -1767,19 +1867,19 @@ export const itinerary = {
       "guideSpots": [
         {
           "place": "黒岳ロープウェイ",
-          "image": "",
-          "caption": "ロープウェイで展望。余力があれば散策路へ",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
-          "stay": "120分",
+          "image": "黒岳ロープウェイ.jpg",
+          "caption": "層雲峡から大雪山の展望へ上がる、この日のメイン観光",
+          "credit": "Wikimedia Commons / CC BY-SA",
+          "parking": "周辺駐車場を現地確認",
+          "stay": "15分",
           "map_url": "https://www.google.com/maps/search/?api=1&query=%E9%BB%92%E5%B2%B3%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%BB%92%E5%B2%B3+%2F+%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D"
         },
         {
           "place": "銀河・流星の滝",
-          "image": "",
-          "caption": "滝見学と写真撮影。歩く距離は短め",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
+          "image": "銀河・流星の滝.jpg",
+          "caption": "層雲峡らしい柱状節理と滝を短時間で楽しめる名所",
+          "credit": "Wikimedia Commons / Public domain",
+          "parking": "周辺駐車場を現地確認",
           "stay": "75分",
           "map_url": "https://www.google.com/maps/search/?api=1&query=%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%BB%92%E5%B2%B3+%2F+%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D"
         }
@@ -1857,7 +1957,20 @@ export const itinerary = {
           "duration": "90分"
         }
       ],
-      "photos": [],
+      "photos": [
+        {
+          "place": "阿寒湖",
+          "image": "阿寒湖.jpg",
+          "caption": "道東移動中に湖畔で休憩を入れる場合の自然スポット",
+          "credit": "Wikimedia Commons / CC BY"
+        },
+        {
+          "place": "摩周湖",
+          "image": "摩周湖.jpg",
+          "caption": "天候が良ければ展望台から見たい、道東らしい深い青の湖",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        }
+      ],
       "restaurants": [
         {
           "meal": "昼食",
@@ -1998,6 +2111,7 @@ export const itinerary = {
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E5%B1%A4%E9%9B%B2%E5%B3%A1&destination=Shinrin+Koen+Camp&travelmode=driving&waypoints=%E5%8C%97%E8%A6%8B|%E9%98%BF%E5%AF%92%E6%B9%96|%E9%98%BF%E5%AF%92%E6%B9%96+%2F+%E6%91%A9%E5%91%A8%E6%B9%96%E5%80%99%E8%A3%9C|%E9%98%BF%E5%AF%92%E3%83%BB%E6%91%A9%E5%91%A8|%E4%B8%AD%E6%A8%99%E6%B4%A5",
+      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-07.png",
       "todayTheme": "層雲峡から道東へ大きく移動する日。阿寒湖または摩周湖周辺で休憩と観光を挟み、中標津の拠点へ入ります。移動負荷が高いので、観光は1〜2か所に絞ります。",
       "mealRecommendations": [
         {
@@ -2026,13 +2140,22 @@ export const itinerary = {
       ],
       "guideSpots": [
         {
-          "place": "阿寒湖 / 摩周湖候補",
-          "image": "",
-          "caption": "天候に合わせて湖畔散策または展望台",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
+          "place": "阿寒湖",
+          "image": "阿寒湖.jpg",
+          "caption": "道東移動中に湖畔で休憩を入れる場合の自然スポット",
+          "credit": "Wikimedia Commons / CC BY",
+          "parking": "周辺駐車場を現地確認",
+          "stay": "約2時間",
+          "map_url": "https://www.google.com/maps/search/?api=1&query=%E9%98%BF%E5%AF%92%E6%B9%96+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%98%BF%E5%AF%92+%2F+%E6%91%A9%E5%91%A8+%2F+%E4%B8%AD%E6%A8%99%E6%B4%A5"
+        },
+        {
+          "place": "摩周湖",
+          "image": "摩周湖.jpg",
+          "caption": "天候が良ければ展望台から見たい、道東らしい深い青の湖",
+          "credit": "Wikimedia Commons / CC BY-SA",
+          "parking": "周辺駐車場を現地確認",
           "stay": "75分",
-          "map_url": "https://www.google.com/maps/search/?api=1&query=%E9%98%BF%E5%AF%92%E6%B9%96+%2F+%E6%91%A9%E5%91%A8%E6%B9%96%E5%80%99%E8%A3%9C+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%98%BF%E5%AF%92+%2F+%E6%91%A9%E5%91%A8+%2F+%E4%B8%AD%E6%A8%99%E6%B4%A5"
+          "map_url": "https://www.google.com/maps/search/?api=1&query=%E6%91%A9%E5%91%A8%E6%B9%96+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%98%BF%E5%AF%92+%2F+%E6%91%A9%E5%91%A8+%2F+%E4%B8%AD%E6%A8%99%E6%B4%A5"
         }
       ]
     },
@@ -2157,7 +2280,26 @@ export const itinerary = {
           "duration": "90分"
         }
       ],
-      "photos": [],
+      "photos": [
+        {
+          "place": "知床峠",
+          "image": "知床峠.jpg",
+          "caption": "羅臼岳や国後島方面を望む、知床横断道路の展望地点",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        },
+        {
+          "place": "知床五湖",
+          "image": "知床五湖.jpg",
+          "caption": "知床連山と原生林を陸路で味わう、世界自然遺産デーの主役",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        },
+        {
+          "place": "オシンコシンの滝",
+          "image": "オシンコシンの滝.jpg",
+          "caption": "駐車場から短時間で見られる、知床帰路の滝スポット",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        }
+      ],
       "restaurants": [
         {
           "meal": "昼食",
@@ -2322,6 +2464,7 @@ export const itinerary = {
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&destination=%E4%B8%AD%E6%A8%99%E6%B4%A5%E3%81%B8%E5%B8%B0%E7%9D%80&travelmode=driving&waypoints=%E7%BE%85%E8%87%BC|%E7%9F%A5%E5%BA%8A%E5%B3%A0|%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96|%E3%82%A6%E3%83%88%E3%83%AD|%E3%83%95%E3%83%AC%E3%83%9A%E3%81%AE%E6%BB%9D%E9%81%8A%E6%AD%A9%E9%81%93|%E3%82%AA%E3%82%B7%E3%83%B3%E3%82%B3%E3%82%B7%E3%83%B3%E3%81%AE%E6%BB%9D",
+      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-08.png",
       "todayTheme": "中標津から羅臼側へ入り、知床峠を越えて知床五湖、フレペの滝、オシンコシンの滝を巡る一日。観光船には乗らず、世界自然遺産・知床の森、山、滝を陸上から満喫します。早朝出発ですが、夕食は中標津に戻ってゆっくり取れる計画です。",
       "mealRecommendations": [
         {
@@ -2351,20 +2494,20 @@ export const itinerary = {
       "guideSpots": [
         {
           "place": "知床峠",
-          "image": "",
-          "caption": "羅臼岳と国後島方面の展望。強風・霧の場合は短時間",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
-          "stay": "25分",
+          "image": "知床峠.jpg",
+          "caption": "羅臼岳や国後島方面を望む、知床横断道路の展望地点",
+          "credit": "Wikimedia Commons / CC BY-SA",
+          "parking": "周辺駐車場を現地確認",
+          "stay": "約30分",
           "map_url": "https://www.google.com/maps/search/?api=1&query=%E7%9F%A5%E5%BA%8A%E5%B3%A0+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E7%BE%85%E8%87%BC+%2F+%E7%9F%A5%E5%BA%8A%E5%B3%A0+%2F+%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%2F+%E3%82%A6%E3%83%88%E3%83%AD"
         },
         {
           "place": "知床五湖",
-          "image": "",
-          "caption": "高架木道を基本に散策。地上遊歩道は当日の開放状況・受付条件・ヒグマ情報を確認",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
-          "stay": "105分",
+          "image": "知床五湖.jpg",
+          "caption": "知床連山と原生林を陸路で味わう、世界自然遺産デーの主役",
+          "credit": "Wikimedia Commons / CC BY-SA",
+          "parking": "周辺駐車場を現地確認",
+          "stay": "約45分",
           "map_url": "https://www.google.com/maps/search/?api=1&query=%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E7%BE%85%E8%87%BC+%2F+%E7%9F%A5%E5%BA%8A%E5%B3%A0+%2F+%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%2F+%E3%82%A6%E3%83%88%E3%83%AD"
         }
       ]
@@ -2441,7 +2584,20 @@ export const itinerary = {
           "duration": "90分"
         }
       ],
-      "photos": [],
+      "photos": [
+        {
+          "place": "野付半島",
+          "image": "野付半島.jpg",
+          "caption": "海と湿原、トドワラの風景が広がる道東らしい自然ドライブ",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        },
+        {
+          "place": "野付半島ネイチャーセンター周辺",
+          "image": "野付半島.jpg",
+          "caption": "風が強い日もあるので、短時間散策を中心に景色を楽しむ",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        }
+      ],
       "restaurants": [
         {
           "meal": "昼食",
@@ -2582,6 +2738,7 @@ export const itinerary = {
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&destination=%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6%E3%83%8D%E3%82%A4%E3%83%81%E3%83%A3%E3%83%BC%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC&travelmode=driving&waypoints=%E6%A8%99%E6%B4%A5|%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6|%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6+%2F+%E5%B0%BE%E5%B2%B1%E6%B2%BC",
+      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-09.png",
       "todayTheme": "中標津から標津・野付半島方面へ。海、湿原、野鳥、立ち枯れたトドワラの風景など、道東らしい自然を味わいます。移動はあるものの、日帰りで戻れる範囲にします。",
       "mealRecommendations": [
         {
@@ -2610,20 +2767,20 @@ export const itinerary = {
       ],
       "guideSpots": [
         {
-          "place": "標津周辺",
-          "image": "",
-          "caption": "海辺散策、資料館や道の駅候補",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
-          "stay": "60分",
-          "map_url": "https://www.google.com/maps/search/?api=1&query=%E6%A8%99%E6%B4%A5+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E6%A8%99%E6%B4%A5+%2F+%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6"
+          "place": "野付半島",
+          "image": "野付半島.jpg",
+          "caption": "海と湿原、トドワラの風景が広がる道東らしい自然ドライブ",
+          "credit": "Wikimedia Commons / CC BY-SA",
+          "parking": "周辺駐車場を現地確認",
+          "stay": "約45分",
+          "map_url": "https://www.google.com/maps/search/?api=1&query=%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E6%A8%99%E6%B4%A5+%2F+%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6"
         },
         {
           "place": "野付半島ネイチャーセンター周辺",
-          "image": "",
-          "caption": "トドワラ、野鳥、湿原風景を短時間散策",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
+          "image": "野付半島.jpg",
+          "caption": "風が強い日もあるので、短時間散策を中心に景色を楽しむ",
+          "credit": "Wikimedia Commons / CC BY-SA",
+          "parking": "周辺駐車場を現地確認",
           "stay": "120分",
           "map_url": "https://www.google.com/maps/search/?api=1&query=%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6%E3%83%8D%E3%82%A4%E3%83%81%E3%83%A3%E3%83%BC%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E6%A8%99%E6%B4%A5+%2F+%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6"
         }
@@ -2694,7 +2851,20 @@ export const itinerary = {
           "duration": "90分"
         }
       ],
-      "photos": [],
+      "photos": [
+        {
+          "place": "釧路湿原",
+          "image": "釧路湿原.jpg",
+          "caption": "広い湿原を展望台から眺める、自然予備日のメイン候補",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        },
+        {
+          "place": "達古武湖",
+          "image": "達古武湖.jpg",
+          "caption": "釧路湿原の水辺を近くに感じられる、静かな湖畔スポット",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        }
+      ],
       "restaurants": [
         {
           "meal": "昼食",
@@ -2835,6 +3005,7 @@ export const itinerary = {
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&destination=%E7%B4%B0%E5%B2%A1%E5%B1%95%E6%9C%9B%E5%8F%B0%E5%80%99%E8%A3%9C&travelmode=driving&waypoints=%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F|%E9%81%94%E5%8F%A4%E6%AD%A6%E6%B9%96+%2F+%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F|%E9%87%A7%E8%B7%AF%E7%94%BA+%2F+%E9%87%A7%E8%B7%AF%E5%B8%82%E5%86%85",
+      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-10.png",
       "todayTheme": "中標津滞在の最終日。天候と体力が合えば、釧路湿原・達古武湖方面へ足を伸ばします。無理に遠出しない場合は、中標津周辺で休養と自然観光に切り替えます。",
       "mealRecommendations": [
         {
@@ -2863,22 +3034,22 @@ export const itinerary = {
       ],
       "guideSpots": [
         {
-          "place": "達古武湖 / 釧路湿原",
-          "image": "",
-          "caption": "湖畔、展望、短時間散策。水辺と湿原の景色を楽しむ",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
-          "stay": "90分",
-          "map_url": "https://www.google.com/maps/search/?api=1&query=%E9%81%94%E5%8F%A4%E6%AD%A6%E6%B9%96+%2F+%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F+%2F+%E9%81%94%E5%8F%A4%E6%AD%A6"
+          "place": "釧路湿原",
+          "image": "釧路湿原.jpg",
+          "caption": "広い湿原を展望台から眺める、自然予備日のメイン候補",
+          "credit": "Wikimedia Commons / CC BY-SA",
+          "parking": "周辺駐車場を現地確認",
+          "stay": "約2時間",
+          "map_url": "https://www.google.com/maps/search/?api=1&query=%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F+%2F+%E9%81%94%E5%8F%A4%E6%AD%A6"
         },
         {
-          "place": "細岡展望台候補",
-          "image": "",
-          "caption": "湿原を見渡す展望スポット。天気優先",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
-          "stay": "75分",
-          "map_url": "https://www.google.com/maps/search/?api=1&query=%E7%B4%B0%E5%B2%A1%E5%B1%95%E6%9C%9B%E5%8F%B0%E5%80%99%E8%A3%9C+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F+%2F+%E9%81%94%E5%8F%A4%E6%AD%A6"
+          "place": "達古武湖",
+          "image": "達古武湖.jpg",
+          "caption": "釧路湿原の水辺を近くに感じられる、静かな湖畔スポット",
+          "credit": "Wikimedia Commons / CC BY-SA",
+          "parking": "周辺駐車場を現地確認",
+          "stay": "90分",
+          "map_url": "https://www.google.com/maps/search/?api=1&query=%E9%81%94%E5%8F%A4%E6%AD%A6%E6%B9%96+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F+%2F+%E9%81%94%E5%8F%A4%E6%AD%A6"
         }
       ]
     },
@@ -2961,7 +3132,20 @@ export const itinerary = {
           "duration": "-"
         }
       ],
-      "photos": [],
+      "photos": [
+        {
+          "place": "十勝平野",
+          "image": "十勝平野.jpg",
+          "caption": "道東から十勝へ抜ける移動日に感じたい、広い空と山並み",
+          "credit": "Wikimedia Commons / Public domain"
+        },
+        {
+          "place": "帯広",
+          "image": "帯広.jpg",
+          "caption": "休憩と十勝グルメを入れる、移動負荷を下げる宿泊地",
+          "credit": "Wikimedia Commons / CC BY"
+        }
+      ],
       "restaurants": [
         {
           "meal": "昼食",
@@ -3102,6 +3286,7 @@ export const itinerary = {
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&destination=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85&travelmode=driving&waypoints=%E5%BC%9F%E5%AD%90%E5%B1%88|%E8%B6%B3%E5%AF%84|%E8%B6%B3%E5%AF%84+%2F+%E9%81%93%E3%81%AE%E9%A7%85|%E5%B8%AF%E5%BA%83",
+      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-11.png",
       "todayTheme": "当初の苫小牧直行ではなく、移動負荷を考慮して帯広に滞在する日。道東から十勝へ移動し、途中は休憩を多めに取ります。夜は帯広で豚丼など十勝グルメを楽しみます。",
       "mealRecommendations": [
         {
@@ -3130,13 +3315,22 @@ export const itinerary = {
       ],
       "guideSpots": [
         {
-          "place": "帯広市内",
-          "image": "",
-          "caption": "六花亭、ばんえい競馬周辺、真鍋庭園など体力で選択",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
-          "stay": "90分",
-          "map_url": "https://www.google.com/maps/search/?api=1&query=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E5%BC%9F%E5%AD%90%E5%B1%88+%2F+%E8%B6%B3%E5%AF%84+%2F+%E5%B8%AF%E5%BA%83"
+          "place": "十勝平野",
+          "image": "十勝平野.jpg",
+          "caption": "道東から十勝へ抜ける移動日に感じたい、広い空と山並み",
+          "credit": "Wikimedia Commons / Public domain",
+          "parking": "周辺駐車場を現地確認",
+          "stay": "30〜60分",
+          "map_url": "https://www.google.com/maps/search/?api=1&query=%E5%8D%81%E5%8B%9D%E5%B9%B3%E9%87%8E+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E5%BC%9F%E5%AD%90%E5%B1%88+%2F+%E8%B6%B3%E5%AF%84+%2F+%E5%B8%AF%E5%BA%83"
+        },
+        {
+          "place": "帯広",
+          "image": "帯広.jpg",
+          "caption": "休憩と十勝グルメを入れる、移動負荷を下げる宿泊地",
+          "credit": "Wikimedia Commons / CC BY",
+          "parking": "周辺駐車場を現地確認",
+          "stay": "約90分",
+          "map_url": "https://www.google.com/maps/search/?api=1&query=%E5%B8%AF%E5%BA%83+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E5%BC%9F%E5%AD%90%E5%B1%88+%2F+%E8%B6%B3%E5%AF%84+%2F+%E5%B8%AF%E5%BA%83"
         }
       ]
     },
@@ -3212,7 +3406,20 @@ export const itinerary = {
           "duration": "-"
         }
       ],
-      "photos": [],
+      "photos": [
+        {
+          "place": "苫小牧港",
+          "image": "苫小牧港.jpg",
+          "caption": "北海道から仙台へ戻るフェリー出港地。乗船手続きは余裕を持って",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        },
+        {
+          "place": "太平洋フェリー",
+          "image": "太平洋フェリー.jpg",
+          "caption": "仙台へ向かう船旅のイメージ。船内用バッグを分けて乗船する",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        }
+      ],
       "restaurants": [
         {
           "meal": "昼食",
@@ -3323,6 +3530,7 @@ export const itinerary = {
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85&destination=%E8%8B%AB%E5%B0%8F%E7%89%A7%E6%B8%AF+%2F+%E8%88%B9%E5%86%85&travelmode=driving&waypoints=%E5%B8%AF%E5%BA%83|%E8%8B%AB%E5%B0%8F%E7%89%A7|%E8%8B%AB%E5%B0%8F%E7%89%A7%E6%B8%AF",
+      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-12.png",
       "todayTheme": "帯広で朝を迎え、十勝で軽く観光・買い物をしてから苫小牧へ移動します。夕方に苫小牧港へ入り、夜のフェリーで仙台へ向かいます。仙台到着は翌朝想定です。",
       "mealRecommendations": [
         {
@@ -3351,13 +3559,22 @@ export const itinerary = {
       ],
       "guideSpots": [
         {
-          "place": "帯広市内",
-          "image": "",
-          "caption": "六花亭、真鍋庭園、十勝牧場方面のどれかを短時間",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
-          "stay": "90分",
-          "map_url": "https://www.google.com/maps/search/?api=1&query=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85+%E5%B8%AF%E5%BA%83+%2F+%E5%8D%81%E5%8B%9D+%2F+%E8%8B%AB%E5%B0%8F%E7%89%A7+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC"
+          "place": "苫小牧港",
+          "image": "苫小牧港.jpg",
+          "caption": "北海道から仙台へ戻るフェリー出港地。乗船手続きは余裕を持って",
+          "credit": "Wikimedia Commons / CC BY-SA",
+          "parking": "周辺駐車場を現地確認",
+          "stay": "75分",
+          "map_url": "https://www.google.com/maps/search/?api=1&query=%E8%8B%AB%E5%B0%8F%E7%89%A7%E6%B8%AF+%E5%B8%AF%E5%BA%83+%2F+%E5%8D%81%E5%8B%9D+%2F+%E8%8B%AB%E5%B0%8F%E7%89%A7+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC"
+        },
+        {
+          "place": "太平洋フェリー",
+          "image": "太平洋フェリー.jpg",
+          "caption": "仙台へ向かう船旅のイメージ。船内用バッグを分けて乗船する",
+          "credit": "Wikimedia Commons / CC BY-SA",
+          "parking": "周辺駐車場を現地確認",
+          "stay": "一晩",
+          "map_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC+%E5%B8%AF%E5%BA%83+%2F+%E5%8D%81%E5%8B%9D+%2F+%E8%8B%AB%E5%B0%8F%E7%89%A7+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC"
         }
       ]
     }

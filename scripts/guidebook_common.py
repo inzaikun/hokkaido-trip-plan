@@ -207,6 +207,48 @@ def coordinate_for(place: str, day=None) -> tuple[float, float] | None:
     return None
 
 
+def route_map_filename(day) -> str:
+    date = value(day, "date", "route")
+    safe = re.sub(r"[^0-9A-Za-z_-]+", "-", str(date)).strip("-") or "route"
+    return f"route-{safe}.png"
+
+
+def route_geo_points(day, max_points: int = 7) -> list[dict[str, str | float | bool]]:
+    points = route_points(day, max_points=max_points)
+    if not points:
+        return []
+
+    coords: list[tuple[float, float] | None] = [coordinate_for(point["place"], day) for point in points]
+    known_flags = [coord is not None for coord in coords]
+    known = [coord for coord in coords if coord is not None]
+    if not known:
+        return []
+
+    for index, coord in enumerate(coords):
+        if coord is not None:
+            continue
+        previous = next((coords[i] for i in range(index - 1, -1, -1) if coords[i] is not None), None)
+        following = next((coords[i] for i in range(index + 1, len(coords)) if coords[i] is not None), None)
+        if previous and following:
+            coords[index] = ((previous[0] + following[0]) / 2, (previous[1] + following[1]) / 2)
+        else:
+            coords[index] = previous or following or known[0]
+
+    result: list[dict[str, str | float | bool]] = []
+    for point, coord, is_known in zip(points, coords, known_flags):
+        if coord is None:
+            continue
+        result.append(
+            {
+                **point,
+                "lat": round(coord[0], 6),
+                "lon": round(coord[1], 6),
+                "known": is_known,
+            }
+        )
+    return result
+
+
 def route_map_points(day, max_points: int = 7) -> list[dict[str, str | float]]:
     points = route_points(day, max_points=max_points)
     if not points:

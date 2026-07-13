@@ -33,6 +33,7 @@ from guidebook_common import (
     today_theme,
     todays_tips,
 )
+from route_map_renderer import render_route_map
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -350,42 +351,18 @@ def add_route_map(slide, day: DayPlan, x, y, w, h):
 
     map_x = x + Inches(0.18)
     map_y = y + Inches(0.52)
-    map_w = int(w * 0.47)
+    map_w = int(w * 0.58)
     map_h = h - Inches(0.72)
     sketch = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, map_x, map_y, map_w, map_h)
     sketch.fill.solid()
     sketch.fill.fore_color.rgb = SKY
     sketch.line.color.rgb = RGBColor(203, 223, 232)
 
-    centers: list[tuple[int, int]] = []
-    for index, point in enumerate(points):
-        cx = int(map_x + map_w * (float(point["x"]) / 100))
-        cy = int(map_y + map_h * (float(point["y"]) / 100))
-        centers.append((cx, cy))
-        if index > 0:
-            x1, y1 = centers[index - 1]
-            connector = slide.shapes.add_connector(MSO_CONNECTOR.STRAIGHT, x1, y1, cx, cy)
-            connector.line.color.rgb = RGBColor(44, 115, 160)
-            connector.line.width = Pt(2.0)
-
-    for index, point in enumerate(points):
-        cx, cy = centers[index]
-        fill = CORAL if index in {0, len(points) - 1} else WHITE
-        text_color = WHITE if index in {0, len(points) - 1} else BLUE
-        dot = slide.shapes.add_shape(MSO_SHAPE.OVAL, cx - Inches(0.11), cy - Inches(0.11), Inches(0.22), Inches(0.22))
-        dot.fill.solid()
-        dot.fill.fore_color.rgb = fill
-        dot.line.color.rgb = BLUE if fill == WHITE else CORAL
-        dot.text_frame.clear()
-        dot.text_frame.vertical_anchor = MSO_ANCHOR.MIDDLE
-        p = dot.text_frame.paragraphs[0]
-        p.alignment = PP_ALIGN.CENTER
-        r = p.add_run()
-        r.text = str(index + 1)
-        r.font.name = EN_FONT
-        r.font.size = Pt(6.5)
-        r.font.bold = True
-        r.font.color.rgb = text_color
+    map_path = render_route_map(day, ROOT)
+    if map_path.exists():
+        add_picture_cover(slide, map_path, map_x, map_y, map_w, map_h)
+    else:
+        add_textbox(slide, map_x + Inches(0.12), map_y + Inches(0.18), map_w - Inches(0.24), Inches(0.42), day.area, 11, NAVY, True, PP_ALIGN.CENTER)
 
     list_x = map_x + map_w + Inches(0.20)
     list_w = x + w - list_x - Inches(0.18)
@@ -592,6 +569,12 @@ def build_pdf(days: list[DayPlan]):
             drawing.add(String(cx - 2.4, cy - 2.4, str(index + 1), fontName="Helvetica-Bold", fontSize=5.2, fillColor=text))
         return drawing
 
+    def route_visual(day: DayPlan):
+        path = render_route_map(day, ROOT)
+        if path.exists():
+            return PdfImage(str(path), width=96 * mm, height=65 * mm)
+        return route_drawing(day)
+
     def route_block(day: DayPlan):
         points = route_points(day, max_points=8)
         route_style = ParagraphStyle("route", parent=base, fontSize=7.6, leading=10.2, wordWrap="CJK")
@@ -614,8 +597,8 @@ def build_pdf(days: list[DayPlan]):
         Paragraph("北海道家族旅行ガイドブック", ParagraphStyle("title", parent=h1, alignment=TA_CENTER, fontSize=30, leading=36)),
         Paragraph("2026年7月31日 - 8月12日", ParagraphStyle("sub", parent=center, fontSize=14, leading=18, textColor=colors.HexColor("#66707A"))),
         Spacer(1, 18),
-        PdfImage(str(cover_image(days)), width=210 * mm, height=140 * mm),
-        Spacer(1, 10),
+        PdfImage(str(cover_image(days)), width=202 * mm, height=134 * mm),
+        Spacer(1, 6),
         p("仙台からフェリーで北海道へ。洞爺湖、札幌、層雲峡、道東方面をめぐる家族旅行。", center),
         PageBreak(),
     ]
@@ -653,7 +636,7 @@ def build_pdf(days: list[DayPlan]):
             Spacer(1, 4),
             Paragraph("Today's Map", h2),
             Table(
-                [[route_drawing(day), route_block(day)]],
+                [[route_visual(day), route_block(day)]],
                 colWidths=[96 * mm, 140 * mm],
                 style=TableStyle([
                     ("VALIGN", (0, 0), (-1, -1), "TOP"),

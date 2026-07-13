@@ -10,6 +10,7 @@ from urllib.parse import quote
 from guidebook_common import (
     guide_spots,
     meal_recommendations,
+    route_map_filename,
     route_map_points,
     route_map_url,
     route_points,
@@ -17,12 +18,14 @@ from guidebook_common import (
     today_theme,
     todays_tips,
 )
+from route_map_renderer import render_route_map
 
 
 ROOT = Path(__file__).resolve().parents[1]
 ITINERARY_DIR = ROOT / "itinerary" / "days"
 OUT = ROOT / "docs" / "index.html"
 RAW_IMAGE_BASE = "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/"
+RAW_MAP_BASE = "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/"
 COVER_IMAGE_NAME = "cover.png"
 WEEKDAYS = ["月", "火", "水", "木", "金", "土", "日"]
 
@@ -268,21 +271,17 @@ def render_photo_spots(day: Day) -> str:
     )
 
 
-def render_route_sketch(points: list[dict[str, str | float]]) -> str:
-    nodes = []
-    path = " ".join(f"{point['x']},{point['y']}" for point in points)
-    for index, point in enumerate(points):
-        kind = " start" if index == 0 else " end" if index == len(points) - 1 else ""
-        nodes.append(
-            f'<span class="map-node{kind}" style="--x:{point["x"]}%;--y:{point["y"]}%">'
-            f"<i>{index + 1}</i>"
-            "</span>"
-        )
+def map_src(image_name: str) -> str:
+    return RAW_MAP_BASE + quote(image_name)
+
+
+def render_route_sketch(day: Day) -> str:
+    render_route_map(day, ROOT)
+    image_name = route_map_filename(day)
     return (
         '<div class="sketch-map" aria-label="簡易ルートマップ">'
-        f'<svg viewBox="0 0 100 100" aria-hidden="true"><polyline points="{path}"></polyline></svg>'
-        + "".join(nodes)
-        + "</div>"
+        f'<img src="{map_src(image_name)}" alt="{esc(day.area)}のルート地図" loading="lazy">'
+        "</div>"
     )
 
 
@@ -308,7 +307,7 @@ def render_route(day: Day) -> str:
         '<div class="card-title-row"><h3>Today\'s Map</h3>'
         f'<a href="{esc(route_map_url(day))}" target="_blank" rel="noreferrer">Google Map</a></div>'
         '<div class="route-card-body">'
-        f"{render_route_sketch(route_map_points(day, max_points=8))}"
+        f"{render_route_sketch(day)}"
         f'<ol class="route-map">{"".join(rows)}</ol>'
         "</div>"
         "</section>"
@@ -745,81 +744,25 @@ def render_page(days: list[Day]) -> str:
 
     .route-card-body {{
       display: grid;
-      grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1fr);
+      grid-template-columns: minmax(260px, 1.15fr) minmax(180px, 0.85fr);
       gap: 16px;
       align-items: stretch;
     }}
 
     .sketch-map {{
-      position: relative;
       min-height: 240px;
       overflow: hidden;
       border-radius: 8px;
       border: 1px solid rgba(20, 107, 124, 0.18);
-      background:
-        linear-gradient(135deg, rgba(231, 241, 244, 0.95), rgba(255, 250, 240, 0.92)),
-        radial-gradient(circle at 18% 20%, rgba(63, 107, 69, 0.16) 0 10%, transparent 11%),
-        radial-gradient(circle at 72% 72%, rgba(62, 127, 168, 0.18) 0 13%, transparent 14%);
+      background: #d5eaf0;
     }}
 
-    .sketch-map svg {{
-      position: absolute;
-      inset: 0;
+    .sketch-map img {{
+      display: block;
       width: 100%;
       height: 100%;
-    }}
-
-    .sketch-map polyline {{
-      fill: none;
-      stroke: rgba(20, 107, 124, 0.72);
-      stroke-width: 2.8;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }}
-
-    .map-node {{
-      position: absolute;
-      left: var(--x);
-      top: var(--y);
-      transform: translate(-50%, -50%);
-      display: grid;
-      justify-items: center;
-      gap: 3px;
-      max-width: 78px;
-      text-align: center;
-      z-index: 1;
-    }}
-
-    .map-node i {{
-      display: grid;
-      place-items: center;
-      width: 24px;
-      height: 24px;
-      border-radius: 999px;
-      background: var(--surface);
-      border: 3px solid var(--lake);
-      color: var(--lake);
-      font-size: 0.76rem;
-      font-style: normal;
-      font-weight: 900;
-      box-shadow: 0 3px 12px rgba(23, 32, 38, 0.12);
-    }}
-
-    .map-node.start i,
-    .map-node.end i {{
-      background: var(--berry);
-      border-color: var(--berry);
-      color: #fff;
-    }}
-
-    .map-node b {{
-      display: block;
-      padding: 2px 5px;
-      border-radius: 4px;
-      background: rgba(255, 255, 255, 0.86);
-      color: var(--ink);
-      font-size: 0.7rem;
-      line-height: 1.25;
+      min-height: 240px;
+      object-fit: cover;
     }}
 
     .route-map {{
