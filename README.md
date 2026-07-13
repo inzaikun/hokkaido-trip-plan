@@ -19,6 +19,8 @@
 - `itinerary/days/*.md`
   - 日別に編集できる旅程Markdown
 
+HTML、PowerPoint、PDFはいずれも、日別Markdownから共通テンプレートで生成します。各DAYには Today's Route、Today's Theme、時刻ベーススケジュール、おすすめランチ・夕食、Today's Tips、観光スポット情報を掲載します。
+
 ## 現在の日程
 
 2026年7月31日から8月12日までの全13日分について、時刻ベースの原案を `itinerary/days/` に分離して管理しています。
@@ -112,6 +114,7 @@ libreoffice --headless --convert-to pdf --outdir output output/hokkaido-family-t
 - `## Notes`: 補足メモ
 
 レイアウトや色、フォントを変えたい場合は `scripts/build_guide.py` を編集します。
+Today's Routeやおすすめ食事などの派生表示を変えたい場合は `scripts/guidebook_common.py` を編集します。
 
 ## GitHub Actions
 

@@ -4,6 +4,8 @@ import json
 import re
 from pathlib import Path
 
+from guidebook_common import guide_spots, meal_recommendations, route_points, today_theme, todays_tips
+
 
 ROOT = Path(__file__).resolve().parents[1]
 ITINERARY_DIR = ROOT / "itinerary" / "days"
@@ -59,7 +61,7 @@ def parse_day(path: Path) -> dict:
         if line.strip().startswith("- ")
     ]
 
-    return {
+    day = {
         "date": meta.get("date", path.stem),
         "day": meta.get("day", ""),
         "title": meta.get("title", path.stem),
@@ -99,6 +101,12 @@ def parse_day(path: Path) -> dict:
         ],
         "notes": notes,
     }
+    day["route"] = route_points(day)
+    day["todayTheme"] = today_theme(day)
+    day["mealRecommendations"] = meal_recommendations(day)
+    day["todaysTips"] = todays_tips(day)
+    day["guideSpots"] = guide_spots(day)
+    return day
 
 
 def main() -> None:
@@ -106,7 +114,7 @@ def main() -> None:
     payload = {
         "title": "北海道家族旅行ガイド",
         "period": "2026年7月31日 - 8月12日",
-        "updated": "旅程Markdownから自動生成",
+        "updated": "旅のしおり最新版",
         "days": days,
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)

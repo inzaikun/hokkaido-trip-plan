@@ -7,6 +7,15 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import quote
 
+from guidebook_common import (
+    guide_spots,
+    map_url,
+    meal_recommendations,
+    route_points,
+    today_theme,
+    todays_tips,
+)
+
 
 ROOT = Path(__file__).resolve().parents[1]
 ITINERARY_DIR = ROOT / "itinerary" / "days"
@@ -223,27 +232,33 @@ def render_restaurants(day: Day) -> str:
 
 
 def render_photo_spots(day: Day) -> str:
-    if not day.photos:
+    spots = guide_spots(day)
+    if not spots:
         return ""
     items = []
-    for photo in day.photos:
-        if photo.image:
-            visual = f'<img src="{image_src(photo.image)}" alt="{esc(photo.place)}">'
+    for spot in spots:
+        if spot["image"]:
+            visual = f'<img src="{image_src(spot["image"])}" alt="{esc(spot["place"])}">'
         else:
-            visual = f'<div class="spot-placeholder">{esc(photo.place)}</div>'
+            visual = f'<div class="spot-placeholder">{esc(spot["place"])}</div>'
         items.append(
             "<figure>"
             f"{visual}"
             "<figcaption>"
-            f"<strong>{esc(photo.place)}</strong>"
-            f"<span>{esc(photo.caption)}</span>"
-            f"<small>{esc(photo.credit)}</small>"
+            f"<strong>{esc(spot['place'])}</strong>"
+            f"<span>{esc(spot['caption'])}</span>"
+            '<dl class="spot-meta">'
+            f"<div><dt>駐車場</dt><dd>{esc(spot['parking'])}</dd></div>"
+            f"<div><dt>滞在</dt><dd>{esc(spot['stay'])}</dd></div>"
+            f'<div><dt>地図</dt><dd><a href="{esc(spot["map_url"])}" target="_blank" rel="noreferrer">Google Map</a></dd></div>'
+            "</dl>"
+            f"<small>{esc(spot['credit'])}</small>"
             "</figcaption>"
             "</figure>"
         )
     return (
         '<section class="photo-spots">'
-        "<h3>写真で見る立ち寄り名所</h3>"
+        "<h3>観光スポット写真</h3>"
         '<div class="spot-grid">'
         + "\n".join(items)
         + "</div>"
@@ -251,14 +266,67 @@ def render_photo_spots(day: Day) -> str:
     )
 
 
-def render_notes(day: Day) -> str:
-    if not day.notes:
+def render_route(day: Day) -> str:
+    points = route_points(day)
+    if not points:
+        return ""
+    rows = []
+    for index, point in enumerate(points):
+        note = f'<span>{esc(point["note"])}</span>' if point.get("note") else ""
+        leg = point.get("leg") or ""
+        connector = ""
+        if index < len(points) - 1:
+            connector = f'<div class="route-leg"><i></i><span>{esc(leg)}</span></div>'
+        rows.append(
+            '<li class="route-point">'
+            f'<strong>{esc(point["place"])}</strong>{note}'
+            f"{connector}"
+            "</li>"
+        )
+    return (
+        '<section class="route-card">'
+        "<h3>Today's Route</h3>"
+        f'<ol class="route-map">{"".join(rows)}</ol>'
+        "</section>"
+    )
+
+
+def render_theme(day: Day) -> str:
+    return (
+        '<section class="theme-card">'
+        "<h3>Today's Theme</h3>"
+        f"<p>{esc(today_theme(day))}</p>"
+        "</section>"
+    )
+
+
+def render_recommendations(day: Day) -> str:
+    items = []
+    for rec in meal_recommendations(day):
+        items.append(
+            '<article class="meal-card">'
+            f'<p class="meal-label">{esc(rec["label"])}</p>'
+            f'<h4>{esc(rec["name"])}</h4>'
+            f'<p class="stars" aria-label="おすすめ度5">{esc(rec["stars"])}</p>'
+            f'<dl><div><dt>予算</dt><dd>{esc(rec["budget"])}</dd></div>'
+            f'<div><dt>人気メニュー</dt><dd>{esc(rec["popular"])}</dd></div></dl>'
+            f'<p>{esc(rec["area"])} / {esc(rec["memo"])}</p>'
+            "</article>"
+        )
+    if not items:
+        return ""
+    return '<section class="meal-recs"><h3>今日の食事メモ</h3>' + "".join(items) + "</section>"
+
+
+def render_tips(day: Day) -> str:
+    tips = todays_tips(day)
+    if not tips:
         return ""
     return (
-        '<section class="notes">'
-        "<h3>メモ</h3>"
+        '<section class="tips-card">'
+        "<h3>Today's Tips</h3>"
         "<ul>"
-        + "\n".join(f"<li>{esc(note)}</li>" for note in day.notes)
+        + "\n".join(f"<li>{esc(tip)}</li>" for tip in tips)
         + "</ul>"
         "</section>"
     )
@@ -275,8 +343,10 @@ def render_day(day: Day) -> str:
           </div>
           {render_photo(day)}
         </header>
-        <p class="summary">{esc(day.summary)}</p>
-        {render_photo_spots(day)}
+        <div class="guide-intro">
+          {render_route(day)}
+          {render_theme(day)}
+        </div>
         <div class="day-layout">
           <section class="timeline-wrap">
             <h3>時刻ベース詳細スケジュール</h3>
@@ -285,15 +355,11 @@ def render_day(day: Day) -> str:
             </ol>
           </section>
           <aside class="side-panel">
-            <section>
-              <h3>レストラン候補</h3>
-              <ul class="restaurants">
-                {render_restaurants(day)}
-              </ul>
-            </section>
-            {render_notes(day)}
+            {render_recommendations(day)}
+            {render_tips(day)}
           </aside>
         </div>
+        {render_photo_spots(day)}
       </article>
 """
 
@@ -593,10 +659,106 @@ def render_page(days: list[Day]) -> str:
       font-weight: 700;
     }}
 
-    .summary {{
-      margin: 20px 0 0;
-      color: var(--ink);
-      font-size: 1.03rem;
+    .guide-intro {{
+      display: grid;
+      grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
+      gap: 18px;
+      margin-top: 22px;
+      align-items: stretch;
+    }}
+
+    .route-card,
+    .theme-card,
+    .meal-card,
+    .tips-card {{
+      border-radius: 8px;
+      border: 1px solid rgba(20, 107, 124, 0.18);
+      background: linear-gradient(180deg, #fff, #fbfaf6);
+      box-shadow: 0 12px 26px rgba(23, 32, 38, 0.06);
+    }}
+
+    .route-card,
+    .theme-card {{
+      padding: 18px;
+    }}
+
+    .route-card h3,
+    .theme-card h3,
+    .meal-recs h3,
+    .tips-card h3,
+    .photo-spots h3 {{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      color: var(--lake);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.22rem;
+    }}
+
+    .route-map {{
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }}
+
+    .route-point {{
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      gap: 4px;
+      padding-left: 26px;
+    }}
+
+    .route-point::before {{
+      content: "";
+      position: absolute;
+      left: 4px;
+      top: 0.48em;
+      width: 12px;
+      height: 12px;
+      border: 3px solid var(--lake);
+      border-radius: 999px;
+      background: var(--surface);
+      box-shadow: 0 0 0 4px #e8f3f4;
+    }}
+
+    .route-point strong {{
+      font-size: 1rem;
+    }}
+
+    .route-point > span {{
+      width: fit-content;
+      padding: 1px 8px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--sun);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }}
+
+    .route-leg {{
+      min-height: 26px;
+      display: grid;
+      grid-template-columns: 2px minmax(0, 1fr);
+      gap: 12px;
+      margin: 3px 0 4px 9px;
+      color: var(--muted);
+      font-size: 0.86rem;
+      font-weight: 800;
+    }}
+
+    .route-leg i {{
+      display: block;
+      width: 2px;
+      min-height: 100%;
+      background: repeating-linear-gradient(to bottom, var(--lake), var(--lake) 5px, transparent 5px, transparent 10px);
+    }}
+
+    .theme-card p {{
+      margin: 0;
+      font-size: 1.08rem;
+      line-height: 1.85;
     }}
 
     .day-layout {{
@@ -637,7 +799,7 @@ def render_page(days: list[Day]) -> str:
     .timeline time {{
       font-weight: 900;
       color: var(--ink);
-      white-space: nowrap;
+      overflow-wrap: anywhere;
     }}
 
     .tag {{
@@ -679,9 +841,7 @@ def render_page(days: list[Day]) -> str:
     }}
 
     .side-panel section {{
-      padding: 18px;
-      border-radius: 8px;
-      background: #f3f7f5;
+      padding: 0;
     }}
 
     .restaurants {{
@@ -725,6 +885,81 @@ def render_page(days: list[Day]) -> str:
 
     .notes li + li {{
       margin-top: 6px;
+    }}
+
+    .meal-recs {{
+      display: grid;
+      gap: 12px;
+    }}
+
+    .meal-card {{
+      padding: 16px;
+      background: #fffaf0;
+    }}
+
+    .meal-card h4 {{
+      margin: 2px 0 2px;
+      font-size: 1.05rem;
+    }}
+
+    .meal-label {{
+      margin: 0;
+      color: var(--berry);
+      font-weight: 900;
+      font-size: 0.86rem;
+    }}
+
+    .stars {{
+      margin: 2px 0 8px;
+      color: #d27d22;
+      letter-spacing: 0;
+      font-weight: 900;
+    }}
+
+    .meal-card dl,
+    .spot-meta {{
+      display: grid;
+      gap: 6px;
+      margin: 0 0 8px;
+    }}
+
+    .meal-card dl div,
+    .spot-meta div {{
+      display: grid;
+      grid-template-columns: 76px minmax(0, 1fr);
+      gap: 8px;
+    }}
+
+    .meal-card dt,
+    .spot-meta dt {{
+      color: var(--lake);
+      font-weight: 900;
+    }}
+
+    .meal-card dd,
+    .spot-meta dd {{
+      margin: 0;
+      color: var(--ink);
+    }}
+
+    .meal-card p:last-child {{
+      margin: 8px 0 0;
+      color: var(--muted);
+    }}
+
+    .tips-card {{
+      padding: 18px;
+      background: #f4f8ef;
+    }}
+
+    .tips-card ul {{
+      margin: 0;
+      padding-left: 1.1em;
+      color: var(--ink);
+    }}
+
+    .tips-card li + li {{
+      margin-top: 8px;
     }}
 
     .photo-spots {{
@@ -784,6 +1019,7 @@ def render_page(days: list[Day]) -> str:
       .stats,
       .day-nav,
       .day-header,
+      .guide-intro,
       .day-layout,
       .spot-grid {{
         grid-template-columns: 1fr;
@@ -840,10 +1076,10 @@ def render_page(days: list[Day]) -> str:
     </section>
 
     <section>
-      <h2 class="section-title">公開資料</h2>
-      <p class="lead">日程は `itinerary/days/*.md` を元にしています。更新時はMarkdownを直して、この公開ページとPowerPoint/PDFを再生成します。</p>
+      <h2 class="section-title">旅の読みどころ</h2>
+      <p class="lead">仙台港からフェリーで北海道へ渡り、洞爺湖、札幌、富良野・美瑛、層雲峡、道東の自然へ。日ごとのルートと見どころを、出発前に眺めて楽しい家族旅行ガイドとしてまとめました。</p>
       <div class="quick-links">
-        <a href="https://github.com/inzaikun/hokkaido-trip-plan/tree/main/itinerary/days">日別Markdown</a>
+        <a href="#days">日別ガイドへ</a>
         <a href="https://github.com/inzaikun/hokkaido-trip-plan">GitHub</a>
       </div>
     </section>

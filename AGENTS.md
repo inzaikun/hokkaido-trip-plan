@@ -8,6 +8,7 @@
 - 旅程は `itinerary/days/*.md` に日別で追加・編集する。
 - PowerPointの見た目や生成ロジックは `scripts/build_guide.py` に集約する。
 - GitHub Pages用の公開HTMLは `scripts/build_public_site.py` で `docs/index.html` に生成する。
+- ガイドブック用の派生情報（Today's Route、Today's Theme、食事レコメンド、Tips、スポット情報）は `scripts/guidebook_common.py` で共通生成し、HTML/PowerPoint/PDFで同じ情報を使う。
 - 写真は `images/` に置き、スクリプトから読み込む。
 - 画像がない場合でもビルドが失敗しないよう、場所名入りプレースホルダーを出す。
 - 生成物は `output/` に置く。
@@ -18,13 +19,17 @@
 - スライドサイズは必ず16:9横長にする。
 - 1日あたり1〜2ページを目安にする。
 - 各日には以下を含める。
+  - Today's Route
+  - Today's Theme
   - 時刻ベースの詳細スケジュール
   - 移動時間
   - 昼食
   - 夕食
   - 観光
   - 休憩
-  - レストラン候補
+  - おすすめランチ・おすすめ夕食
+  - Today's Tips
+  - 観光スポット写真、駐車場、滞在時間、GoogleMapリンク
 - 写真がある場合は大きく使い、書店の旅行ガイドブック風にする。
 - 写真がない場合は、場所名がわかるプレースホルダーを表示する。
 
