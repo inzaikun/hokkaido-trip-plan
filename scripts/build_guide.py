@@ -26,6 +26,7 @@ from reportlab.platypus import PageBreak, Paragraph, SimpleDocTemplate, Spacer, 
 from guidebook_common import (
     guide_spots,
     meal_recommendations,
+    route_map_points,
     route_map_url,
     route_points,
     short_text,
@@ -337,20 +338,13 @@ def add_guide_heading(slide, x, y, text, size=13):
     add_textbox(slide, x, y, Inches(2.2), Inches(0.26), text, size, BLUE, True)
 
 
-def route_node_position(index: int, total: int) -> tuple[float, float]:
-    xs = [0.18, 0.46, 0.74, 0.58, 0.28, 0.50, 0.80]
-    if total <= 1:
-        return 0.48, 0.50
-    return xs[index % len(xs)], 0.13 + index * (0.74 / max(total - 1, 1))
-
-
 def add_route_map(slide, day: DayPlan, x, y, w, h):
     add_card(slide, x, y, w, h, RGBColor(255, 252, 246), RGBColor(232, 217, 196))
     add_guide_heading(slide, x + Inches(0.18), y + Inches(0.14), "Today's Map", 13)
     link = add_textbox(slide, x + w - Inches(1.28), y + Inches(0.14), Inches(1.05), Inches(0.22), "Google Map", 7.2, BLUE, True, PP_ALIGN.RIGHT)
     link.text_frame.paragraphs[0].runs[0].hyperlink.address = route_map_url(day)
 
-    points = route_points(day, max_points=7)
+    points = route_map_points(day, max_points=8)
     if not points:
         return
 
@@ -365,9 +359,8 @@ def add_route_map(slide, day: DayPlan, x, y, w, h):
 
     centers: list[tuple[int, int]] = []
     for index, point in enumerate(points):
-        px_ratio, py_ratio = route_node_position(index, len(points))
-        cx = int(map_x + map_w * px_ratio)
-        cy = int(map_y + map_h * py_ratio)
+        cx = int(map_x + map_w * (float(point["x"]) / 100))
+        cy = int(map_y + map_h * (float(point["y"]) / 100))
         centers.append((cx, cy))
         if index > 0:
             x1, y1 = centers[index - 1]
@@ -393,7 +386,6 @@ def add_route_map(slide, day: DayPlan, x, y, w, h):
         r.font.size = Pt(6.5)
         r.font.bold = True
         r.font.color.rgb = text_color
-        add_textbox(slide, cx - Inches(0.34), cy + Inches(0.12), Inches(0.68), Inches(0.20), short_text(point["place"], 8), 5.5, NAVY, True, PP_ALIGN.CENTER)
 
     list_x = map_x + map_w + Inches(0.20)
     list_w = x + w - list_x - Inches(0.18)
@@ -578,16 +570,15 @@ def build_pdf(days: list[DayPlan]):
         return tbl
 
     def route_drawing(day: DayPlan):
-        points = route_points(day, max_points=7)
+        points = route_map_points(day, max_points=8)
         width = 92 * mm
         height = 58 * mm
         drawing = Drawing(width, height)
         drawing.add(Rect(0, 0, width, height, rx=8, ry=8, fillColor=colors.HexColor("#E7F1F4"), strokeColor=colors.HexColor("#CBDDE8")))
         centers = []
-        for index, _point in enumerate(points):
-            x_ratio, y_ratio = route_node_position(index, len(points))
-            cx = width * x_ratio
-            cy = height * (1 - y_ratio)
+        for index, point in enumerate(points):
+            cx = width * (float(point["x"]) / 100)
+            cy = height * (1 - (float(point["y"]) / 100))
             centers.append((cx, cy))
             if index > 0:
                 px, py = centers[index - 1]
@@ -599,11 +590,10 @@ def build_pdf(days: list[DayPlan]):
             text = colors.white if is_edge else colors.HexColor("#2C73A0")
             drawing.add(Circle(cx, cy, 5.5, fillColor=fill, strokeColor=colors.HexColor("#2C73A0"), strokeWidth=1.2))
             drawing.add(String(cx - 2.4, cy - 2.4, str(index + 1), fontName="Helvetica-Bold", fontSize=5.2, fillColor=text))
-            drawing.add(String(cx - 18, cy - 12, short_text(point["place"], 8), fontName=font, fontSize=5.8, fillColor=colors.HexColor("#143753")))
         return drawing
 
     def route_block(day: DayPlan):
-        points = route_points(day, max_points=7)
+        points = route_points(day, max_points=8)
         route_style = ParagraphStyle("route", parent=base, fontSize=7.6, leading=10.2, wordWrap="CJK")
         rows = []
         for index, point in enumerate(points):

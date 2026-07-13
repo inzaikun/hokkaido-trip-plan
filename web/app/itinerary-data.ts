@@ -192,10 +192,90 @@ export const itinerary = {
           "leg": "約35分"
         },
         {
+          "place": "仙台港",
+          "note": "",
+          "kind": "移動",
+          "leg": ""
+        },
+        {
           "place": "仙台港フェリーターミナル",
           "note": "",
           "kind": "手続き",
           "leg": ""
+        }
+      ],
+      "routeMapPoints": [
+        {
+          "place": "千葉県印西市",
+          "note": "",
+          "kind": "移動",
+          "leg": "約4時間30分",
+          "x": 13.0,
+          "y": 87.0,
+          "known": true
+        },
+        {
+          "place": "仙台",
+          "note": "",
+          "kind": "移動",
+          "leg": "",
+          "x": 74.2,
+          "y": 13.0,
+          "known": true
+        },
+        {
+          "place": "仙台市内",
+          "note": "昼食",
+          "kind": "昼食",
+          "leg": "",
+          "x": 59.2,
+          "y": 12.1,
+          "known": true
+        },
+        {
+          "place": "仙台城跡",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 68.7,
+          "y": 26.2,
+          "known": true
+        },
+        {
+          "place": "瑞鳳殿",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 78.9,
+          "y": 23.6,
+          "known": true
+        },
+        {
+          "place": "仙台市内",
+          "note": "",
+          "kind": "移動",
+          "leg": "約35分",
+          "x": 88.2,
+          "y": 6,
+          "known": true
+        },
+        {
+          "place": "仙台港",
+          "note": "",
+          "kind": "移動",
+          "leg": "",
+          "x": 94,
+          "y": 21.9,
+          "known": true
+        },
+        {
+          "place": "仙台港フェリーターミナル",
+          "note": "",
+          "kind": "手続き",
+          "leg": "",
+          "x": 83.2,
+          "y": 11.4,
+          "known": true
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82&destination=%E4%BB%99%E5%8F%B0%E6%B8%AF%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB&travelmode=driving&waypoints=%E4%BB%99%E5%8F%B0|%E4%BB%99%E5%8F%B0%E5%B8%82%E5%86%85|%E4%BB%99%E5%8F%B0%E5%9F%8E%E8%B7%A1|%E7%91%9E%E9%B3%B3%E6%AE%BF|%E4%BB%99%E5%8F%B0%E6%B8%AF",
@@ -387,6 +467,62 @@ export const itinerary = {
           "leg": ""
         }
       ],
+      "routeMapPoints": [
+        {
+          "place": "苫小牧市内",
+          "note": "昼食",
+          "kind": "昼食",
+          "leg": "",
+          "x": 87.0,
+          "y": 13.0,
+          "known": true
+        },
+        {
+          "place": "苫小牧",
+          "note": "",
+          "kind": "移動",
+          "leg": "約2時間15分",
+          "x": 72.0,
+          "y": 12.1,
+          "known": true
+        },
+        {
+          "place": "洞爺湖",
+          "note": "",
+          "kind": "移動",
+          "leg": "",
+          "x": 13.0,
+          "y": 87.0,
+          "known": true
+        },
+        {
+          "place": "Green stay Toya",
+          "note": "",
+          "kind": "手続き",
+          "leg": "",
+          "x": 13.6,
+          "y": 61.2,
+          "known": true
+        },
+        {
+          "place": "キャンプ場 / 洞爺湖温泉街",
+          "note": "夕食",
+          "kind": "夕食",
+          "leg": "",
+          "x": 6,
+          "y": 60.3,
+          "known": true
+        },
+        {
+          "place": "洞爺湖湖畔",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 6,
+          "y": 86.1,
+          "known": true
+        }
+      ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E8%8B%AB%E5%B0%8F%E7%89%A7%E5%B8%82%E5%86%85&destination=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B9%96%E7%95%94&travelmode=driving&waypoints=%E8%8B%AB%E5%B0%8F%E7%89%A7|%E6%B4%9E%E7%88%BA%E6%B9%96|Green+stay+Toya|%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%97%E5%A0%B4+%2F+%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B8%A9%E6%B3%89%E8%A1%97",
       "todayTheme": "フェリーで苫小牧に到着し、北海道ドライブを開始。初日は無理に詰め込まず、昼食と休憩を挟みながら洞爺湖のキャンプ拠点へ入ります。夜は湖畔でゆっくり過ごします。",
       "mealRecommendations": [
@@ -552,6 +688,53 @@ export const itinerary = {
           "note": "",
           "kind": "観光",
           "leg": ""
+        }
+      ],
+      "routeMapPoints": [
+        {
+          "place": "洞爺湖湖畔",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 43.5,
+          "y": 78.5,
+          "known": true
+        },
+        {
+          "place": "洞爺湖温泉街",
+          "note": "昼食",
+          "kind": "昼食",
+          "leg": "",
+          "x": 57.4,
+          "y": 88.0,
+          "known": true
+        },
+        {
+          "place": "洞爺湖汽船",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 36.1,
+          "y": 92.1,
+          "known": true
+        },
+        {
+          "place": "キャンプ場",
+          "note": "夕食",
+          "kind": "夕食",
+          "leg": "",
+          "x": 56.5,
+          "y": 13.0,
+          "known": true
+        },
+        {
+          "place": "洞爺湖湖畔",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 28.5,
+          "y": 77.6,
+          "known": true
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B9%96%E7%95%94&destination=%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%97%E5%A0%B4&travelmode=driving&waypoints=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B8%A9%E6%B3%89%E8%A1%97|%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B1%BD%E8%88%B9",
@@ -743,10 +926,90 @@ export const itinerary = {
           "leg": ""
         },
         {
+          "place": "洞爺湖温泉街",
+          "note": "",
+          "kind": "移動",
+          "leg": "30分"
+        },
+        {
           "place": "キャンプ場",
           "note": "",
           "kind": "移動",
           "leg": ""
+        }
+      ],
+      "routeMapPoints": [
+        {
+          "place": "洞爺湖",
+          "note": "",
+          "kind": "移動",
+          "leg": "約30分",
+          "x": 26.2,
+          "y": 63.9,
+          "known": true
+        },
+        {
+          "place": "有珠山",
+          "note": "",
+          "kind": "移動",
+          "leg": "",
+          "x": 48.2,
+          "y": 87.0,
+          "known": true
+        },
+        {
+          "place": "有珠山ロープウェイ",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 62.3,
+          "y": 86.1,
+          "known": true
+        },
+        {
+          "place": "昭和新山",
+          "note": "昼食",
+          "kind": "昼食",
+          "leg": "",
+          "x": 77.0,
+          "y": 93.8,
+          "known": true
+        },
+        {
+          "place": "サイロ展望台",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 13.0,
+          "y": 13.0,
+          "known": true
+        },
+        {
+          "place": "壮瞥",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 87.0,
+          "y": 78.7,
+          "known": true
+        },
+        {
+          "place": "洞爺湖温泉街",
+          "note": "",
+          "kind": "移動",
+          "leg": "30分",
+          "x": 38.1,
+          "y": 75.5,
+          "known": true
+        },
+        {
+          "place": "キャンプ場",
+          "note": "",
+          "kind": "移動",
+          "leg": "",
+          "x": 31.5,
+          "y": 42.6,
+          "known": true
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E6%B4%9E%E7%88%BA%E6%B9%96&destination=%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%97%E5%A0%B4&travelmode=driving&waypoints=%E6%9C%89%E7%8F%A0%E5%B1%B1|%E6%9C%89%E7%8F%A0%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4|%E6%98%AD%E5%92%8C%E6%96%B0%E5%B1%B1|%E3%82%B5%E3%82%A4%E3%83%AD%E5%B1%95%E6%9C%9B%E5%8F%B0|%E5%A3%AE%E7%9E%A5|%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B8%A9%E6%B3%89%E8%A1%97",
@@ -930,6 +1193,53 @@ export const itinerary = {
           "note": "",
           "kind": "観光",
           "leg": ""
+        }
+      ],
+      "routeMapPoints": [
+        {
+          "place": "洞爺湖",
+          "note": "",
+          "kind": "移動",
+          "leg": "約2時間",
+          "x": 13.0,
+          "y": 87.0,
+          "known": true
+        },
+        {
+          "place": "中山峠",
+          "note": "",
+          "kind": "移動",
+          "leg": "",
+          "x": 50.0,
+          "y": 46.5,
+          "known": true
+        },
+        {
+          "place": "札幌市内",
+          "note": "昼食",
+          "kind": "昼食",
+          "leg": "",
+          "x": 87.0,
+          "y": 14.8,
+          "known": true
+        },
+        {
+          "place": "HOTEL MYSTAYS Sapporo Aspen",
+          "note": "",
+          "kind": "手続き",
+          "leg": "",
+          "x": 94,
+          "y": 7.4,
+          "known": true
+        },
+        {
+          "place": "北海道大学",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 73.2,
+          "y": 7.0,
+          "known": true
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E6%B4%9E%E7%88%BA%E6%B9%96&destination=%E5%8C%97%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%A6&travelmode=driving&waypoints=%E4%B8%AD%E5%B1%B1%E5%B3%A0|%E6%9C%AD%E5%B9%8C%E5%B8%82%E5%86%85|HOTEL+MYSTAYS+Sapporo+Aspen",
@@ -1132,6 +1442,71 @@ export const itinerary = {
           "leg": ""
         }
       ],
+      "routeMapPoints": [
+        {
+          "place": "札幌",
+          "note": "",
+          "kind": "移動",
+          "leg": "約2時間15分",
+          "x": 13.0,
+          "y": 87.0,
+          "known": true
+        },
+        {
+          "place": "富良野",
+          "note": "",
+          "kind": "移動",
+          "leg": "",
+          "x": 59.9,
+          "y": 55.8,
+          "known": true
+        },
+        {
+          "place": "富良野市内",
+          "note": "昼食",
+          "kind": "昼食",
+          "leg": "",
+          "x": 44.9,
+          "y": 54.9,
+          "known": true
+        },
+        {
+          "place": "ファーム富田",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 71.3,
+          "y": 41.1,
+          "known": true
+        },
+        {
+          "place": "美瑛",
+          "note": "",
+          "kind": "観光",
+          "leg": "約2時間",
+          "x": 63.7,
+          "y": 28.4,
+          "known": true
+        },
+        {
+          "place": "層雲峡",
+          "note": "",
+          "kind": "移動",
+          "leg": "",
+          "x": 85.7,
+          "y": 13.0,
+          "known": true
+        },
+        {
+          "place": "Sounkyo Auto Camp",
+          "note": "",
+          "kind": "手続き",
+          "leg": "",
+          "x": 94,
+          "y": 22.7,
+          "known": true
+        }
+      ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E6%9C%AD%E5%B9%8C&destination=Sounkyo+Auto+Camp&travelmode=driving&waypoints=%E5%AF%8C%E8%89%AF%E9%87%8E|%E5%AF%8C%E8%89%AF%E9%87%8E%E5%B8%82%E5%86%85|%E3%83%95%E3%82%A1%E3%83%BC%E3%83%A0%E5%AF%8C%E7%94%B0|%E7%BE%8E%E7%91%9B|%E5%B1%A4%E9%9B%B2%E5%B3%A1",
       "todayTheme": "札幌を11時ごろ出発し、富良野周辺の花畑や美瑛の景色を楽しみながら層雲峡へ向かいます。観光を入れつつも移動日なので、夕方のチェックインを優先します。",
       "mealRecommendations": [
@@ -1313,6 +1688,53 @@ export const itinerary = {
           "note": "",
           "kind": "観光",
           "leg": ""
+        }
+      ],
+      "routeMapPoints": [
+        {
+          "place": "コテージ",
+          "note": "",
+          "kind": "移動",
+          "leg": "15分",
+          "x": 61.8,
+          "y": 63.3,
+          "known": true
+        },
+        {
+          "place": "黒岳ロープウェイ",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 14.7,
+          "y": 48.5,
+          "known": true
+        },
+        {
+          "place": "層雲峡温泉街",
+          "note": "昼食",
+          "kind": "昼食",
+          "leg": "",
+          "x": 6,
+          "y": 37.1,
+          "known": true
+        },
+        {
+          "place": "銀河・流星の滝",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 50.0,
+          "y": 48.5,
+          "known": true
+        },
+        {
+          "place": "大函 / 層雲峡散策",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 87.0,
+          "y": 36.7,
+          "known": true
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E3%82%B3%E3%83%86%E3%83%BC%E3%82%B8&destination=%E5%A4%A7%E5%87%BD+%2F+%E5%B1%A4%E9%9B%B2%E5%B3%A1%E6%95%A3%E7%AD%96&travelmode=driving&waypoints=%E9%BB%92%E5%B2%B3%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4|%E5%B1%A4%E9%9B%B2%E5%B3%A1%E6%B8%A9%E6%B3%89%E8%A1%97|%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D",
@@ -1508,6 +1930,71 @@ export const itinerary = {
           "note": "",
           "kind": "手続き",
           "leg": ""
+        }
+      ],
+      "routeMapPoints": [
+        {
+          "place": "層雲峡",
+          "note": "",
+          "kind": "移動",
+          "leg": "約2時間",
+          "x": 13.0,
+          "y": 28.6,
+          "known": true
+        },
+        {
+          "place": "北見",
+          "note": "",
+          "kind": "移動",
+          "leg": "約2時間",
+          "x": 47.6,
+          "y": 13.0,
+          "known": true
+        },
+        {
+          "place": "阿寒湖",
+          "note": "昼食",
+          "kind": "移動",
+          "leg": "",
+          "x": 55.0,
+          "y": 87.0,
+          "known": true
+        },
+        {
+          "place": "阿寒湖 / 摩周湖候補",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 40.1,
+          "y": 86.1,
+          "known": true
+        },
+        {
+          "place": "阿寒・摩周",
+          "note": "",
+          "kind": "移動",
+          "leg": "約90分",
+          "x": 67.5,
+          "y": 76.6,
+          "known": true
+        },
+        {
+          "place": "中標津",
+          "note": "",
+          "kind": "移動",
+          "leg": "",
+          "x": 87.0,
+          "y": 62.8,
+          "known": true
+        },
+        {
+          "place": "Shinrin Koen Camp",
+          "note": "",
+          "kind": "手続き",
+          "leg": "",
+          "x": 72.0,
+          "y": 61.9,
+          "known": true
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E5%B1%A4%E9%9B%B2%E5%B3%A1&destination=Shinrin+Koen+Camp&travelmode=driving&waypoints=%E5%8C%97%E8%A6%8B|%E9%98%BF%E5%AF%92%E6%B9%96|%E9%98%BF%E5%AF%92%E6%B9%96+%2F+%E6%91%A9%E5%91%A8%E6%B9%96%E5%80%99%E8%A3%9C|%E9%98%BF%E5%AF%92%E3%83%BB%E6%91%A9%E5%91%A8|%E4%B8%AD%E6%A8%99%E6%B4%A5",
@@ -1748,10 +2235,90 @@ export const itinerary = {
           "leg": ""
         },
         {
+          "place": "オシンコシンの滝",
+          "note": "",
+          "kind": "観光",
+          "leg": "約2時間15分"
+        },
+        {
           "place": "中標津へ帰着",
           "note": "",
           "kind": "休憩",
           "leg": ""
+        }
+      ],
+      "routeMapPoints": [
+        {
+          "place": "中標津",
+          "note": "",
+          "kind": "移動",
+          "leg": "約75分",
+          "x": 28.3,
+          "y": 87.0,
+          "known": true
+        },
+        {
+          "place": "羅臼",
+          "note": "",
+          "kind": "移動",
+          "leg": "約30分",
+          "x": 87.0,
+          "y": 26.5,
+          "known": true
+        },
+        {
+          "place": "知床峠",
+          "note": "",
+          "kind": "観光",
+          "leg": "約45分",
+          "x": 68.8,
+          "y": 19.5,
+          "known": true
+        },
+        {
+          "place": "知床五湖",
+          "note": "",
+          "kind": "観光",
+          "leg": "約30分",
+          "x": 51.2,
+          "y": 15.5,
+          "known": true
+        },
+        {
+          "place": "ウトロ",
+          "note": "昼食",
+          "kind": "移動",
+          "leg": "約15分",
+          "x": 34.7,
+          "y": 20.9,
+          "known": true
+        },
+        {
+          "place": "フレペの滝遊歩道",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 29.2,
+          "y": 23.4,
+          "known": true
+        },
+        {
+          "place": "オシンコシンの滝",
+          "note": "",
+          "kind": "観光",
+          "leg": "約2時間15分",
+          "x": 13.0,
+          "y": 25.1,
+          "known": true
+        },
+        {
+          "place": "中標津へ帰着",
+          "note": "",
+          "kind": "休憩",
+          "leg": "",
+          "x": 13.3,
+          "y": 86.1,
+          "known": true
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&destination=%E4%B8%AD%E6%A8%99%E6%B4%A5%E3%81%B8%E5%B8%B0%E7%9D%80&travelmode=driving&waypoints=%E7%BE%85%E8%87%BC|%E7%9F%A5%E5%BA%8A%E5%B3%A0|%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96|%E3%82%A6%E3%83%88%E3%83%AD|%E3%83%95%E3%83%AC%E3%83%9A%E3%81%AE%E6%BB%9D%E9%81%8A%E6%AD%A9%E9%81%93|%E3%82%AA%E3%82%B7%E3%83%B3%E3%82%B3%E3%82%B7%E3%83%B3%E3%81%AE%E6%BB%9D",
@@ -1949,6 +2516,71 @@ export const itinerary = {
           "leg": ""
         }
       ],
+      "routeMapPoints": [
+        {
+          "place": "中標津",
+          "note": "",
+          "kind": "移動",
+          "leg": "約45分",
+          "x": 13.0,
+          "y": 87.0,
+          "known": true
+        },
+        {
+          "place": "標津",
+          "note": "",
+          "kind": "観光",
+          "leg": "約45分",
+          "x": 45.7,
+          "y": 13.0,
+          "known": true
+        },
+        {
+          "place": "野付半島",
+          "note": "",
+          "kind": "移動",
+          "leg": "",
+          "x": 87.0,
+          "y": 64.4,
+          "known": true
+        },
+        {
+          "place": "野付半島 / 尾岱沼",
+          "note": "昼食",
+          "kind": "昼食",
+          "leg": "",
+          "x": 72.0,
+          "y": 63.6,
+          "known": true
+        },
+        {
+          "place": "野付半島ネイチャーセンター",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 87.7,
+          "y": 76.7,
+          "known": true
+        },
+        {
+          "place": "野付半島",
+          "note": "",
+          "kind": "移動",
+          "leg": "約90分",
+          "x": 94,
+          "y": 53.1,
+          "known": true
+        },
+        {
+          "place": "中標津",
+          "note": "",
+          "kind": "移動",
+          "leg": "",
+          "x": 6,
+          "y": 86.1,
+          "known": true
+        }
+      ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&destination=%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6%E3%83%8D%E3%82%A4%E3%83%81%E3%83%A3%E3%83%BC%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC&travelmode=driving&waypoints=%E6%A8%99%E6%B4%A5|%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6|%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6+%2F+%E5%B0%BE%E5%B2%B1%E6%B2%BC",
       "todayTheme": "中標津から標津・野付半島方面へ。海、湿原、野鳥、立ち枯れたトドワラの風景など、道東らしい自然を味わいます。移動はあるものの、日帰りで戻れる範囲にします。",
       "mealRecommendations": [
@@ -2135,6 +2767,71 @@ export const itinerary = {
           "note": "",
           "kind": "移動",
           "leg": ""
+        }
+      ],
+      "routeMapPoints": [
+        {
+          "place": "中標津",
+          "note": "",
+          "kind": "移動",
+          "leg": "約2時間",
+          "x": 87.0,
+          "y": 13.0,
+          "known": true
+        },
+        {
+          "place": "釧路湿原",
+          "note": "",
+          "kind": "移動",
+          "leg": "",
+          "x": 13.0,
+          "y": 72.6,
+          "known": true
+        },
+        {
+          "place": "達古武湖 / 釧路湿原",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 33.7,
+          "y": 75.1,
+          "known": true
+        },
+        {
+          "place": "釧路町 / 釧路市内",
+          "note": "昼食",
+          "kind": "昼食",
+          "leg": "",
+          "x": 17.9,
+          "y": 87.0,
+          "known": true
+        },
+        {
+          "place": "細岡展望台候補",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 21.5,
+          "y": 82.8,
+          "known": true
+        },
+        {
+          "place": "釧路湿原",
+          "note": "",
+          "kind": "移動",
+          "leg": "約2時間",
+          "x": 6,
+          "y": 71.7,
+          "known": true
+        },
+        {
+          "place": "中標津",
+          "note": "",
+          "kind": "移動",
+          "leg": "",
+          "x": 72.0,
+          "y": 12.1,
+          "known": true
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&destination=%E7%B4%B0%E5%B2%A1%E5%B1%95%E6%9C%9B%E5%8F%B0%E5%80%99%E8%A3%9C&travelmode=driving&waypoints=%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F|%E9%81%94%E5%8F%A4%E6%AD%A6%E6%B9%96+%2F+%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F|%E9%87%A7%E8%B7%AF%E7%94%BA+%2F+%E9%87%A7%E8%B7%AF%E5%B8%82%E5%86%85",
@@ -2339,6 +3036,71 @@ export const itinerary = {
           "leg": ""
         }
       ],
+      "routeMapPoints": [
+        {
+          "place": "中標津",
+          "note": "",
+          "kind": "移動",
+          "leg": "約90分",
+          "x": 87.0,
+          "y": 13.0,
+          "known": true
+        },
+        {
+          "place": "弟子屈",
+          "note": "",
+          "kind": "移動",
+          "leg": "約90分",
+          "x": 65.6,
+          "y": 21.2,
+          "known": true
+        },
+        {
+          "place": "足寄",
+          "note": "",
+          "kind": "移動",
+          "leg": "",
+          "x": 27.9,
+          "y": 49.4,
+          "known": true
+        },
+        {
+          "place": "足寄 / 道の駅",
+          "note": "昼食",
+          "kind": "昼食",
+          "leg": "",
+          "x": 12.9,
+          "y": 48.5,
+          "known": true
+        },
+        {
+          "place": "足寄",
+          "note": "",
+          "kind": "移動",
+          "leg": "約90分",
+          "x": 41.8,
+          "y": 38.1,
+          "known": true
+        },
+        {
+          "place": "帯広",
+          "note": "",
+          "kind": "移動",
+          "leg": "",
+          "x": 13.0,
+          "y": 87.0,
+          "known": true
+        },
+        {
+          "place": "帯広市内",
+          "note": "",
+          "kind": "観光",
+          "leg": "",
+          "x": 6,
+          "y": 86.1,
+          "known": true
+        }
+      ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&destination=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85&travelmode=driving&waypoints=%E5%BC%9F%E5%AD%90%E5%B1%88|%E8%B6%B3%E5%AF%84|%E8%B6%B3%E5%AF%84+%2F+%E9%81%93%E3%81%AE%E9%A7%85|%E5%B8%AF%E5%BA%83",
       "todayTheme": "当初の苫小牧直行ではなく、移動負荷を考慮して帯広に滞在する日。道東から十勝へ移動し、途中は休憩を多めに取ります。夜は帯広で豚丼など十勝グルメを楽しみます。",
       "mealRecommendations": [
@@ -2511,6 +3273,53 @@ export const itinerary = {
           "note": "夕食",
           "kind": "夕食",
           "leg": ""
+        }
+      ],
+      "routeMapPoints": [
+        {
+          "place": "帯広市内",
+          "note": "昼食",
+          "kind": "観光",
+          "leg": "",
+          "x": 87.0,
+          "y": 13.0,
+          "known": true
+        },
+        {
+          "place": "帯広",
+          "note": "",
+          "kind": "移動",
+          "leg": "約3時間",
+          "x": 72.0,
+          "y": 12.1,
+          "known": true
+        },
+        {
+          "place": "苫小牧",
+          "note": "",
+          "kind": "移動",
+          "leg": "",
+          "x": 13.0,
+          "y": 87.0,
+          "known": true
+        },
+        {
+          "place": "苫小牧港",
+          "note": "",
+          "kind": "手続き",
+          "leg": "",
+          "x": 23.3,
+          "y": 80.0,
+          "known": true
+        },
+        {
+          "place": "苫小牧港 / 船内",
+          "note": "夕食",
+          "kind": "夕食",
+          "leg": "",
+          "x": 6,
+          "y": 85.4,
+          "known": true
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85&destination=%E8%8B%AB%E5%B0%8F%E7%89%A7%E6%B8%AF+%2F+%E8%88%B9%E5%86%85&travelmode=driving&waypoints=%E5%B8%AF%E5%BA%83|%E8%8B%AB%E5%B0%8F%E7%89%A7|%E8%8B%AB%E5%B0%8F%E7%89%A7%E6%B8%AF",
