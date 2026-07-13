@@ -227,7 +227,7 @@ h1 {
 
 .guideIntro {
   display: grid;
-  grid-template-columns: minmax(260px, .9fr) minmax(0, 1.1fr);
+  grid-template-columns: minmax(0, 1.22fr) minmax(260px, .78fr);
   gap: 18px;
   padding: 22px 28px 0;
 }
@@ -248,9 +248,106 @@ h1 {
   font-size: 20px;
 }
 
+.cardTitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.cardTitleRow h3 {
+  margin: 0;
+}
+
+.cardTitleRow a {
+  flex: 0 0 auto;
+  border-radius: 999px;
+  padding: 4px 10px;
+  background: var(--blue);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 900;
+  text-decoration: none;
+}
+
+.routeCardBody {
+  display: grid;
+  grid-template-columns: minmax(180px, .8fr) minmax(0, 1fr);
+  gap: 16px;
+}
+
+.sketchMap {
+  position: relative;
+  min-height: 240px;
+  overflow: hidden;
+  border: 1px solid rgba(23, 107, 135, .18);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(226, 241, 248, .95), rgba(255, 250, 240, .92)),
+    radial-gradient(circle at 18% 20%, rgba(61, 123, 89, .15) 0 10%, transparent 11%),
+    radial-gradient(circle at 72% 72%, rgba(23, 107, 135, .16) 0 13%, transparent 14%);
+}
+
+.sketchMap::before {
+  content: "";
+  position: absolute;
+  inset: 12% 16%;
+  border: 3px dashed rgba(23, 107, 135, .55);
+  border-left-width: 0;
+  border-bottom-width: 0;
+  border-radius: 52% 42% 48% 36%;
+  transform: rotate(13deg);
+}
+
+.mapNode {
+  position: absolute;
+  left: var(--x);
+  top: var(--y);
+  transform: translate(-50%, -50%);
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  max-width: 78px;
+  text-align: center;
+  z-index: 1;
+}
+
+.mapNode i {
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  border: 3px solid var(--blue);
+  background: #fff;
+  color: var(--blue);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 900;
+  box-shadow: 0 3px 12px rgba(17, 24, 39, .12);
+}
+
+.mapNode.start i,
+.mapNode.end i {
+  border-color: var(--coral);
+  background: var(--coral);
+  color: #fff;
+}
+
+.mapNode b {
+  display: block;
+  padding: 2px 5px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, .86);
+  color: var(--ink);
+  font-size: 11px;
+  line-height: 1.25;
+}
+
 .routeCard ol {
   display: grid;
-  gap: 10px;
+  gap: 8px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -303,13 +400,14 @@ h1 {
 .routeCard small {
   grid-column: 1 / -1;
   color: var(--muted);
+  font-size: 12px;
   font-weight: 800;
 }
 
 .themeCard p {
   margin: 0;
   color: #2f3d4b;
-  font-size: 16px;
+  font-size: 15px;
 }
 
 .photoSpots {
@@ -324,7 +422,7 @@ h1 {
 
 .photoSpots__grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -391,7 +489,7 @@ h1 {
 
 .day__grid {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 360px;
+  grid-template-columns: minmax(0, 1.35fr) minmax(260px, .65fr);
   gap: 22px;
   padding: 24px 28px 30px;
 }
@@ -411,7 +509,7 @@ h1 {
 
 .timeline {
   display: grid;
-  gap: 10px;
+  gap: 6px;
   margin: 0;
   padding: 0;
   list-style: none;
@@ -423,7 +521,7 @@ h1 {
   gap: 10px;
   align-items: start;
   border-top: 1px solid #edf2f6;
-  padding-top: 10px;
+  padding-top: 8px;
 }
 
 .timeline li:first-child {
@@ -461,6 +559,10 @@ time {
 .timeline p {
   margin: 2px 0 0;
   color: #39495a;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .timeline small {
@@ -520,6 +622,7 @@ time {
   .hero,
   .day__header,
   .guideIntro,
+  .routeCardBody,
   .day__grid {
     grid-template-columns: 1fr;
   }
@@ -552,6 +655,10 @@ time {
   }
 
   .timeline li {
+    grid-template-columns: 1fr;
+  }
+
+  .photoSpots__grid {
     grid-template-columns: 1fr;
   }
 }

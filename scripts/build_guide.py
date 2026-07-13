@@ -9,7 +9,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 from pptx import Presentation
 from pptx.dml.color import RGBColor
-from pptx.enum.shapes import MSO_SHAPE
+from pptx.enum.shapes import MSO_CONNECTOR, MSO_SHAPE
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR, MSO_AUTO_SIZE
 from pptx.util import Inches, Pt
 from reportlab.lib import colors
@@ -17,6 +17,7 @@ from reportlab.lib.enums import TA_CENTER, TA_LEFT
 from reportlab.lib.pagesizes import landscape, A4
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.units import mm
+from reportlab.graphics.shapes import Circle, Drawing, Line, Rect, String
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import Image as PdfImage
@@ -24,9 +25,10 @@ from reportlab.platypus import PageBreak, Paragraph, SimpleDocTemplate, Spacer, 
 
 from guidebook_common import (
     guide_spots,
-    map_url,
     meal_recommendations,
+    route_map_url,
     route_points,
+    short_text,
     today_theme,
     todays_tips,
 )
@@ -248,7 +250,7 @@ def make_placeholder(label: str, path: Path, size=(1600, 900)) -> Path:
         font_big = ImageFont.load_default()
         font_small = ImageFont.load_default()
     title = label
-    subtitle = "写真を images フォルダに追加"
+    subtitle = "写真準備中"
     tw = draw.textbbox((0, 0), title, font=font_big)
     sw = draw.textbbox((0, 0), subtitle, font=font_small)
     draw.rounded_rectangle((120, 260, 1480, 640), radius=36, fill=(255, 255, 255), outline=(44, 115, 160), width=4)
@@ -318,8 +320,8 @@ def add_timeline(slide, items: list[TimelineItem], start_y=Inches(1.55), max_ite
         add_textbox(slide, Inches(0.68), y + Inches(0.07), Inches(0.9), Inches(0.25), item.time, time_size, BLUE, True, PP_ALIGN.CENTER)
         add_textbox(slide, Inches(1.55), y + Inches(0.07), Inches(0.75), Inches(0.25), item.type, time_size, CORAL, True, PP_ALIGN.CENTER)
         add_textbox(slide, Inches(2.28), y + Inches(0.06), Inches(1.35), Inches(0.28), item.place, place_size, NAVY, True)
-        add_textbox(slide, Inches(3.55), y + Inches(0.05), Inches(3.35), Inches(0.32), item.detail, detail_size, INK)
-        add_textbox(slide, Inches(6.95), y + Inches(0.07), Inches(0.45), Inches(0.25), item.duration, detail_size, MUTED, False, PP_ALIGN.RIGHT)
+        add_textbox(slide, Inches(3.55), y + Inches(0.05), Inches(3.15), Inches(0.32), short_text(item.detail, 72), detail_size, INK)
+        add_textbox(slide, Inches(6.72), y + Inches(0.07), Inches(0.70), Inches(0.25), item.duration, detail_size, MUTED, False, PP_ALIGN.RIGHT)
         y += step
 
 
@@ -335,38 +337,79 @@ def add_guide_heading(slide, x, y, text, size=13):
     add_textbox(slide, x, y, Inches(2.2), Inches(0.26), text, size, BLUE, True)
 
 
+def route_node_position(index: int, total: int) -> tuple[float, float]:
+    xs = [0.18, 0.46, 0.74, 0.58, 0.28, 0.50, 0.80]
+    if total <= 1:
+        return 0.48, 0.50
+    return xs[index % len(xs)], 0.13 + index * (0.74 / max(total - 1, 1))
+
+
 def add_route_map(slide, day: DayPlan, x, y, w, h):
     add_card(slide, x, y, w, h, RGBColor(255, 252, 246), RGBColor(232, 217, 196))
-    add_guide_heading(slide, x + Inches(0.18), y + Inches(0.14), "Today's Route", 13)
-    points = route_points(day, max_points=9)
+    add_guide_heading(slide, x + Inches(0.18), y + Inches(0.14), "Today's Map", 13)
+    link = add_textbox(slide, x + w - Inches(1.28), y + Inches(0.14), Inches(1.05), Inches(0.22), "Google Map", 7.2, BLUE, True, PP_ALIGN.RIGHT)
+    link.text_frame.paragraphs[0].runs[0].hyperlink.address = route_map_url(day)
+
+    points = route_points(day, max_points=7)
     if not points:
         return
-    start_y = y + Inches(0.55)
-    available = h - Inches(0.72)
-    step = min(Inches(0.35), available / max(len(points), 1))
+
+    map_x = x + Inches(0.18)
+    map_y = y + Inches(0.52)
+    map_w = int(w * 0.47)
+    map_h = h - Inches(0.72)
+    sketch = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, map_x, map_y, map_w, map_h)
+    sketch.fill.solid()
+    sketch.fill.fore_color.rgb = SKY
+    sketch.line.color.rgb = RGBColor(203, 223, 232)
+
+    centers: list[tuple[int, int]] = []
     for index, point in enumerate(points):
-        py = start_y + step * index
-        dot = slide.shapes.add_shape(MSO_SHAPE.OVAL, x + Inches(0.22), py + Inches(0.04), Inches(0.12), Inches(0.12))
+        px_ratio, py_ratio = route_node_position(index, len(points))
+        cx = int(map_x + map_w * px_ratio)
+        cy = int(map_y + map_h * py_ratio)
+        centers.append((cx, cy))
+        if index > 0:
+            x1, y1 = centers[index - 1]
+            connector = slide.shapes.add_connector(MSO_CONNECTOR.STRAIGHT, x1, y1, cx, cy)
+            connector.line.color.rgb = RGBColor(44, 115, 160)
+            connector.line.width = Pt(2.0)
+
+    for index, point in enumerate(points):
+        cx, cy = centers[index]
+        fill = CORAL if index in {0, len(points) - 1} else WHITE
+        text_color = WHITE if index in {0, len(points) - 1} else BLUE
+        dot = slide.shapes.add_shape(MSO_SHAPE.OVAL, cx - Inches(0.11), cy - Inches(0.11), Inches(0.22), Inches(0.22))
         dot.fill.solid()
-        dot.fill.fore_color.rgb = BLUE
-        dot.line.fill.background()
-        add_textbox(slide, x + Inches(0.42), py, w - Inches(0.62), Inches(0.18), point["place"], 7.8, NAVY, True)
-        if point.get("note"):
-            add_textbox(slide, x + w - Inches(0.92), py, Inches(0.72), Inches(0.18), point["note"], 6.7, CORAL, True, PP_ALIGN.RIGHT)
-        if index < len(points) - 1:
-            leg = point.get("leg", "")
-            line_shape = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, x + Inches(0.275), py + Inches(0.19), Inches(0.025), max(step - Inches(0.11), Inches(0.05)))
-            line_shape.fill.solid()
-            line_shape.fill.fore_color.rgb = RGBColor(176, 203, 209)
-            line_shape.line.fill.background()
-            if leg:
-                add_textbox(slide, x + Inches(0.48), py + Inches(0.17), w - Inches(0.72), Inches(0.15), leg, 5.8, MUTED)
+        dot.fill.fore_color.rgb = fill
+        dot.line.color.rgb = BLUE if fill == WHITE else CORAL
+        dot.text_frame.clear()
+        dot.text_frame.vertical_anchor = MSO_ANCHOR.MIDDLE
+        p = dot.text_frame.paragraphs[0]
+        p.alignment = PP_ALIGN.CENTER
+        r = p.add_run()
+        r.text = str(index + 1)
+        r.font.name = EN_FONT
+        r.font.size = Pt(6.5)
+        r.font.bold = True
+        r.font.color.rgb = text_color
+        add_textbox(slide, cx - Inches(0.34), cy + Inches(0.12), Inches(0.68), Inches(0.20), short_text(point["place"], 8), 5.5, NAVY, True, PP_ALIGN.CENTER)
+
+    list_x = map_x + map_w + Inches(0.20)
+    list_w = x + w - list_x - Inches(0.18)
+    row_h = min(Inches(0.36), (map_h - Inches(0.12)) / max(len(points), 1))
+    for index, point in enumerate(points):
+        py = map_y + Inches(0.05) + row_h * index
+        add_textbox(slide, list_x, py, Inches(0.22), Inches(0.18), f"{index + 1}", 6.4, CORAL, True, PP_ALIGN.CENTER)
+        add_textbox(slide, list_x + Inches(0.24), py, list_w - Inches(0.26), Inches(0.18), short_text(point["place"], 18), 7.2, NAVY, True)
+        if point.get("leg") and index < len(points) - 1:
+            add_textbox(slide, list_x + Inches(0.28), py + Inches(0.17), list_w - Inches(0.30), Inches(0.14), point["leg"], 5.6, MUTED)
 
 
 def add_theme_card(slide, day: DayPlan, x, y, w, h):
     add_card(slide, x, y, w, h, RGBColor(247, 251, 250), RGBColor(210, 229, 226))
     add_guide_heading(slide, x + Inches(0.18), y + Inches(0.14), "Today's Theme", 13)
-    add_textbox(slide, x + Inches(0.18), y + Inches(0.52), w - Inches(0.36), h - Inches(0.65), today_theme(day), 10.5, INK)
+    add_textbox(slide, x + Inches(0.18), y + Inches(0.52), w - Inches(0.36), h - Inches(0.65), today_theme(day), 10.0, INK)
 
 
 def add_meal_recommendations(slide, day: DayPlan, x, y, w, h):
@@ -379,16 +422,16 @@ def add_meal_recommendations(slide, day: DayPlan, x, y, w, h):
         add_textbox(slide, x + Inches(0.18), iy, Inches(1.3), Inches(0.18), rec["label"], 7.6, CORAL, True)
         add_textbox(slide, x + Inches(1.25), iy, w - Inches(1.42), Inches(0.22), rec["stars"], 7.6, RGBColor(198, 122, 36), True, PP_ALIGN.RIGHT)
         add_textbox(slide, x + Inches(0.18), iy + Inches(0.22), w - Inches(0.36), Inches(0.22), rec["name"], 8.7, NAVY, True)
-        add_textbox(slide, x + Inches(0.18), iy + Inches(0.47), w - Inches(0.36), Inches(0.32), f"{rec['budget']} / {rec['popular']}", 7.1, MUTED)
+        add_textbox(slide, x + Inches(0.18), iy + Inches(0.47), w - Inches(0.36), Inches(0.26), f"{rec['budget']} / {rec['popular']}", 6.8, MUTED)
 
 
 def add_tips_card(slide, day: DayPlan, x, y, w, h):
     add_card(slide, x, y, w, h, RGBColor(245, 250, 240), RGBColor(218, 231, 204))
     add_guide_heading(slide, x + Inches(0.16), y + Inches(0.12), "Today's Tips", 12)
-    tips = todays_tips(day, max_items=4)
+    tips = todays_tips(day, max_items=2)
     ty = y + Inches(0.48)
     for tip in tips:
-        add_textbox(slide, x + Inches(0.18), ty, w - Inches(0.36), Inches(0.26), f"・{tip}", 7.2, INK)
+        add_textbox(slide, x + Inches(0.18), ty, w - Inches(0.36), Inches(0.25), f"・{short_text(tip, 42)}", 7.0, INK)
         ty += Inches(0.34)
 
 
@@ -420,19 +463,19 @@ def add_photo_spots(slide, day: DayPlan, x=Inches(7.82), y=Inches(0.35), max_ite
         add_textbox(slide, px, y + Inches(1.28), photo_w, Inches(0.34), photo.caption, 6.2, MUTED, False, PP_ALIGN.CENTER)
 
 
-def add_spot_strip(slide, day: DayPlan, x, y, w, h, max_items=3):
+def add_spot_strip(slide, day: DayPlan, x, y, w, h, max_items=2):
     spots = guide_spots(day, max_items=max_items)
     if not spots:
         return
-    add_guide_heading(slide, x, y, "観光スポット写真", 12)
+    add_guide_heading(slide, x, y, "より道スポット", 12)
     y += Inches(0.32)
     gap = Inches(0.16)
     item_w = (w - gap * (len(spots) - 1)) / len(spots)
     for index, spot in enumerate(spots):
         sx = x + (item_w + gap) * index
         add_picture_cover(slide, spot_image(day, spot), sx, y, item_w, h - Inches(0.58))
-        add_textbox(slide, sx, y + h - Inches(0.50), item_w, Inches(0.18), spot["place"], 6.7, NAVY, True, PP_ALIGN.CENTER)
-        add_textbox(slide, sx, y + h - Inches(0.30), item_w, Inches(0.20), f"滞在 {spot['stay']} / 駐車場確認", 5.7, MUTED, False, PP_ALIGN.CENTER)
+        add_textbox(slide, sx, y + h - Inches(0.50), item_w, Inches(0.18), short_text(spot["place"], 15), 6.7, NAVY, True, PP_ALIGN.CENTER)
+        add_textbox(slide, sx, y + h - Inches(0.30), item_w, Inches(0.20), f"滞在 {spot['stay']} / Mapあり", 5.7, MUTED, False, PP_ALIGN.CENTER)
 
 
 def chunks(items: list[TimelineItem], size: int) -> list[list[TimelineItem]]:
@@ -459,26 +502,25 @@ def build_pptx(days: list[DayPlan]):
     for day in days:
         slide = prs.slides.add_slide(blank)
         style_background(slide, RGBColor(255, 252, 246))
-        add_picture_cover(slide, hero_image(day), Inches(7.0), Inches(0.0), Inches(6.33), Inches(3.35))
+        add_picture_cover(slide, hero_image(day), Inches(7.05), Inches(0.42), Inches(5.75), Inches(3.05))
         add_label(slide, Inches(0.55), Inches(0.36), f"DAY {day.day}")
-        add_textbox(slide, Inches(0.55), Inches(0.78), Inches(6.15), Inches(0.62), day.title, 23, NAVY, True)
-        add_textbox(slide, Inches(0.58), Inches(1.38), Inches(6.2), Inches(0.34), f"{day.date}  {day.area}", 11.5, BLUE, True)
-        add_theme_card(slide, day, Inches(0.55), Inches(1.92), Inches(6.1), Inches(1.22))
-        add_route_map(slide, day, Inches(0.55), Inches(3.35), Inches(4.75), Inches(3.75))
-        add_meal_recommendations(slide, day, Inches(5.48), Inches(3.35), Inches(3.55), Inches(1.88))
-        add_tips_card(slide, day, Inches(9.18), Inches(3.35), Inches(3.6), Inches(1.88))
-        add_spot_strip(slide, day, Inches(5.48), Inches(5.45), Inches(7.3), Inches(1.72), max_items=3)
+        add_textbox(slide, Inches(0.55), Inches(0.78), Inches(6.15), Inches(0.58), day.title, 22, NAVY, True)
+        add_textbox(slide, Inches(0.58), Inches(1.34), Inches(6.2), Inches(0.30), f"{day.date}  {day.area}", 11.0, BLUE, True)
+        add_theme_card(slide, day, Inches(0.55), Inches(1.78), Inches(6.1), Inches(1.02))
+        add_route_map(slide, day, Inches(0.55), Inches(3.02), Inches(6.15), Inches(4.02))
+        add_meal_recommendations(slide, day, Inches(7.05), Inches(3.72), Inches(2.75), Inches(1.48))
+        add_tips_card(slide, day, Inches(10.05), Inches(3.72), Inches(2.75), Inches(1.48))
+        add_spot_strip(slide, day, Inches(7.05), Inches(5.58), Inches(5.75), Inches(1.35), max_items=2)
 
         for page_index, timeline_items in enumerate(chunks(day.timeline, 10), start=1):
             slide2 = prs.slides.add_slide(blank)
             style_background(slide2, RGBColor(252, 252, 250))
             add_label(slide2, Inches(0.55), Inches(0.35), f"DAY {day.day}")
-            title = "時刻ベース詳細スケジュール" if page_index == 1 else "時刻ベース詳細スケジュール 続き"
+            title = "時刻表" if page_index == 1 else "時刻表 続き"
             add_textbox(slide2, Inches(0.55), Inches(0.78), Inches(6.8), Inches(0.42), title, 22, NAVY, True)
             add_timeline(slide2, timeline_items, start_y=Inches(1.45), max_items=10, compact=True)
             add_picture_cover(slide2, hero_image(day), Inches(8.05), Inches(0.55), Inches(4.55), Inches(2.35))
-            add_spot_strip(slide2, day, Inches(8.05), Inches(3.08), Inches(4.55), Inches(1.72), max_items=2)
-            add_meal_recommendations(slide2, day, Inches(8.05), Inches(5.08), Inches(4.55), Inches(1.76))
+            add_route_map(slide2, day, Inches(8.05), Inches(3.14), Inches(4.55), Inches(3.85))
 
     prs.save(PPTX_PATH)
 
@@ -535,6 +577,48 @@ def build_pdf(days: list[DayPlan]):
         ]))
         return tbl
 
+    def route_drawing(day: DayPlan):
+        points = route_points(day, max_points=7)
+        width = 92 * mm
+        height = 58 * mm
+        drawing = Drawing(width, height)
+        drawing.add(Rect(0, 0, width, height, rx=8, ry=8, fillColor=colors.HexColor("#E7F1F4"), strokeColor=colors.HexColor("#CBDDE8")))
+        centers = []
+        for index, _point in enumerate(points):
+            x_ratio, y_ratio = route_node_position(index, len(points))
+            cx = width * x_ratio
+            cy = height * (1 - y_ratio)
+            centers.append((cx, cy))
+            if index > 0:
+                px, py = centers[index - 1]
+                drawing.add(Line(px, py, cx, cy, strokeColor=colors.HexColor("#2C73A0"), strokeWidth=1.5))
+        for index, point in enumerate(points):
+            cx, cy = centers[index]
+            is_edge = index in {0, len(points) - 1}
+            fill = colors.HexColor("#D86352") if is_edge else colors.white
+            text = colors.white if is_edge else colors.HexColor("#2C73A0")
+            drawing.add(Circle(cx, cy, 5.5, fillColor=fill, strokeColor=colors.HexColor("#2C73A0"), strokeWidth=1.2))
+            drawing.add(String(cx - 2.4, cy - 2.4, str(index + 1), fontName="Helvetica-Bold", fontSize=5.2, fillColor=text))
+            drawing.add(String(cx - 18, cy - 12, short_text(point["place"], 8), fontName=font, fontSize=5.8, fillColor=colors.HexColor("#143753")))
+        return drawing
+
+    def route_block(day: DayPlan):
+        points = route_points(day, max_points=7)
+        route_style = ParagraphStyle("route", parent=base, fontSize=7.6, leading=10.2, wordWrap="CJK")
+        rows = []
+        for index, point in enumerate(points):
+            leg = f" / {point.get('leg', '')}" if point.get("leg") and index < len(points) - 1 else ""
+            rows.append([Paragraph(f"<b>{index + 1}. {short_text(point['place'], 24)}</b>{leg}", route_style)])
+        rows.append([Paragraph(f'<link href="{route_map_url(day)}">Google Mapでルートを開く</link>', route_style)])
+        tbl = Table(rows, colWidths=[136 * mm])
+        tbl.setStyle(TableStyle([
+            ("LEFTPADDING", (0, 0), (-1, -1), 4),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 4),
+            ("TOPPADDING", (0, 0), (-1, -1), 2),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
+        ]))
+        return tbl
+
     story = [
         Spacer(1, 28),
         Paragraph("北海道家族旅行ガイドブック", ParagraphStyle("title", parent=h1, alignment=TA_CENTER, fontSize=30, leading=36)),
@@ -547,18 +631,14 @@ def build_pdf(days: list[DayPlan]):
     ]
 
     for day in days:
-        route_rows = []
-        points = route_points(day)
-        for index, point in enumerate(points):
-            route_rows.append([point["place"], point.get("note", ""), point.get("leg", "") if index < len(points) - 1 else ""])
         rec_rows = [
             [rec["label"], rec["name"], rec["stars"], rec["budget"], rec["popular"]]
-            for rec in meal_recommendations(day)
+            for rec in meal_recommendations(day)[:2]
         ]
         tip_rows = [[tip] for tip in todays_tips(day)]
         spot_rows = [
             [spot["place"], spot["stay"], spot["parking"], f'<link href="{spot["map_url"]}">Google Map</link>']
-            for spot in guide_spots(day)
+            for spot in guide_spots(day, max_items=2)
         ]
         header = Table(
             [
@@ -581,13 +661,23 @@ def build_pdf(days: list[DayPlan]):
         story += [
             header,
             Spacer(1, 4),
-            Paragraph("Today's Route", h2),
-            pdf_table([["Place", "Note", "Move"]] + route_rows, [82 * mm, 34 * mm, 34 * mm], header=colors.HexColor("#F5EEDC"), size=7.6),
+            Paragraph("Today's Map", h2),
+            Table(
+                [[route_drawing(day), route_block(day)]],
+                colWidths=[96 * mm, 140 * mm],
+                style=TableStyle([
+                    ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                    ("LEFTPADDING", (0, 0), (-1, -1), 0),
+                    ("RIGHTPADDING", (0, 0), (-1, -1), 6),
+                    ("TOPPADDING", (0, 0), (-1, -1), 0),
+                    ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
+                ]),
+            ),
             Paragraph("Today's Theme", h2),
             p(today_theme(day)),
-            Paragraph("時刻ベース詳細スケジュール", h2),
+            Paragraph("時刻表", h2),
             pdf_table(
-                [["Time", "Type", "Place", "Detail", "Duration"]] + [[i.time, i.type, i.place, i.detail, i.duration] for i in day.timeline],
+                [["Time", "Type", "Place", "Detail", "Duration"]] + [[i.time, i.type, i.place, short_text(i.detail, 76), i.duration] for i in day.timeline],
                 [24 * mm, 22 * mm, 42 * mm, 132 * mm, 26 * mm],
                 size=7.2,
             ),
@@ -609,7 +699,7 @@ def build_pdf(days: list[DayPlan]):
             ]
         if spot_rows:
             story += [
-                Paragraph("観光スポット写真・駐車場・GoogleMap", h2),
+                Paragraph("より道スポット・駐車場・Google Map", h2),
                 pdf_table(
                     [["Spot", "Stay", "Parking", "GoogleMap"]] + spot_rows,
                     [54 * mm, 28 * mm, 56 * mm, 108 * mm],

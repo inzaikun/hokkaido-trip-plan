@@ -1,4 +1,5 @@
 import { itinerary } from "./itinerary-data";
+import type { CSSProperties } from "react";
 
 const typeClass: Record<string, string> = {
   移動: "move",
@@ -10,6 +11,17 @@ const typeClass: Record<string, string> = {
   手続き: "prep",
   準備: "prep",
 };
+
+function shortText(text: string, limit = 82) {
+  if (text.length <= limit) return text;
+  return `${text.slice(0, limit).replace(/[、。・\s]+$/, "")}…`;
+}
+
+function routeNodePosition(index: number, total: number) {
+  const xs = [18, 46, 74, 58, 28, 50, 80];
+  if (total <= 1) return { x: 48, y: 50 };
+  return { x: xs[index % xs.length], y: 13 + Math.round(index * (74 / Math.max(total - 1, 1))) };
+}
 
 export default function Page() {
   const totalStops = itinerary.days.reduce((sum, day) => sum + day.timeline.length, 0);
@@ -78,16 +90,37 @@ export default function Page() {
             </header>
             <div className="guideIntro">
               <section className="routeCard">
-                <h3>Today&apos;s Route</h3>
-                <ol>
-                  {day.route.map((point) => (
+                <div className="cardTitleRow">
+                  <h3>Today&apos;s Map</h3>
+                  <a href={day.routeMapUrl} target="_blank" rel="noreferrer">Google Map</a>
+                </div>
+                <div className="routeCardBody">
+                  <div className="sketchMap" aria-label="簡易ルートマップ">
+                    {day.route.slice(0, 7).map((point, index) => {
+                      const position = routeNodePosition(index, Math.min(day.route.length, 7));
+                      const nodeClass = index === 0 ? "start" : index === Math.min(day.route.length, 7) - 1 ? "end" : "";
+                      return (
+                        <span
+                          className={`mapNode ${nodeClass}`}
+                          key={`${day.date}-map-${point.place}`}
+                          style={{ "--x": `${position.x}%`, "--y": `${position.y}%` } as CSSProperties}
+                        >
+                          <i>{index + 1}</i>
+                          <b>{shortText(point.place, 12)}</b>
+                        </span>
+                      );
+                    })}
+                  </div>
+                  <ol>
+                    {day.route.map((point) => (
                     <li key={`${day.date}-${point.place}-${point.note}`}>
                       <strong>{point.place}</strong>
                       {point.note ? <span>{point.note}</span> : null}
                       {point.leg ? <small>{point.leg}</small> : null}
                     </li>
-                  ))}
-                </ol>
+                    ))}
+                  </ol>
+                </div>
               </section>
               <section className="themeCard">
                 <h3>Today&apos;s Theme</h3>
@@ -95,32 +128,9 @@ export default function Page() {
               </section>
             </div>
 
-            {day.guideSpots.length > 0 ? (
-              <section className="photoSpots">
-                <h3>観光スポット写真</h3>
-                <div className="photoSpots__grid">
-                  {day.guideSpots.map((spot) => (
-                    <figure key={`${day.date}-${spot.place}`}>
-                      {spot.image ? (
-                        <img src={`/images/${spot.image}`} alt={spot.place} />
-                      ) : (
-                        <div className="photoSpots__placeholder">{spot.place}</div>
-                      )}
-                      <figcaption>
-                        <strong>{spot.place}</strong>
-                        <span>{spot.caption}</span>
-                        <small>滞在 {spot.stay} / {spot.parking}</small>
-                        <a href={spot.map_url} target="_blank" rel="noreferrer">Google Map</a>
-                      </figcaption>
-                    </figure>
-                  ))}
-                </div>
-              </section>
-            ) : null}
-
             <div className="day__grid">
               <section className="card">
-                <h3>時刻ベース詳細スケジュール</h3>
+                <h3>時刻表</h3>
                 <ol className="timeline">
                   {day.timeline.map((item) => (
                     <li key={`${day.date}-${item.time}-${item.detail}`}>
@@ -128,7 +138,7 @@ export default function Page() {
                       <span className={`tag ${typeClass[item.type] ?? "other"}`}>{item.type}</span>
                       <div>
                         <strong>{item.place}</strong>
-                        <p>{item.detail}</p>
+                        <p title={item.detail}>{shortText(item.detail, 86)}</p>
                         <small>{item.duration}</small>
                       </div>
                     </li>
@@ -146,7 +156,7 @@ export default function Page() {
                         <strong>{restaurant.name}</strong>
                         <em>{restaurant.stars}</em>
                         <p>{restaurant.budget} / {restaurant.popular}</p>
-                        <p>{restaurant.area} / {restaurant.memo}</p>
+                        <p>{shortText(restaurant.memo, 48)}</p>
                       </div>
                     ))}
                   </div>
@@ -164,6 +174,29 @@ export default function Page() {
                 ) : null}
               </aside>
             </div>
+
+            {day.guideSpots.length > 0 ? (
+              <section className="photoSpots">
+                <h3>より道スポット</h3>
+                <div className="photoSpots__grid">
+                  {day.guideSpots.map((spot) => (
+                    <figure key={`${day.date}-${spot.place}`}>
+                      {spot.image ? (
+                        <img src={`/images/${spot.image}`} alt={spot.place} />
+                      ) : (
+                        <div className="photoSpots__placeholder">{spot.place}</div>
+                      )}
+                      <figcaption>
+                        <strong>{spot.place}</strong>
+                        <span>{shortText(spot.caption, 74)}</span>
+                        <small>滞在 {spot.stay} / {spot.parking}</small>
+                        <a href={spot.map_url} target="_blank" rel="noreferrer">Google Map</a>
+                      </figcaption>
+                    </figure>
+                  ))}
+                </div>
+              </section>
+            ) : null}
           </article>
         ))}
       </section>

@@ -40,7 +40,19 @@ def compact_duration(duration: str, detail: str = "") -> str:
     return match.group(1) if match else ""
 
 
-def route_points(day, max_points: int = 9) -> list[dict[str, str]]:
+def short_text(text: str, limit: int = 84) -> str:
+    text = re.sub(r"\s+", " ", text).strip()
+    if len(text) <= limit:
+        return text
+    clipped = text[:limit]
+    for mark in ("。", "、", "・", " "):
+        pos = clipped.rfind(mark)
+        if pos >= max(24, limit // 2):
+            return clipped[:pos].rstrip("、。・ ") + "…"
+    return clipped.rstrip("、。・ ") + "…"
+
+
+def route_points(day, max_points: int = 7) -> list[dict[str, str]]:
     points: list[dict[str, str]] = []
 
     def add(place: str, note: str = "", kind: str = "", leg: str = "") -> None:
@@ -111,20 +123,20 @@ def today_theme(day) -> str:
     summary = re.sub(r"\s+", " ", value(day, "summary", "")).strip()
     title = value(day, "title", "")
     area = value(day, "area", "")
-    if len(summary) < 100:
+    if len(summary) < 70:
         summary = (
             f"{summary} {title}をテーマに、{area}の見どころを無理なく巡ります。"
-            "移動、休憩、食事のリズムを整えながら、家族で写真を残したい景色を楽しむ一日です。"
+            "移動と休憩のリズムを整えながら、家族で写真を残したい景色を楽しむ一日です。"
         )
-    if len(summary) > 150:
-        clipped = summary[:150]
+    if len(summary) > 115:
+        clipped = summary[:115]
         last_period = clipped.rfind("。")
         last_comma = clipped.rfind("、")
-        cut_at = last_period if last_period >= 90 else last_comma
-        if cut_at >= 90:
+        cut_at = last_period if last_period >= 60 else last_comma
+        if cut_at >= 60:
             summary = clipped[:cut_at].rstrip("、。") + "。"
         else:
-            summary = clipped[:147].rstrip("、。") + "。"
+            summary = clipped[:112].rstrip("、。") + "。"
     return summary
 
 
@@ -200,7 +212,7 @@ def meal_recommendations(day) -> list[dict[str, str]]:
     return results
 
 
-def todays_tips(day, max_items: int = 5) -> list[str]:
+def todays_tips(day, max_items: int = 3) -> list[str]:
     tips: list[str] = []
 
     def add(text: str) -> None:
@@ -237,6 +249,23 @@ def map_url(place: str, area: str = "") -> str:
     return "https://www.google.com/maps/search/?api=1&query=" + quote_plus(query)
 
 
+def route_map_url(day) -> str:
+    points = route_points(day, max_points=8)
+    if not points:
+        return map_url(value(day, "area", "北海道"), "北海道")
+    places = [clean_place(point["place"]) for point in points if point.get("place")]
+    places = [place for index, place in enumerate(places) if place and place not in places[:index]]
+    if len(places) < 2:
+        return map_url(places[0], value(day, "area", "")) if places else map_url(value(day, "area", "北海道"), "")
+    origin = quote_plus(places[0])
+    destination = quote_plus(places[-1])
+    waypoints = "|".join(quote_plus(place) for place in places[1:-1])
+    url = f"https://www.google.com/maps/dir/?api=1&origin={origin}&destination={destination}&travelmode=driving"
+    if waypoints:
+        url += f"&waypoints={waypoints}"
+    return url
+
+
 def stay_time_for(day, place: str) -> str:
     clean = clean_place(place)
     for item in value(day, "timeline", []):
@@ -247,7 +276,7 @@ def stay_time_for(day, place: str) -> str:
     return "30〜60分"
 
 
-def guide_spots(day, max_items: int = 4) -> list[dict[str, str]]:
+def guide_spots(day, max_items: int = 2) -> list[dict[str, str]]:
     spots: list[dict[str, str]] = []
     for photo in value(day, "photos", []):
         place = value(photo, "place", "")
