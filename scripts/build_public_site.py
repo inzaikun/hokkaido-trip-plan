@@ -10,6 +10,7 @@ from urllib.parse import quote
 from guidebook_common import (
     guide_spots,
     meal_recommendations,
+    route_map_points,
     route_map_url,
     route_points,
     short_text,
@@ -267,30 +268,26 @@ def render_photo_spots(day: Day) -> str:
     )
 
 
-def route_node_position(index: int, total: int) -> tuple[int, int]:
-    xs = [18, 46, 74, 58, 28, 50, 80]
-    if total <= 1:
-        return 48, 50
-    y = 13 + round(index * (74 / max(total - 1, 1)))
-    return xs[index % len(xs)], y
-
-
-def render_route_sketch(points: list[dict[str, str]]) -> str:
+def render_route_sketch(points: list[dict[str, str | float]]) -> str:
     nodes = []
-    visible = points[:7]
-    for index, point in enumerate(visible):
-        x, y = route_node_position(index, len(visible))
-        kind = " start" if index == 0 else " end" if index == len(visible) - 1 else ""
+    path = " ".join(f"{point['x']},{point['y']}" for point in points)
+    for index, point in enumerate(points):
+        kind = " start" if index == 0 else " end" if index == len(points) - 1 else ""
         nodes.append(
-            f'<span class="map-node{kind}" style="--x:{x}%;--y:{y}%">'
-            f"<i>{index + 1}</i><b>{esc(short_text(point['place'], 12))}</b>"
+            f'<span class="map-node{kind}" style="--x:{point["x"]}%;--y:{point["y"]}%">'
+            f"<i>{index + 1}</i>"
             "</span>"
         )
-    return '<div class="sketch-map" aria-label="簡易ルートマップ">' + "".join(nodes) + "</div>"
+    return (
+        '<div class="sketch-map" aria-label="簡易ルートマップ">'
+        f'<svg viewBox="0 0 100 100" aria-hidden="true"><polyline points="{path}"></polyline></svg>'
+        + "".join(nodes)
+        + "</div>"
+    )
 
 
 def render_route(day: Day) -> str:
-    points = route_points(day, max_points=7)
+    points = route_points(day, max_points=8)
     if not points:
         return ""
     rows = []
@@ -311,7 +308,7 @@ def render_route(day: Day) -> str:
         '<div class="card-title-row"><h3>Today\'s Map</h3>'
         f'<a href="{esc(route_map_url(day))}" target="_blank" rel="noreferrer">Google Map</a></div>'
         '<div class="route-card-body">'
-        f"{render_route_sketch(points)}"
+        f"{render_route_sketch(route_map_points(day, max_points=8))}"
         f'<ol class="route-map">{"".join(rows)}</ol>'
         "</div>"
         "</section>"
@@ -765,15 +762,19 @@ def render_page(days: list[Day]) -> str:
         radial-gradient(circle at 72% 72%, rgba(62, 127, 168, 0.18) 0 13%, transparent 14%);
     }}
 
-    .sketch-map::before {{
-      content: "";
+    .sketch-map svg {{
       position: absolute;
-      inset: 12% 16%;
-      border: 3px dashed rgba(20, 107, 124, 0.55);
-      border-left-width: 0;
-      border-bottom-width: 0;
-      border-radius: 52% 42% 48% 36%;
-      transform: rotate(13deg);
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }}
+
+    .sketch-map polyline {{
+      fill: none;
+      stroke: rgba(20, 107, 124, 0.72);
+      stroke-width: 2.8;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }}
 
     .map-node {{

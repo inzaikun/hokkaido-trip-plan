@@ -17,12 +17,6 @@ function shortText(text: string, limit = 82) {
   return `${text.slice(0, limit).replace(/[、。・\s]+$/, "")}…`;
 }
 
-function routeNodePosition(index: number, total: number) {
-  const xs = [18, 46, 74, 58, 28, 50, 80];
-  if (total <= 1) return { x: 48, y: 50 };
-  return { x: xs[index % xs.length], y: 13 + Math.round(index * (74 / Math.max(total - 1, 1))) };
-}
-
 export default function Page() {
   const totalStops = itinerary.days.reduce((sum, day) => sum + day.timeline.length, 0);
   const restaurantCount = itinerary.days.reduce((sum, day) => sum + day.restaurants.length, 0);
@@ -96,17 +90,18 @@ export default function Page() {
                 </div>
                 <div className="routeCardBody">
                   <div className="sketchMap" aria-label="簡易ルートマップ">
-                    {day.route.slice(0, 7).map((point, index) => {
-                      const position = routeNodePosition(index, Math.min(day.route.length, 7));
-                      const nodeClass = index === 0 ? "start" : index === Math.min(day.route.length, 7) - 1 ? "end" : "";
+                    <svg viewBox="0 0 100 100" aria-hidden="true">
+                      <polyline points={day.routeMapPoints.map((point) => `${point.x},${point.y}`).join(" ")} />
+                    </svg>
+                    {day.routeMapPoints.map((point, index) => {
+                      const nodeClass = index === 0 ? "start" : index === day.routeMapPoints.length - 1 ? "end" : "";
                       return (
                         <span
                           className={`mapNode ${nodeClass}`}
                           key={`${day.date}-map-${point.place}`}
-                          style={{ "--x": `${position.x}%`, "--y": `${position.y}%` } as CSSProperties}
+                          style={{ "--x": `${point.x}%`, "--y": `${point.y}%` } as CSSProperties}
                         >
                           <i>{index + 1}</i>
-                          <b>{shortText(point.place, 12)}</b>
                         </span>
                       );
                     })}
