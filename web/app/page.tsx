@@ -1,5 +1,4 @@
 import { itinerary } from "./itinerary-data";
-import type { CSSProperties } from "react";
 
 const typeClass: Record<string, string> = {
   移動: "move",
@@ -90,21 +89,7 @@ export default function Page() {
                 </div>
                 <div className="routeCardBody">
                   <div className="sketchMap" aria-label="簡易ルートマップ">
-                    <svg viewBox="0 0 100 100" aria-hidden="true">
-                      <polyline points={day.routeMapPoints.map((point) => `${point.x},${point.y}`).join(" ")} />
-                    </svg>
-                    {day.routeMapPoints.map((point, index) => {
-                      const nodeClass = index === 0 ? "start" : index === day.routeMapPoints.length - 1 ? "end" : "";
-                      return (
-                        <span
-                          className={`mapNode ${nodeClass}`}
-                          key={`${day.date}-map-${point.place}`}
-                          style={{ "--x": `${point.x}%`, "--y": `${point.y}%` } as CSSProperties}
-                        >
-                          <i>{index + 1}</i>
-                        </span>
-                      );
-                    })}
+                    <img src={day.routeMapImage} alt={`${day.area}のルート地図`} />
                   </div>
                   <ol>
                     {day.route.map((point) => (
