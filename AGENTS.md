@@ -8,7 +8,8 @@
 - 旅程は `itinerary/days/*.md` に日別で追加・編集する。
 - PowerPointの見た目や生成ロジックは `scripts/build_guide.py` に集約する。
 - GitHub Pages用の公開HTMLは `scripts/build_public_site.py` で `docs/index.html` に生成する。
-- ガイドブック用の派生情報（Today's Route、Today's Theme、食事レコメンド、Tips、スポット情報）は `scripts/guidebook_common.py` で共通生成し、HTML/PowerPoint/PDFで同じ情報を使う。
+- ガイドブック用の派生情報（Today's Map、Today's Theme、食事レコメンド、Tips、スポット情報）は `scripts/guidebook_common.py` で共通生成し、HTML/PowerPoint/PDFで同じ情報を使う。
+- 日別冒頭は読み物として軽くする。詳細情報を増やす場合も、地図・テーマ・食事・Tipsは短く絞り、長い説明は時刻表側へ寄せる。
 - 写真は `images/` に置き、スクリプトから読み込む。
 - 画像がない場合でもビルドが失敗しないよう、場所名入りプレースホルダーを出す。
 - 生成物は `output/` に置く。
@@ -20,6 +21,7 @@
 - 1日あたり1〜2ページを目安にする。
 - 各日には以下を含める。
   - Today's Route
+  - Today's Map（簡易ルート地図とGoogle Mapリンク）
   - Today's Theme
   - 時刻ベースの詳細スケジュール
   - 移動時間

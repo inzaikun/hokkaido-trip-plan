@@ -192,19 +192,14 @@ export const itinerary = {
           "leg": "約35分"
         },
         {
-          "place": "仙台港",
-          "note": "",
-          "kind": "移動",
-          "leg": ""
-        },
-        {
           "place": "仙台港フェリーターミナル",
           "note": "",
           "kind": "手続き",
           "leg": ""
         }
       ],
-      "todayTheme": "北海道家族旅行の出発日。千葉県印西市の自宅を7:00に出発し、昼ごろ仙台に到着して市内観光を楽しんでから仙台港へ向かいます。長距離移動の疲れをためないよう、サービスエリア休憩と昼食を早めに挟み、夕方は余裕を持って太平洋フェリーの乗船手続きに入ります。",
+      "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82&destination=%E4%BB%99%E5%8F%B0%E6%B8%AF%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB&travelmode=driving&waypoints=%E4%BB%99%E5%8F%B0|%E4%BB%99%E5%8F%B0%E5%B8%82%E5%86%85|%E4%BB%99%E5%8F%B0%E5%9F%8E%E8%B7%A1|%E7%91%9E%E9%B3%B3%E6%AE%BF|%E4%BB%99%E5%8F%B0%E6%B8%AF",
+      "todayTheme": "北海道家族旅行の出発日。千葉県印西市の自宅を7:00に出発し、昼ごろ仙台に到着して市内観光を楽しんでから仙台港へ向かいます。",
       "mealRecommendations": [
         {
           "label": "おすすめランチ",
@@ -228,9 +223,7 @@ export const itinerary = {
       "todaysTips": [
         "フェリーWi-Fiは有料1,500円。使うか当日判断。",
         "船内用バッグに、着替え、洗面具、充電器、酔い止めを分ける。",
-        "苫小牧到着は翌日11:00予定。",
-        "印西市から仙台までは長距離なので、到着時刻は渋滞次第。観光は仙台城跡と瑞鳳殿を優先し、時間が押したら定禅寺通散策を短縮する。",
-        "長距離区間は早めの給油と休憩を入れると安心。"
+        "苫小牧到着は翌日11:00予定。"
       ],
       "guideSpots": [
         {
@@ -250,15 +243,6 @@ export const itinerary = {
           "parking": "周辺駐車場を現地確認",
           "stay": "60分",
           "map_url": "https://www.google.com/maps/search/?api=1&query=%E7%91%9E%E9%B3%B3%E6%AE%BF+%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82+%2F+%E4%BB%99%E5%8F%B0+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC"
-        },
-        {
-          "place": "仙台港フェリーターミナル",
-          "image": "",
-          "caption": "北海道へ向かう船旅の入口。乗船前に家族写真を撮る候補",
-          "credit": "写真未設定",
-          "parking": "周辺駐車場を現地確認",
-          "stay": "60分",
-          "map_url": "https://www.google.com/maps/search/?api=1&query=%E4%BB%99%E5%8F%B0%E6%B8%AF%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB+%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82+%2F+%E4%BB%99%E5%8F%B0+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC"
         }
       ]
     },
@@ -403,7 +387,8 @@ export const itinerary = {
           "leg": ""
         }
       ],
-      "todayTheme": "フェリーで苫小牧に到着し、北海道ドライブを開始。初日は無理に詰め込まず、昼食と休憩を挟みながら洞爺湖のキャンプ拠点へ入ります。夜は湖畔でゆっくり過ごします。 苫小牧到着から洞爺湖へをテーマに、苫小牧 / 支笏湖 / 洞爺湖の見どころを無理なく巡ります。",
+      "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E8%8B%AB%E5%B0%8F%E7%89%A7%E5%B8%82%E5%86%85&destination=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B9%96%E7%95%94&travelmode=driving&waypoints=%E8%8B%AB%E5%B0%8F%E7%89%A7|%E6%B4%9E%E7%88%BA%E6%B9%96|Green+stay+Toya|%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%97%E5%A0%B4+%2F+%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B8%A9%E6%B3%89%E8%A1%97",
+      "todayTheme": "フェリーで苫小牧に到着し、北海道ドライブを開始。初日は無理に詰め込まず、昼食と休憩を挟みながら洞爺湖のキャンプ拠点へ入ります。夜は湖畔でゆっくり過ごします。",
       "mealRecommendations": [
         {
           "label": "おすすめランチ",
@@ -427,8 +412,7 @@ export const itinerary = {
       "todaysTips": [
         "初日は北海道到着の余韻を優先し、観光を詰め込みすぎない。",
         "バンガロー滞在中の食材・飲み物をこの日に少し補充する。",
-        "夕方の光がきれいな場所は、短時間でも写真休憩を。",
-        "船内バッグは先に分けて、乗船後に慌てない。"
+        "夕方の光がきれいな場所は、短時間でも写真休憩を。"
       ],
       "guideSpots": [
         {
@@ -570,7 +554,8 @@ export const itinerary = {
           "leg": ""
         }
       ],
-      "todayTheme": "洞爺湖滞在中の「湖から出ない日」。移動を最小限にして、湖畔散歩、遊覧船、温泉街、キャンプ場での休憩を中心にゆっくり過ごします。 洞爺湖から出ない湖畔の日をテーマに、洞爺湖の見どころを無理なく巡ります。移動、休憩、食事のリズムを整えながら、家族で写真を残したい景色を楽しむ一日です。",
+      "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B9%96%E7%95%94&destination=%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%97%E5%A0%B4&travelmode=driving&waypoints=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B8%A9%E6%B3%89%E8%A1%97|%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B1%BD%E8%88%B9",
+      "todayTheme": "洞爺湖滞在中の「湖から出ない日」。移動を最小限にして、湖畔散歩、遊覧船、温泉街、キャンプ場での休憩を中心にゆっくり過ごします。 洞爺湖から出ない湖畔の日をテーマに、洞爺湖の見どころを無理なく巡ります。",
       "mealRecommendations": [
         {
           "label": "おすすめランチ",
@@ -614,15 +599,6 @@ export const itinerary = {
           "parking": "駐車場・停車場所を現地確認",
           "stay": "60分",
           "map_url": "https://www.google.com/maps/search/?api=1&query=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B1%BD%E8%88%B9+%E6%B4%9E%E7%88%BA%E6%B9%96"
-        },
-        {
-          "place": "洞爺湖湖畔",
-          "image": "",
-          "caption": "花火開催日は湖畔で鑑賞。無理なら早寝",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
-          "stay": "45分",
-          "map_url": "https://www.google.com/maps/search/?api=1&query=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B9%96%E7%95%94+%E6%B4%9E%E7%88%BA%E6%B9%96"
         }
       ]
     },
@@ -767,19 +743,14 @@ export const itinerary = {
           "leg": ""
         },
         {
-          "place": "洞爺湖温泉街",
-          "note": "",
-          "kind": "移動",
-          "leg": "30分"
-        },
-        {
           "place": "キャンプ場",
           "note": "",
           "kind": "移動",
           "leg": ""
         }
       ],
-      "todayTheme": "洞爺湖周辺観光の日。有珠山ロープウェイ、サイロ展望台、壮瞥方面を無理なく回り、火山と湖の景色を楽しみます。夕方はキャンプ場へ戻って休みます。 有珠山と洞爺湖周辺ジオパークをテーマに、洞爺湖 / 有珠山 / 壮瞥の見どころを無理なく巡ります。",
+      "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E6%B4%9E%E7%88%BA%E6%B9%96&destination=%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%97%E5%A0%B4&travelmode=driving&waypoints=%E6%9C%89%E7%8F%A0%E5%B1%B1|%E6%9C%89%E7%8F%A0%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4|%E6%98%AD%E5%92%8C%E6%96%B0%E5%B1%B1|%E3%82%B5%E3%82%A4%E3%83%AD%E5%B1%95%E6%9C%9B%E5%8F%B0|%E5%A3%AE%E7%9E%A5|%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B8%A9%E6%B3%89%E8%A1%97",
+      "todayTheme": "洞爺湖周辺観光の日。有珠山ロープウェイ、サイロ展望台、壮瞥方面を無理なく回り、火山と湖の景色を楽しみます。夕方はキャンプ場へ戻って休みます。",
       "mealRecommendations": [
         {
           "label": "おすすめランチ",
@@ -803,8 +774,7 @@ export const itinerary = {
       "todaysTips": [
         "有珠山ロープウェイは天候と運行状況を当日確認。",
         "翌日は札幌移動なので、夜に荷物を少しまとめる。",
-        "雨や霧の日は展望系を短縮し、屋内休憩を増やす。",
-        "夕方の光がきれいな場所は、短時間でも写真休憩を。"
+        "雨や霧の日は展望系を短縮し、屋内休憩を増やす。"
       ],
       "guideSpots": [
         {
@@ -824,15 +794,6 @@ export const itinerary = {
           "parking": "駐車場・停車場所を現地確認",
           "stay": "45分",
           "map_url": "https://www.google.com/maps/search/?api=1&query=%E3%82%B5%E3%82%A4%E3%83%AD%E5%B1%95%E6%9C%9B%E5%8F%B0+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%89%E7%8F%A0%E5%B1%B1+%2F+%E5%A3%AE%E7%9E%A5"
-        },
-        {
-          "place": "壮瞥方面",
-          "image": "",
-          "caption": "果物直売所、道の駅、湖畔ドライブ",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
-          "stay": "90分",
-          "map_url": "https://www.google.com/maps/search/?api=1&query=%E5%A3%AE%E7%9E%A5+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%89%E7%8F%A0%E5%B1%B1+%2F+%E5%A3%AE%E7%9E%A5"
         }
       ]
     },
@@ -971,7 +932,8 @@ export const itinerary = {
           "leg": ""
         }
       ],
-      "todayTheme": "洞爺湖のキャンプ滞在を終えて札幌へ。ホテルに入り、北海道大学の緑の多いキャンパスを散策します。夜は札幌駅前の串鳥で夕食予定です。 洞爺湖から札幌へ、北大散策と串鳥をテーマに、洞爺湖 / 札幌駅前 / 北海道大学の見どころを無理なく巡ります。",
+      "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E6%B4%9E%E7%88%BA%E6%B9%96&destination=%E5%8C%97%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%A6&travelmode=driving&waypoints=%E4%B8%AD%E5%B1%B1%E5%B3%A0|%E6%9C%AD%E5%B9%8C%E5%B8%82%E5%86%85|HOTEL+MYSTAYS+Sapporo+Aspen",
+      "todayTheme": "洞爺湖のキャンプ滞在を終えて札幌へ。ホテルに入り、北海道大学の緑の多いキャンパスを散策します。夜は札幌駅前の串鳥で夕食予定です。",
       "mealRecommendations": [
         {
           "label": "おすすめランチ",
@@ -1170,7 +1132,8 @@ export const itinerary = {
           "leg": ""
         }
       ],
-      "todayTheme": "札幌を11時ごろ出発し、富良野周辺の花畑や美瑛の景色を楽しみながら層雲峡へ向かいます。観光を入れつつも移動日なので、夕方のチェックインを優先します。 札幌11時発、富良野・美瑛を抜けて層雲峡へをテーマに、札幌 / 富良野 / 美瑛 / 層雲峡の見どころを無理なく巡ります。",
+      "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E6%9C%AD%E5%B9%8C&destination=Sounkyo+Auto+Camp&travelmode=driving&waypoints=%E5%AF%8C%E8%89%AF%E9%87%8E|%E5%AF%8C%E8%89%AF%E9%87%8E%E5%B8%82%E5%86%85|%E3%83%95%E3%82%A1%E3%83%BC%E3%83%A0%E5%AF%8C%E7%94%B0|%E7%BE%8E%E7%91%9B|%E5%B1%A4%E9%9B%B2%E5%B3%A1",
+      "todayTheme": "札幌を11時ごろ出発し、富良野周辺の花畑や美瑛の景色を楽しみながら層雲峡へ向かいます。観光を入れつつも移動日なので、夕方のチェックインを優先します。",
       "mealRecommendations": [
         {
           "label": "おすすめランチ",
@@ -1352,7 +1315,8 @@ export const itinerary = {
           "leg": ""
         }
       ],
-      "todayTheme": "層雲峡滞在日。黒岳ロープウェイ、銀河・流星の滝、温泉街散策を組み合わせ、大雪山の自然を無理なく楽しみます。天候が悪い場合は温泉と短時間散策に切り替えます。 層雲峡で大雪山の自然を満喫をテーマに、層雲峡 / 黒岳 / 銀河・流星の滝の見どころを無理なく巡ります。",
+      "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E3%82%B3%E3%83%86%E3%83%BC%E3%82%B8&destination=%E5%A4%A7%E5%87%BD+%2F+%E5%B1%A4%E9%9B%B2%E5%B3%A1%E6%95%A3%E7%AD%96&travelmode=driving&waypoints=%E9%BB%92%E5%B2%B3%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4|%E5%B1%A4%E9%9B%B2%E5%B3%A1%E6%B8%A9%E6%B3%89%E8%A1%97|%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D",
+      "todayTheme": "層雲峡滞在日。黒岳ロープウェイ、銀河・流星の滝、温泉街散策を組み合わせ、大雪山の自然を無理なく楽しみます。天候が悪い場合は温泉と短時間散策に切り替えます。",
       "mealRecommendations": [
         {
           "label": "おすすめランチ",
@@ -1376,8 +1340,7 @@ export const itinerary = {
       "todaysTips": [
         "黒岳は天候優先。風や雨が強ければ滝と温泉中心にする。",
         "翌日は中標津方面へ長距離移動のため、夜に荷物をまとめる。",
-        "雨や霧の日は展望系を短縮し、屋内休憩を増やす。",
-        "夕方の光がきれいな場所は、短時間でも写真休憩を。"
+        "雨や霧の日は展望系を短縮し、屋内休憩を増やす。"
       ],
       "guideSpots": [
         {
@@ -1397,15 +1360,6 @@ export const itinerary = {
           "parking": "駐車場・停車場所を現地確認",
           "stay": "75分",
           "map_url": "https://www.google.com/maps/search/?api=1&query=%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%BB%92%E5%B2%B3+%2F+%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D"
-        },
-        {
-          "place": "大函 / 層雲峡散策",
-          "image": "",
-          "caption": "天候と体力に応じて短時間散策",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
-          "stay": "60分",
-          "map_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%A7%E5%87%BD+%2F+%E5%B1%A4%E9%9B%B2%E5%B3%A1%E6%95%A3%E7%AD%96+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%BB%92%E5%B2%B3+%2F+%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D"
         }
       ]
     },
@@ -1556,7 +1510,8 @@ export const itinerary = {
           "leg": ""
         }
       ],
-      "todayTheme": "層雲峡から道東へ大きく移動する日。阿寒湖または摩周湖周辺で休憩と観光を挟み、中標津の拠点へ入ります。移動負荷が高いので、観光は1〜2か所に絞ります。 層雲峡から阿寒・摩周を経て中標津へをテーマに、層雲峡 / 阿寒 / 摩周 / 中標津の見どころを無理なく巡ります。",
+      "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E5%B1%A4%E9%9B%B2%E5%B3%A1&destination=Shinrin+Koen+Camp&travelmode=driving&waypoints=%E5%8C%97%E8%A6%8B|%E9%98%BF%E5%AF%92%E6%B9%96|%E9%98%BF%E5%AF%92%E6%B9%96+%2F+%E6%91%A9%E5%91%A8%E6%B9%96%E5%80%99%E8%A3%9C|%E9%98%BF%E5%AF%92%E3%83%BB%E6%91%A9%E5%91%A8|%E4%B8%AD%E6%A8%99%E6%B4%A5",
+      "todayTheme": "層雲峡から道東へ大きく移動する日。阿寒湖または摩周湖周辺で休憩と観光を挟み、中標津の拠点へ入ります。移動負荷が高いので、観光は1〜2か所に絞ります。",
       "mealRecommendations": [
         {
           "label": "おすすめランチ",
@@ -1580,9 +1535,7 @@ export const itinerary = {
       "todaysTips": [
         "この日は長距離移動日。眠気対策で休憩を多めに取る。",
         "阿寒湖と摩周湖を両方詰め込まず、天気が良い方を選ぶ。",
-        "長距離区間は早めの給油と休憩を入れると安心。",
-        "トイレ休憩は道の駅やPAでこまめに確保。",
-        "雨や霧の日は展望系を短縮し、屋内休憩を増やす。"
+        "長距離区間は早めの給油と休憩を入れると安心。"
       ],
       "guideSpots": [
         {
@@ -1795,18 +1748,13 @@ export const itinerary = {
           "leg": ""
         },
         {
-          "place": "オシンコシンの滝",
-          "note": "",
-          "kind": "観光",
-          "leg": "約2時間15分"
-        },
-        {
           "place": "中標津へ帰着",
           "note": "",
           "kind": "休憩",
           "leg": ""
         }
       ],
+      "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&destination=%E4%B8%AD%E6%A8%99%E6%B4%A5%E3%81%B8%E5%B8%B0%E7%9D%80&travelmode=driving&waypoints=%E7%BE%85%E8%87%BC|%E7%9F%A5%E5%BA%8A%E5%B3%A0|%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96|%E3%82%A6%E3%83%88%E3%83%AD|%E3%83%95%E3%83%AC%E3%83%9A%E3%81%AE%E6%BB%9D%E9%81%8A%E6%AD%A9%E9%81%93|%E3%82%AA%E3%82%B7%E3%83%B3%E3%82%B3%E3%82%B7%E3%83%B3%E3%81%AE%E6%BB%9D",
       "todayTheme": "中標津から羅臼側へ入り、知床峠を越えて知床五湖、フレペの滝、オシンコシンの滝を巡る一日。観光船には乗らず、世界自然遺産・知床の森、山、滝を陸上から満喫します。早朝出発ですが、夕食は中標津に戻ってゆっくり取れる計画です。",
       "mealRecommendations": [
         {
@@ -1831,9 +1779,7 @@ export const itinerary = {
       "todaysTips": [
         "知床横断道路は濃霧、強風、野生動物の飛び出しに注意する。",
         "知床五湖はヒグマ出没や天候により利用方法が変わる。高架木道を基本プランとし、地上遊歩道は当日判断にする。",
-        "フレペの滝遊歩道でも野生動物との距離を取り、食べ物を出したまま歩かない。",
-        "予定が30分以上遅れた場合は、オシンコシンの滝を短縮または省略し、明るいうちの帰路を優先する。",
-        "雨天時は知床自然センター、知床世界遺産センター、羅臼ビジターセンターを組み合わせる。"
+        "フレペの滝遊歩道でも野生動物との距離を取り、食べ物を出したまま歩かない。"
       ],
       "guideSpots": [
         {
@@ -1853,24 +1799,6 @@ export const itinerary = {
           "parking": "駐車場・停車場所を現地確認",
           "stay": "105分",
           "map_url": "https://www.google.com/maps/search/?api=1&query=%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E7%BE%85%E8%87%BC+%2F+%E7%9F%A5%E5%BA%8A%E5%B3%A0+%2F+%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%2F+%E3%82%A6%E3%83%88%E3%83%AD"
-        },
-        {
-          "place": "フレペの滝遊歩道",
-          "image": "",
-          "caption": "往復約2kmをゆっくり散策。草原、断崖、知床連山を楽しむ",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
-          "stay": "90分",
-          "map_url": "https://www.google.com/maps/search/?api=1&query=%E3%83%95%E3%83%AC%E3%83%9A%E3%81%AE%E6%BB%9D%E9%81%8A%E6%AD%A9%E9%81%93+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E7%BE%85%E8%87%BC+%2F+%E7%9F%A5%E5%BA%8A%E5%B3%A0+%2F+%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%2F+%E3%82%A6%E3%83%88%E3%83%AD"
-        },
-        {
-          "place": "オシンコシンの滝",
-          "image": "",
-          "caption": "駐車場から短時間で見学。階段は濡れている場合がある",
-          "credit": "写真準備中",
-          "parking": "駐車場・停車場所を現地確認",
-          "stay": "30分",
-          "map_url": "https://www.google.com/maps/search/?api=1&query=%E3%82%AA%E3%82%B7%E3%83%B3%E3%82%B3%E3%82%B7%E3%83%B3%E3%81%AE%E6%BB%9D+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E7%BE%85%E8%87%BC+%2F+%E7%9F%A5%E5%BA%8A%E5%B3%A0+%2F+%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%2F+%E3%82%A6%E3%83%88%E3%83%AD"
         }
       ]
     },
@@ -2021,7 +1949,8 @@ export const itinerary = {
           "leg": ""
         }
       ],
-      "todayTheme": "中標津から標津・野付半島方面へ。海、湿原、野鳥、立ち枯れたトドワラの風景など、道東らしい自然を味わいます。移動はあるものの、日帰りで戻れる範囲にします。 野付半島と海辺の道東自然ドライブをテーマに、中標津 / 標津 / 野付半島の見どころを無理なく巡ります。",
+      "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&destination=%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6%E3%83%8D%E3%82%A4%E3%83%81%E3%83%A3%E3%83%BC%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC&travelmode=driving&waypoints=%E6%A8%99%E6%B4%A5|%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6|%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6+%2F+%E5%B0%BE%E5%B2%B1%E6%B2%BC",
+      "todayTheme": "中標津から標津・野付半島方面へ。海、湿原、野鳥、立ち枯れたトドワラの風景など、道東らしい自然を味わいます。移動はあるものの、日帰りで戻れる範囲にします。",
       "mealRecommendations": [
         {
           "label": "おすすめランチ",
@@ -2208,7 +2137,8 @@ export const itinerary = {
           "leg": ""
         }
       ],
-      "todayTheme": "中標津滞在の最終日。天候と体力が合えば、釧路湿原・達古武湖方面へ足を伸ばします。無理に遠出しない場合は、中標津周辺で休養と自然観光に切り替えます。 釧路湿原・達古武方面の自然予備日をテーマに、中標津 / 釧路湿原 / 達古武の見どころを無理なく巡ります。",
+      "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&destination=%E7%B4%B0%E5%B2%A1%E5%B1%95%E6%9C%9B%E5%8F%B0%E5%80%99%E8%A3%9C&travelmode=driving&waypoints=%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F|%E9%81%94%E5%8F%A4%E6%AD%A6%E6%B9%96+%2F+%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F|%E9%87%A7%E8%B7%AF%E7%94%BA+%2F+%E9%87%A7%E8%B7%AF%E5%B8%82%E5%86%85",
+      "todayTheme": "中標津滞在の最終日。天候と体力が合えば、釧路湿原・達古武湖方面へ足を伸ばします。無理に遠出しない場合は、中標津周辺で休養と自然観光に切り替えます。",
       "mealRecommendations": [
         {
           "label": "おすすめランチ",
@@ -2409,7 +2339,8 @@ export const itinerary = {
           "leg": ""
         }
       ],
-      "todayTheme": "当初の苫小牧直行ではなく、移動負荷を考慮して帯広に滞在する日。道東から十勝へ移動し、途中は休憩を多めに取ります。夜は帯広で豚丼など十勝グルメを楽しみます。 中標津から帯広へ、移動負荷を下げる日をテーマに、中標津 / 弟子屈 / 足寄 / 帯広の見どころを無理なく巡ります。",
+      "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&destination=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85&travelmode=driving&waypoints=%E5%BC%9F%E5%AD%90%E5%B1%88|%E8%B6%B3%E5%AF%84|%E8%B6%B3%E5%AF%84+%2F+%E9%81%93%E3%81%AE%E9%A7%85|%E5%B8%AF%E5%BA%83",
+      "todayTheme": "当初の苫小牧直行ではなく、移動負荷を考慮して帯広に滞在する日。道東から十勝へ移動し、途中は休憩を多めに取ります。夜は帯広で豚丼など十勝グルメを楽しみます。",
       "mealRecommendations": [
         {
           "label": "おすすめランチ",
@@ -2433,8 +2364,7 @@ export const itinerary = {
       "todaysTips": [
         "8/11は帯広泊に変更し、苫小牧まで一気に走らない。",
         "宿泊先は帯広駅周辺または駐車しやすいホテルを優先。",
-        "長距離区間は早めの給油と休憩を入れると安心。",
-        "トイレ休憩は道の駅やPAでこまめに確保。"
+        "長距離区間は早めの給油と休憩を入れると安心。"
       ],
       "guideSpots": [
         {
@@ -2583,7 +2513,8 @@ export const itinerary = {
           "leg": ""
         }
       ],
-      "todayTheme": "帯広で朝を迎え、十勝で軽く観光・買い物をしてから苫小牧へ移動します。夕方に苫小牧港へ入り、夜のフェリーで仙台へ向かいます。仙台到着は翌朝想定です。 帯広から苫小牧へ、フェリーで仙台へをテーマに、帯広 / 十勝 / 苫小牧 / 太平洋フェリーの見どころを無理なく巡ります。",
+      "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85&destination=%E8%8B%AB%E5%B0%8F%E7%89%A7%E6%B8%AF+%2F+%E8%88%B9%E5%86%85&travelmode=driving&waypoints=%E5%B8%AF%E5%BA%83|%E8%8B%AB%E5%B0%8F%E7%89%A7|%E8%8B%AB%E5%B0%8F%E7%89%A7%E6%B8%AF",
+      "todayTheme": "帯広で朝を迎え、十勝で軽く観光・買い物をしてから苫小牧へ移動します。夕方に苫小牧港へ入り、夜のフェリーで仙台へ向かいます。仙台到着は翌朝想定です。",
       "mealRecommendations": [
         {
           "label": "おすすめランチ",
@@ -2607,9 +2538,7 @@ export const itinerary = {
       "todaysTips": [
         "8/12はフェリー出港日。仙台到着は翌朝想定。",
         "帯広観光は1か所だけに絞り、苫小牧到着を優先する。",
-        "長距離区間は早めの給油と休憩を入れると安心。",
-        "トイレ休憩は道の駅やPAでこまめに確保。",
-        "船内バッグは先に分けて、乗船後に慌てない。"
+        "長距離区間は早めの給油と休憩を入れると安心。"
       ],
       "guideSpots": [
         {

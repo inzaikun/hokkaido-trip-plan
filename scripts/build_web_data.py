@@ -4,7 +4,7 @@ import json
 import re
 from pathlib import Path
 
-from guidebook_common import guide_spots, meal_recommendations, route_points, today_theme, todays_tips
+from guidebook_common import guide_spots, meal_recommendations, route_map_url, route_points, today_theme, todays_tips
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -102,6 +102,7 @@ def parse_day(path: Path) -> dict:
         "notes": notes,
     }
     day["route"] = route_points(day)
+    day["routeMapUrl"] = route_map_url(day)
     day["todayTheme"] = today_theme(day)
     day["mealRecommendations"] = meal_recommendations(day)
     day["todaysTips"] = todays_tips(day)

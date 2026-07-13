@@ -286,7 +286,7 @@
 
     .guide-intro {
       display: grid;
-      grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
+      grid-template-columns: minmax(0, 1.22fr) minmax(260px, 0.78fr);
       gap: 18px;
       margin-top: 22px;
       align-items: stretch;
@@ -307,6 +307,29 @@
       padding: 18px;
     }
 
+    .card-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .card-title-row h3 {
+      margin: 0;
+    }
+
+    .card-title-row a {
+      flex: 0 0 auto;
+      border-radius: 999px;
+      padding: 4px 10px;
+      background: var(--lake);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-decoration: none;
+    }
+
     .route-card h3,
     .theme-card h3,
     .meal-recs h3,
@@ -319,6 +342,81 @@
       color: var(--lake);
       font-family: Georgia, "Times New Roman", serif;
       font-size: 1.22rem;
+    }
+
+    .route-card-body {
+      display: grid;
+      grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .sketch-map {
+      position: relative;
+      min-height: 240px;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid rgba(20, 107, 124, 0.18);
+      background:
+        linear-gradient(135deg, rgba(231, 241, 244, 0.95), rgba(255, 250, 240, 0.92)),
+        radial-gradient(circle at 18% 20%, rgba(63, 107, 69, 0.16) 0 10%, transparent 11%),
+        radial-gradient(circle at 72% 72%, rgba(62, 127, 168, 0.18) 0 13%, transparent 14%);
+    }
+
+    .sketch-map::before {
+      content: "";
+      position: absolute;
+      inset: 12% 16%;
+      border: 3px dashed rgba(20, 107, 124, 0.55);
+      border-left-width: 0;
+      border-bottom-width: 0;
+      border-radius: 52% 42% 48% 36%;
+      transform: rotate(13deg);
+    }
+
+    .map-node {
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      transform: translate(-50%, -50%);
+      display: grid;
+      justify-items: center;
+      gap: 3px;
+      max-width: 78px;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .map-node i {
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 3px solid var(--lake);
+      color: var(--lake);
+      font-size: 0.76rem;
+      font-style: normal;
+      font-weight: 900;
+      box-shadow: 0 3px 12px rgba(23, 32, 38, 0.12);
+    }
+
+    .map-node.start i,
+    .map-node.end i {
+      background: var(--berry);
+      border-color: var(--berry);
+      color: #fff;
+    }
+
+    .map-node b {
+      display: block;
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--ink);
+      font-size: 0.7rem;
+      line-height: 1.25;
     }
 
     .route-map {
@@ -363,13 +461,13 @@
     }
 
     .route-leg {
-      min-height: 26px;
+      min-height: 20px;
       display: grid;
       grid-template-columns: 2px minmax(0, 1fr);
       gap: 12px;
       margin: 3px 0 4px 9px;
       color: var(--muted);
-      font-size: 0.86rem;
+      font-size: 0.78rem;
       font-weight: 800;
     }
 
@@ -382,13 +480,13 @@
 
     .theme-card p {
       margin: 0;
-      font-size: 1.08rem;
-      line-height: 1.85;
+      font-size: 1rem;
+      line-height: 1.75;
     }
 
     .day-layout {
       display: grid;
-      grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.75fr);
+      grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
       gap: 22px;
       margin-top: 24px;
       align-items: start;
@@ -402,7 +500,7 @@
 
     .timeline {
       display: grid;
-      gap: 10px;
+      gap: 6px;
       margin: 0;
       padding: 0;
       list-style: none;
@@ -412,7 +510,7 @@
       display: grid;
       grid-template-columns: 72px 64px minmax(0, 1fr);
       gap: 12px;
-      padding: 14px 0;
+      padding: 10px 0;
       border-top: 1px solid var(--line);
     }
 
@@ -453,6 +551,10 @@
     .timeline p {
       margin: 3px 0;
       color: var(--muted);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
 
     .timeline small {
@@ -462,7 +564,7 @@
 
     .side-panel {
       display: grid;
-      gap: 18px;
+      gap: 14px;
     }
 
     .side-panel section {
@@ -518,13 +620,13 @@
     }
 
     .meal-card {
-      padding: 16px;
+      padding: 13px;
       background: #fffaf0;
     }
 
     .meal-card h4 {
       margin: 2px 0 2px;
-      font-size: 1.05rem;
+      font-size: 0.98rem;
     }
 
     .meal-label {
@@ -535,17 +637,18 @@
     }
 
     .stars {
-      margin: 2px 0 8px;
+      margin: 0 0 5px;
       color: #d27d22;
       letter-spacing: 0;
       font-weight: 900;
+      font-size: 0.82rem;
     }
 
     .meal-card dl,
     .spot-meta {
       display: grid;
-      gap: 6px;
-      margin: 0 0 8px;
+      gap: 4px;
+      margin: 0 0 5px;
     }
 
     .meal-card dl div,
@@ -573,7 +676,7 @@
     }
 
     .tips-card {
-      padding: 18px;
+      padding: 14px;
       background: #f4f8ef;
     }
 
@@ -584,19 +687,19 @@
     }
 
     .tips-card li + li {
-      margin-top: 8px;
+      margin-top: 6px;
     }
 
     .photo-spots {
       margin-top: 24px;
-      padding: 20px;
+      padding: 18px;
       border-radius: 8px;
       background: #f8f2e8;
     }
 
     .spot-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
     }
 
@@ -646,6 +749,7 @@
       .day-header,
       .guide-intro,
       .day-layout,
+      .route-card-body,
       .spot-grid {
         grid-template-columns: 1fr;
       }
@@ -742,39 +846,36 @@
           <figure class="hero-photo"><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E4%BB%99%E5%8F%B0%E5%9F%8E%E8%B7%A1.jpg" alt="仙台城跡"><figcaption>仙台城跡</figcaption></figure>
         </header>
         <div class="guide-intro">
-          <section class="route-card"><h3>Today's Route</h3><ol class="route-map"><li class="route-point"><strong>千葉県印西市</strong><div class="route-leg"><i></i><span>約4時間30分</span></div></li><li class="route-point"><strong>仙台</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>仙台市内</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>仙台城跡</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>瑞鳳殿</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>仙台市内</strong><div class="route-leg"><i></i><span>約35分</span></div></li><li class="route-point"><strong>仙台港</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>仙台港フェリーターミナル</strong></li></ol></section>
-          <section class="theme-card"><h3>Today's Theme</h3><p>北海道家族旅行の出発日。千葉県印西市の自宅を7:00に出発し、昼ごろ仙台に到着して市内観光を楽しんでから仙台港へ向かいます。長距離移動の疲れをためないよう、サービスエリア休憩と昼食を早めに挟み、夕方は余裕を持って太平洋フェリーの乗船手続きに入ります。</p></section>
+          <section class="route-card"><div class="card-title-row"><h3>Today's Map</h3><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82&amp;destination=%E4%BB%99%E5%8F%B0%E6%B8%AF%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB&amp;travelmode=driving&amp;waypoints=%E4%BB%99%E5%8F%B0|%E4%BB%99%E5%8F%B0%E5%B8%82%E5%86%85|%E4%BB%99%E5%8F%B0%E5%9F%8E%E8%B7%A1|%E7%91%9E%E9%B3%B3%E6%AE%BF|%E4%BB%99%E5%8F%B0%E6%B8%AF" target="_blank" rel="noreferrer">Google Map</a></div><div class="route-card-body"><div class="sketch-map" aria-label="簡易ルートマップ"><span class="map-node start" style="--x:18%;--y:13%"><i>1</i><b>千葉県印西市</b></span><span class="map-node" style="--x:46%;--y:25%"><i>2</i><b>仙台</b></span><span class="map-node" style="--x:74%;--y:38%"><i>3</i><b>仙台市内</b></span><span class="map-node" style="--x:58%;--y:50%"><i>4</i><b>仙台城跡</b></span><span class="map-node" style="--x:28%;--y:62%"><i>5</i><b>瑞鳳殿</b></span><span class="map-node" style="--x:50%;--y:75%"><i>6</i><b>仙台市内</b></span><span class="map-node end" style="--x:80%;--y:87%"><i>7</i><b>仙台港フェリーターミナル</b></span></div><ol class="route-map"><li class="route-point"><strong>千葉県印西市</strong><div class="route-leg"><i></i><span>約4時間30分</span></div></li><li class="route-point"><strong>仙台</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>仙台市内</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>仙台城跡</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>瑞鳳殿</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>仙台市内</strong><div class="route-leg"><i></i><span>約35分</span></div></li><li class="route-point"><strong>仙台港フェリーターミナル</strong></li></ol></div></section>
+          <section class="theme-card"><h3>Today's Theme</h3><p>北海道家族旅行の出発日。千葉県印西市の自宅を7:00に出発し、昼ごろ仙台に到着して市内観光を楽しんでから仙台港へ向かいます。</p></section>
         </div>
         <div class="day-layout">
           <section class="timeline-wrap">
-            <h3>時刻ベース詳細スケジュール</h3>
+            <h3>時刻表</h3>
             <ol class="timeline">
-              <li><time>06:30</time><span class="tag prep">準備</span><div><strong>自宅</strong><p>荷物、チケット、身分証、船内バッグ、酔い止めを最終確認</p><small>30分</small></div></li>
-<li><time>07:00</time><span class="tag move">移動</span><div><strong>千葉県印西市 → 仙台方面</strong><p>常磐道または東北道方面で仙台へ。渋滞を見て休憩地点を調整</p><small>約4時間30分</small></div></li>
-<li><time>09:30</time><span class="tag rest">休憩</span><div><strong>SA/PA</strong><p>トイレ、給油、飲み物補充。子どもは軽く体を動かす</p><small>20分</small></div></li>
-<li><time>12:00</time><span class="tag food">昼食</span><div><strong>仙台市内</strong><p>牛たん、海鮮、駅周辺ランチなどから当日の混雑で選択</p><small>60分</small></div></li>
-<li><time>13:15</time><span class="tag see">観光</span><div><strong>仙台城跡</strong><p>伊達政宗像、仙台市街の眺望、記念写真</p><small>60分</small></div></li>
-<li><time>14:30</time><span class="tag see">観光</span><div><strong>瑞鳳殿</strong><p>伊達政宗公の霊屋を見学。坂道があるので水分補給を忘れずに</p><small>60分</small></div></li>
-<li><time>15:45</time><span class="tag rest">休憩</span><div><strong>定禅寺通周辺</strong><p>ケヤキ並木を散策。カフェ休憩またはおやつ購入</p><small>45分</small></div></li>
-<li><time>16:45</time><span class="tag move">移動</span><div><strong>仙台市内 → 仙台港</strong><p>フェリー乗船に向けて港へ移動。夕方渋滞を見込んで早めに出発</p><small>約35分</small></div></li>
-<li><time>17:30</time><span class="tag prep">手続き</span><div><strong>仙台港フェリーターミナル</strong><p>乗船手続き、車両乗船準備、船内バッグを手元に分ける</p><small>60分</small></div></li>
-<li><time>18:30</time><span class="tag food">夕食</span><div><strong>フェリー船内</strong><p>船内レストランまたは仙台市内で買った持ち込み軽食</p><small>45分</small></div></li>
-<li><time>19:40</time><span class="tag move">移動</span><div><strong>太平洋フェリー</strong><p>仙台港を出港。船内探検と入浴</p><small>一晩</small></div></li>
-<li><time>21:30</time><span class="tag rest">休憩</span><div><strong>客室</strong><p>翌日の苫小牧到着に備えて早めに就寝</p><small>-</small></div></li>
+              <li><time>06:30</time><span class="tag prep">準備</span><div><strong>自宅</strong><p title="荷物、チケット、身分証、船内バッグ、酔い止めを最終確認">荷物、チケット、身分証、船内バッグ、酔い止めを最終確認</p><small>30分</small></div></li>
+<li><time>07:00</time><span class="tag move">移動</span><div><strong>千葉県印西市 → 仙台方面</strong><p title="常磐道または東北道方面で仙台へ。渋滞を見て休憩地点を調整">常磐道または東北道方面で仙台へ。渋滞を見て休憩地点を調整</p><small>約4時間30分</small></div></li>
+<li><time>09:30</time><span class="tag rest">休憩</span><div><strong>SA/PA</strong><p title="トイレ、給油、飲み物補充。子どもは軽く体を動かす">トイレ、給油、飲み物補充。子どもは軽く体を動かす</p><small>20分</small></div></li>
+<li><time>12:00</time><span class="tag food">昼食</span><div><strong>仙台市内</strong><p title="牛たん、海鮮、駅周辺ランチなどから当日の混雑で選択">牛たん、海鮮、駅周辺ランチなどから当日の混雑で選択</p><small>60分</small></div></li>
+<li><time>13:15</time><span class="tag see">観光</span><div><strong>仙台城跡</strong><p title="伊達政宗像、仙台市街の眺望、記念写真">伊達政宗像、仙台市街の眺望、記念写真</p><small>60分</small></div></li>
+<li><time>14:30</time><span class="tag see">観光</span><div><strong>瑞鳳殿</strong><p title="伊達政宗公の霊屋を見学。坂道があるので水分補給を忘れずに">伊達政宗公の霊屋を見学。坂道があるので水分補給を忘れずに</p><small>60分</small></div></li>
+<li><time>15:45</time><span class="tag rest">休憩</span><div><strong>定禅寺通周辺</strong><p title="ケヤキ並木を散策。カフェ休憩またはおやつ購入">ケヤキ並木を散策。カフェ休憩またはおやつ購入</p><small>45分</small></div></li>
+<li><time>16:45</time><span class="tag move">移動</span><div><strong>仙台市内 → 仙台港</strong><p title="フェリー乗船に向けて港へ移動。夕方渋滞を見込んで早めに出発">フェリー乗船に向けて港へ移動。夕方渋滞を見込んで早めに出発</p><small>約35分</small></div></li>
+<li><time>17:30</time><span class="tag prep">手続き</span><div><strong>仙台港フェリーターミナル</strong><p title="乗船手続き、車両乗船準備、船内バッグを手元に分ける">乗船手続き、車両乗船準備、船内バッグを手元に分ける</p><small>60分</small></div></li>
+<li><time>18:30</time><span class="tag food">夕食</span><div><strong>フェリー船内</strong><p title="船内レストランまたは仙台市内で買った持ち込み軽食">船内レストランまたは仙台市内で買った持ち込み軽食</p><small>45分</small></div></li>
+<li><time>19:40</time><span class="tag move">移動</span><div><strong>太平洋フェリー</strong><p title="仙台港を出港。船内探検と入浴">仙台港を出港。船内探検と入浴</p><small>一晩</small></div></li>
+<li><time>21:30</time><span class="tag rest">休憩</span><div><strong>客室</strong><p title="翌日の苫小牧到着に備えて早めに就寝">翌日の苫小牧到着に備えて早めに就寝</p><small>-</small></div></li>
             </ol>
           </section>
           <aside class="side-panel">
-            <section class="meal-recs"><h3>今日の食事メモ</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>牛たん炭焼 利久 仙台駅周辺</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,200〜2,800円</dd></div><div><dt>人気メニュー</dt><dd>牛たん定食</dd></div></dl><p>仙台駅周辺 / 仙台らしい昼食の第一候補。混雑時は近隣店舗に切替</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>太平洋フェリー船内レストラン</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,500〜3,000円</dd></div><div><dt>人気メニュー</dt><dd>海鮮丼・焼き魚</dd></div></dl><p>船内 / 出港前後に利用しやすい第一候補</p></article></section>
+            <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>牛たん炭焼 利久 仙台駅周辺</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,200〜2,800円</dd></div><div><dt>人気メニュー</dt><dd>牛たん定食</dd></div></dl><p>仙台らしい昼食の第一候補。混雑時は近隣店舗に切替</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>太平洋フェリー船内レストラン</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,500〜3,000円</dd></div><div><dt>人気メニュー</dt><dd>海鮮丼・焼き魚</dd></div></dl><p>出港前後に利用しやすい第一候補</p></article></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>フェリーWi-Fiは有料1,500円。使うか当日判断。</li>
 <li>船内用バッグに、着替え、洗面具、充電器、酔い止めを分ける。</li>
-<li>苫小牧到着は翌日11:00予定。</li>
-<li>印西市から仙台までは長距離なので、到着時刻は渋滞次第。観光は仙台城跡と瑞鳳殿を優先し、時間が押したら定禅寺通散策を短縮する。</li>
-<li>長距離区間は早めの給油と休憩を入れると安心。</li></ul></section>
+<li>苫小牧到着は翌日11:00予定。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>観光スポット写真</h3><div class="spot-grid"><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E4%BB%99%E5%8F%B0%E5%9F%8E%E8%B7%A1.jpg" alt="仙台城跡"><figcaption><strong>仙台城跡</strong><span>伊達政宗ゆかりの城跡。仙台市街を見渡す初日の記念写真スポット</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%BB%99%E5%8F%B0%E5%9F%8E%E8%B7%A1+%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82+%2F+%E4%BB%99%E5%8F%B0+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons</small></figcaption></figure>
-<figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E7%91%9E%E9%B3%B3%E6%AE%BF.jpg" alt="瑞鳳殿"><figcaption><strong>瑞鳳殿</strong><span>桃山文化の装飾が美しい伊達政宗公の霊屋。午後の短時間観光に組み込みやすい</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%91%9E%E9%B3%B3%E6%AE%BF+%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82+%2F+%E4%BB%99%E5%8F%B0+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons</small></figcaption></figure>
-<figure><div class="spot-placeholder">仙台港フェリーターミナル</div><figcaption><strong>仙台港フェリーターミナル</strong><span>北海道へ向かう船旅の入口。乗船前に家族写真を撮る候補</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%BB%99%E5%8F%B0%E6%B8%AF%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB+%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82+%2F+%E4%BB%99%E5%8F%B0+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真未設定</small></figcaption></figure></div></section>
+        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E4%BB%99%E5%8F%B0%E5%9F%8E%E8%B7%A1.jpg" alt="仙台城跡"><figcaption><strong>仙台城跡</strong><span>伊達政宗ゆかりの城跡。仙台市街を見渡す初日の記念写真スポット</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%BB%99%E5%8F%B0%E5%9F%8E%E8%B7%A1+%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82+%2F+%E4%BB%99%E5%8F%B0+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons</small></figcaption></figure>
+<figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E7%91%9E%E9%B3%B3%E6%AE%BF.jpg" alt="瑞鳳殿"><figcaption><strong>瑞鳳殿</strong><span>桃山文化の装飾が美しい伊達政宗公の霊屋。午後の短時間観光に組み込みやすい</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%91%9E%E9%B3%B3%E6%AE%BF+%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82+%2F+%E4%BB%99%E5%8F%B0+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons</small></figcaption></figure></div></section>
       </article>
 
 
@@ -788,33 +889,32 @@
           <div class="hero-photo placeholder"><span>洞爺湖</span><small>写真準備中</small></div>
         </header>
         <div class="guide-intro">
-          <section class="route-card"><h3>Today's Route</h3><ol class="route-map"><li class="route-point"><strong>苫小牧市内</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>苫小牧</strong><div class="route-leg"><i></i><span>約2時間15分</span></div></li><li class="route-point"><strong>洞爺湖</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>Green stay Toya</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>キャンプ場 / 洞爺湖温泉街</strong><span>夕食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>洞爺湖湖畔</strong></li></ol></section>
-          <section class="theme-card"><h3>Today's Theme</h3><p>フェリーで苫小牧に到着し、北海道ドライブを開始。初日は無理に詰め込まず、昼食と休憩を挟みながら洞爺湖のキャンプ拠点へ入ります。夜は湖畔でゆっくり過ごします。 苫小牧到着から洞爺湖へをテーマに、苫小牧 / 支笏湖 / 洞爺湖の見どころを無理なく巡ります。</p></section>
+          <section class="route-card"><div class="card-title-row"><h3>Today's Map</h3><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%E8%8B%AB%E5%B0%8F%E7%89%A7%E5%B8%82%E5%86%85&amp;destination=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B9%96%E7%95%94&amp;travelmode=driving&amp;waypoints=%E8%8B%AB%E5%B0%8F%E7%89%A7|%E6%B4%9E%E7%88%BA%E6%B9%96|Green+stay+Toya|%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%97%E5%A0%B4+%2F+%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B8%A9%E6%B3%89%E8%A1%97" target="_blank" rel="noreferrer">Google Map</a></div><div class="route-card-body"><div class="sketch-map" aria-label="簡易ルートマップ"><span class="map-node start" style="--x:18%;--y:13%"><i>1</i><b>苫小牧市内</b></span><span class="map-node" style="--x:46%;--y:28%"><i>2</i><b>苫小牧</b></span><span class="map-node" style="--x:74%;--y:43%"><i>3</i><b>洞爺湖</b></span><span class="map-node" style="--x:58%;--y:57%"><i>4</i><b>Green stay T…</b></span><span class="map-node" style="--x:28%;--y:72%"><i>5</i><b>キャンプ場 / 洞爺湖温…</b></span><span class="map-node end" style="--x:50%;--y:87%"><i>6</i><b>洞爺湖湖畔</b></span></div><ol class="route-map"><li class="route-point"><strong>苫小牧市内</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>苫小牧</strong><div class="route-leg"><i></i><span>約2時間15分</span></div></li><li class="route-point"><strong>洞爺湖</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>Green stay Toya</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>キャンプ場 / 洞爺湖温泉街</strong><span>夕食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>洞爺湖湖畔</strong></li></ol></div></section>
+          <section class="theme-card"><h3>Today's Theme</h3><p>フェリーで苫小牧に到着し、北海道ドライブを開始。初日は無理に詰め込まず、昼食と休憩を挟みながら洞爺湖のキャンプ拠点へ入ります。夜は湖畔でゆっくり過ごします。</p></section>
         </div>
         <div class="day-layout">
           <section class="timeline-wrap">
-            <h3>時刻ベース詳細スケジュール</h3>
+            <h3>時刻表</h3>
             <ol class="timeline">
-              <li><time>07:30</time><span class="tag food">朝食</span><div><strong>フェリー船内</strong><p>下船前に朝食。荷物整理も済ませる</p><small>45分</small></div></li>
-<li><time>10:30</time><span class="tag prep">準備</span><div><strong>フェリー船内</strong><p>車両甲板へ向かう準備、忘れ物確認</p><small>30分</small></div></li>
-<li><time>11:00</time><span class="tag move">移動</span><div><strong>苫小牧港</strong><p>下船。北海道ドライブ開始</p><small>30分</small></div></li>
-<li><time>11:45</time><span class="tag food">昼食</span><div><strong>苫小牧市内</strong><p>海鮮、定食、または道の駅系で軽めに昼食</p><small>60分</small></div></li>
-<li><time>13:00</time><span class="tag move">移動</span><div><strong>苫小牧 → 洞爺湖</strong><p>支笏湖方面または高速利用で洞爺湖へ</p><small>約2時間15分</small></div></li>
-<li><time>15:15</time><span class="tag rest">休憩</span><div><strong>サイロ展望台周辺</strong><p>洞爺湖を見下ろす短時間休憩、写真撮影</p><small>30分</small></div></li>
-<li><time>16:00</time><span class="tag prep">手続き</span><div><strong>Green stay Toya</strong><p>バンガローK15へチェックイン、荷下ろし</p><small>60分</small></div></li>
-<li><time>17:30</time><span class="tag food">夕食</span><div><strong>キャンプ場 / 洞爺湖温泉街</strong><p>初日は簡単キャンプ飯か温泉街で外食</p><small>90分</small></div></li>
-<li><time>20:30</time><span class="tag see">観光</span><div><strong>洞爺湖湖畔</strong><p>余力があれば湖畔散歩、花火開催日は湖畔で鑑賞</p><small>45分</small></div></li>
+              <li><time>07:30</time><span class="tag food">朝食</span><div><strong>フェリー船内</strong><p title="下船前に朝食。荷物整理も済ませる">下船前に朝食。荷物整理も済ませる</p><small>45分</small></div></li>
+<li><time>10:30</time><span class="tag prep">準備</span><div><strong>フェリー船内</strong><p title="車両甲板へ向かう準備、忘れ物確認">車両甲板へ向かう準備、忘れ物確認</p><small>30分</small></div></li>
+<li><time>11:00</time><span class="tag move">移動</span><div><strong>苫小牧港</strong><p title="下船。北海道ドライブ開始">下船。北海道ドライブ開始</p><small>30分</small></div></li>
+<li><time>11:45</time><span class="tag food">昼食</span><div><strong>苫小牧市内</strong><p title="海鮮、定食、または道の駅系で軽めに昼食">海鮮、定食、または道の駅系で軽めに昼食</p><small>60分</small></div></li>
+<li><time>13:00</time><span class="tag move">移動</span><div><strong>苫小牧 → 洞爺湖</strong><p title="支笏湖方面または高速利用で洞爺湖へ">支笏湖方面または高速利用で洞爺湖へ</p><small>約2時間15分</small></div></li>
+<li><time>15:15</time><span class="tag rest">休憩</span><div><strong>サイロ展望台周辺</strong><p title="洞爺湖を見下ろす短時間休憩、写真撮影">洞爺湖を見下ろす短時間休憩、写真撮影</p><small>30分</small></div></li>
+<li><time>16:00</time><span class="tag prep">手続き</span><div><strong>Green stay Toya</strong><p title="バンガローK15へチェックイン、荷下ろし">バンガローK15へチェックイン、荷下ろし</p><small>60分</small></div></li>
+<li><time>17:30</time><span class="tag food">夕食</span><div><strong>キャンプ場 / 洞爺湖温泉街</strong><p title="初日は簡単キャンプ飯か温泉街で外食">初日は簡単キャンプ飯か温泉街で外食</p><small>90分</small></div></li>
+<li><time>20:30</time><span class="tag see">観光</span><div><strong>洞爺湖湖畔</strong><p title="余力があれば湖畔散歩、花火開催日は湖畔で鑑賞">余力があれば湖畔散歩、花火開催日は湖畔で鑑賞</p><small>45分</small></div></li>
             </ol>
           </section>
           <aside class="side-panel">
-            <section class="meal-recs"><h3>今日の食事メモ</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>苫小牧海鮮系食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,500〜3,000円</dd></div><div><dt>人気メニュー</dt><dd>海鮮丼・焼き魚</dd></div></dl><p>苫小牧 / 下船後の第一候補。混雑なら回避</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>洞爺湖温泉街の食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>洞爺湖 / 外食にする場合の候補</p></article></section>
+            <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>苫小牧海鮮系食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,500〜3,000円</dd></div><div><dt>人気メニュー</dt><dd>海鮮丼・焼き魚</dd></div></dl><p>下船後の第一候補。混雑なら回避</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>洞爺湖温泉街の食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>外食にする場合の候補</p></article></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>初日は北海道到着の余韻を優先し、観光を詰め込みすぎない。</li>
 <li>バンガロー滞在中の食材・飲み物をこの日に少し補充する。</li>
-<li>夕方の光がきれいな場所は、短時間でも写真休憩を。</li>
-<li>船内バッグは先に分けて、乗船後に慌てない。</li></ul></section>
+<li>夕方の光がきれいな場所は、短時間でも写真休憩を。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>観光スポット写真</h3><div class="spot-grid"><figure><div class="spot-placeholder">洞爺湖湖畔</div><figcaption><strong>洞爺湖湖畔</strong><span>余力があれば湖畔散歩、花火開催日は湖畔で鑑賞</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>45分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B9%96%E7%95%94+%E8%8B%AB%E5%B0%8F%E7%89%A7+%2F+%E6%94%AF%E7%AC%8F%E6%B9%96+%2F+%E6%B4%9E%E7%88%BA%E6%B9%96" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
+        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><div class="spot-placeholder">洞爺湖湖畔</div><figcaption><strong>洞爺湖湖畔</strong><span>余力があれば湖畔散歩、花火開催日は湖畔で鑑賞</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>45分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B9%96%E7%95%94+%E8%8B%AB%E5%B0%8F%E7%89%A7+%2F+%E6%94%AF%E7%AC%8F%E6%B9%96+%2F+%E6%B4%9E%E7%88%BA%E6%B9%96" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
 
@@ -828,33 +928,32 @@
           <div class="hero-photo placeholder"><span>洞爺湖湖畔</span><small>写真準備中</small></div>
         </header>
         <div class="guide-intro">
-          <section class="route-card"><h3>Today's Route</h3><ol class="route-map"><li class="route-point"><strong>洞爺湖湖畔</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>洞爺湖温泉街</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>洞爺湖汽船</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>キャンプ場</strong><span>夕食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>洞爺湖湖畔</strong></li></ol></section>
-          <section class="theme-card"><h3>Today's Theme</h3><p>洞爺湖滞在中の「湖から出ない日」。移動を最小限にして、湖畔散歩、遊覧船、温泉街、キャンプ場での休憩を中心にゆっくり過ごします。 洞爺湖から出ない湖畔の日をテーマに、洞爺湖の見どころを無理なく巡ります。移動、休憩、食事のリズムを整えながら、家族で写真を残したい景色を楽しむ一日です。</p></section>
+          <section class="route-card"><div class="card-title-row"><h3>Today's Map</h3><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B9%96%E7%95%94&amp;destination=%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%97%E5%A0%B4&amp;travelmode=driving&amp;waypoints=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B8%A9%E6%B3%89%E8%A1%97|%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B1%BD%E8%88%B9" target="_blank" rel="noreferrer">Google Map</a></div><div class="route-card-body"><div class="sketch-map" aria-label="簡易ルートマップ"><span class="map-node start" style="--x:18%;--y:13%"><i>1</i><b>洞爺湖湖畔</b></span><span class="map-node" style="--x:46%;--y:31%"><i>2</i><b>洞爺湖温泉街</b></span><span class="map-node" style="--x:74%;--y:50%"><i>3</i><b>洞爺湖汽船</b></span><span class="map-node" style="--x:58%;--y:69%"><i>4</i><b>キャンプ場</b></span><span class="map-node end" style="--x:28%;--y:87%"><i>5</i><b>洞爺湖湖畔</b></span></div><ol class="route-map"><li class="route-point"><strong>洞爺湖湖畔</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>洞爺湖温泉街</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>洞爺湖汽船</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>キャンプ場</strong><span>夕食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>洞爺湖湖畔</strong></li></ol></div></section>
+          <section class="theme-card"><h3>Today's Theme</h3><p>洞爺湖滞在中の「湖から出ない日」。移動を最小限にして、湖畔散歩、遊覧船、温泉街、キャンプ場での休憩を中心にゆっくり過ごします。 洞爺湖から出ない湖畔の日をテーマに、洞爺湖の見どころを無理なく巡ります。</p></section>
         </div>
         <div class="day-layout">
           <section class="timeline-wrap">
-            <h3>時刻ベース詳細スケジュール</h3>
+            <h3>時刻表</h3>
             <ol class="timeline">
-              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>Green stay Toya</strong><p>バンガローで朝食。洗濯と片付けも少し進める</p><small>60分</small></div></li>
-<li><time>09:30</time><span class="tag see">観光</span><div><strong>洞爺湖湖畔</strong><p>湖畔散歩。水辺、彫刻公園、写真撮影</p><small>90分</small></div></li>
-<li><time>11:15</time><span class="tag rest">休憩</span><div><strong>洞爺湖温泉街</strong><p>カフェ休憩、お土産下見</p><small>45分</small></div></li>
-<li><time>12:15</time><span class="tag food">昼食</span><div><strong>洞爺湖温泉街</strong><p>湖畔の食堂またはカフェで昼食</p><small>60分</small></div></li>
-<li><time>13:30</time><span class="tag see">観光</span><div><strong>洞爺湖汽船</strong><p>遊覧船で湖上から中島方面を眺める</p><small>60分</small></div></li>
-<li><time>15:00</time><span class="tag rest">休憩</span><div><strong>キャンプ場</strong><p>昼寝、読書、子どもの自由時間</p><small>120分</small></div></li>
-<li><time>17:30</time><span class="tag food">夕食</span><div><strong>キャンプ場</strong><p>バンガローでキャンプ飯。翌日の天気を確認</p><small>90分</small></div></li>
-<li><time>20:30</time><span class="tag see">観光</span><div><strong>洞爺湖湖畔</strong><p>花火開催日は湖畔で鑑賞。無理なら早寝</p><small>45分</small></div></li>
+              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>Green stay Toya</strong><p title="バンガローで朝食。洗濯と片付けも少し進める">バンガローで朝食。洗濯と片付けも少し進める</p><small>60分</small></div></li>
+<li><time>09:30</time><span class="tag see">観光</span><div><strong>洞爺湖湖畔</strong><p title="湖畔散歩。水辺、彫刻公園、写真撮影">湖畔散歩。水辺、彫刻公園、写真撮影</p><small>90分</small></div></li>
+<li><time>11:15</time><span class="tag rest">休憩</span><div><strong>洞爺湖温泉街</strong><p title="カフェ休憩、お土産下見">カフェ休憩、お土産下見</p><small>45分</small></div></li>
+<li><time>12:15</time><span class="tag food">昼食</span><div><strong>洞爺湖温泉街</strong><p title="湖畔の食堂またはカフェで昼食">湖畔の食堂またはカフェで昼食</p><small>60分</small></div></li>
+<li><time>13:30</time><span class="tag see">観光</span><div><strong>洞爺湖汽船</strong><p title="遊覧船で湖上から中島方面を眺める">遊覧船で湖上から中島方面を眺める</p><small>60分</small></div></li>
+<li><time>15:00</time><span class="tag rest">休憩</span><div><strong>キャンプ場</strong><p title="昼寝、読書、子どもの自由時間">昼寝、読書、子どもの自由時間</p><small>120分</small></div></li>
+<li><time>17:30</time><span class="tag food">夕食</span><div><strong>キャンプ場</strong><p title="バンガローでキャンプ飯。翌日の天気を確認">バンガローでキャンプ飯。翌日の天気を確認</p><small>90分</small></div></li>
+<li><time>20:30</time><span class="tag see">観光</span><div><strong>洞爺湖湖畔</strong><p title="花火開催日は湖畔で鑑賞。無理なら早寝">花火開催日は湖畔で鑑賞。無理なら早寝</p><small>45分</small></div></li>
             </ol>
           </section>
           <aside class="side-panel">
-            <section class="meal-recs"><h3>今日の食事メモ</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>洞爺湖温泉街の湖畔カフェ</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 700〜1,500円</dd></div><div><dt>人気メニュー</dt><dd>軽食・スイーツ</dd></div></dl><p>洞爺湖 / 湖から出ない日の第一候補</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>バンガローでキャンプ飯</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>食材費中心</dd></div><div><dt>人気メニュー</dt><dd>簡単キャンプ飯</dd></div></dl><p>Green stay Toya / この日の本命。移動しない</p></article></section>
+            <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>洞爺湖温泉街の湖畔カフェ</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 700〜1,500円</dd></div><div><dt>人気メニュー</dt><dd>軽食・スイーツ</dd></div></dl><p>湖から出ない日の第一候補</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>バンガローでキャンプ飯</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>食材費中心</dd></div><div><dt>人気メニュー</dt><dd>簡単キャンプ飯</dd></div></dl><p>この日の本命。移動しない</p></article></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>この日は洞爺湖エリアから出ない。</li>
 <li>天気が悪い場合は温泉街、カフェ、早めの休憩に切り替える。</li>
 <li>夕方の光がきれいな場所は、短時間でも写真休憩を。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>観光スポット写真</h3><div class="spot-grid"><figure><div class="spot-placeholder">洞爺湖湖畔</div><figcaption><strong>洞爺湖湖畔</strong><span>湖畔散歩。水辺、彫刻公園、写真撮影</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>90分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B9%96%E7%95%94+%E6%B4%9E%E7%88%BA%E6%B9%96" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
-<figure><div class="spot-placeholder">洞爺湖汽船</div><figcaption><strong>洞爺湖汽船</strong><span>遊覧船で湖上から中島方面を眺める</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B1%BD%E8%88%B9+%E6%B4%9E%E7%88%BA%E6%B9%96" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
-<figure><div class="spot-placeholder">洞爺湖湖畔</div><figcaption><strong>洞爺湖湖畔</strong><span>花火開催日は湖畔で鑑賞。無理なら早寝</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>45分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B9%96%E7%95%94+%E6%B4%9E%E7%88%BA%E6%B9%96" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
+        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><div class="spot-placeholder">洞爺湖湖畔</div><figcaption><strong>洞爺湖湖畔</strong><span>湖畔散歩。水辺、彫刻公園、写真撮影</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>90分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B9%96%E7%95%94+%E6%B4%9E%E7%88%BA%E6%B9%96" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
+<figure><div class="spot-placeholder">洞爺湖汽船</div><figcaption><strong>洞爺湖汽船</strong><span>遊覧船で湖上から中島方面を眺める</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B1%BD%E8%88%B9+%E6%B4%9E%E7%88%BA%E6%B9%96" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
 
@@ -868,35 +967,33 @@
           <div class="hero-photo placeholder"><span>有珠山ロープウェイ</span><small>写真準備中</small></div>
         </header>
         <div class="guide-intro">
-          <section class="route-card"><h3>Today's Route</h3><ol class="route-map"><li class="route-point"><strong>洞爺湖</strong><div class="route-leg"><i></i><span>約30分</span></div></li><li class="route-point"><strong>有珠山</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>有珠山ロープウェイ</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>昭和新山</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>サイロ展望台</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>壮瞥</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>洞爺湖温泉街</strong><div class="route-leg"><i></i><span>30分</span></div></li><li class="route-point"><strong>キャンプ場</strong></li></ol></section>
-          <section class="theme-card"><h3>Today's Theme</h3><p>洞爺湖周辺観光の日。有珠山ロープウェイ、サイロ展望台、壮瞥方面を無理なく回り、火山と湖の景色を楽しみます。夕方はキャンプ場へ戻って休みます。 有珠山と洞爺湖周辺ジオパークをテーマに、洞爺湖 / 有珠山 / 壮瞥の見どころを無理なく巡ります。</p></section>
+          <section class="route-card"><div class="card-title-row"><h3>Today's Map</h3><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%E6%B4%9E%E7%88%BA%E6%B9%96&amp;destination=%E3%82%AD%E3%83%A3%E3%83%B3%E3%83%97%E5%A0%B4&amp;travelmode=driving&amp;waypoints=%E6%9C%89%E7%8F%A0%E5%B1%B1|%E6%9C%89%E7%8F%A0%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4|%E6%98%AD%E5%92%8C%E6%96%B0%E5%B1%B1|%E3%82%B5%E3%82%A4%E3%83%AD%E5%B1%95%E6%9C%9B%E5%8F%B0|%E5%A3%AE%E7%9E%A5|%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B8%A9%E6%B3%89%E8%A1%97" target="_blank" rel="noreferrer">Google Map</a></div><div class="route-card-body"><div class="sketch-map" aria-label="簡易ルートマップ"><span class="map-node start" style="--x:18%;--y:13%"><i>1</i><b>洞爺湖</b></span><span class="map-node" style="--x:46%;--y:25%"><i>2</i><b>有珠山</b></span><span class="map-node" style="--x:74%;--y:38%"><i>3</i><b>有珠山ロープウェイ</b></span><span class="map-node" style="--x:58%;--y:50%"><i>4</i><b>昭和新山</b></span><span class="map-node" style="--x:28%;--y:62%"><i>5</i><b>サイロ展望台</b></span><span class="map-node" style="--x:50%;--y:75%"><i>6</i><b>壮瞥</b></span><span class="map-node end" style="--x:80%;--y:87%"><i>7</i><b>キャンプ場</b></span></div><ol class="route-map"><li class="route-point"><strong>洞爺湖</strong><div class="route-leg"><i></i><span>約30分</span></div></li><li class="route-point"><strong>有珠山</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>有珠山ロープウェイ</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>昭和新山</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>サイロ展望台</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>壮瞥</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>キャンプ場</strong></li></ol></div></section>
+          <section class="theme-card"><h3>Today's Theme</h3><p>洞爺湖周辺観光の日。有珠山ロープウェイ、サイロ展望台、壮瞥方面を無理なく回り、火山と湖の景色を楽しみます。夕方はキャンプ場へ戻って休みます。</p></section>
         </div>
         <div class="day-layout">
           <section class="timeline-wrap">
-            <h3>時刻ベース詳細スケジュール</h3>
+            <h3>時刻表</h3>
             <ol class="timeline">
-              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>Green stay Toya</strong><p>朝食と出発準備</p><small>60分</small></div></li>
-<li><time>09:15</time><span class="tag move">移動</span><div><strong>洞爺湖 → 有珠山</strong><p>有珠山ロープウェイ方面へ移動</p><small>約30分</small></div></li>
-<li><time>10:00</time><span class="tag see">観光</span><div><strong>有珠山ロープウェイ</strong><p>ロープウェイと展望台。天候が悪ければ短縮</p><small>90分</small></div></li>
-<li><time>11:45</time><span class="tag food">昼食</span><div><strong>昭和新山周辺</strong><p>軽食、レストハウス、または周辺食堂</p><small>60分</small></div></li>
-<li><time>13:00</time><span class="tag see">観光</span><div><strong>サイロ展望台</strong><p>洞爺湖を見下ろす定番写真スポット</p><small>45分</small></div></li>
-<li><time>14:00</time><span class="tag see">観光</span><div><strong>壮瞥方面</strong><p>果物直売所、道の駅、湖畔ドライブ</p><small>90分</small></div></li>
-<li><time>15:45</time><span class="tag rest">休憩</span><div><strong>洞爺湖温泉街</strong><p>カフェまたは日帰り温泉候補</p><small>60分</small></div></li>
-<li><time>17:00</time><span class="tag move">移動</span><div><strong>洞爺湖温泉街 → キャンプ場</strong><p>夕食前に戻る</p><small>30分</small></div></li>
-<li><time>18:00</time><span class="tag food">夕食</span><div><strong>キャンプ場</strong><p>キャンプ飯。翌日の札幌移動準備</p><small>90分</small></div></li>
+              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>Green stay Toya</strong><p title="朝食と出発準備">朝食と出発準備</p><small>60分</small></div></li>
+<li><time>09:15</time><span class="tag move">移動</span><div><strong>洞爺湖 → 有珠山</strong><p title="有珠山ロープウェイ方面へ移動">有珠山ロープウェイ方面へ移動</p><small>約30分</small></div></li>
+<li><time>10:00</time><span class="tag see">観光</span><div><strong>有珠山ロープウェイ</strong><p title="ロープウェイと展望台。天候が悪ければ短縮">ロープウェイと展望台。天候が悪ければ短縮</p><small>90分</small></div></li>
+<li><time>11:45</time><span class="tag food">昼食</span><div><strong>昭和新山周辺</strong><p title="軽食、レストハウス、または周辺食堂">軽食、レストハウス、または周辺食堂</p><small>60分</small></div></li>
+<li><time>13:00</time><span class="tag see">観光</span><div><strong>サイロ展望台</strong><p title="洞爺湖を見下ろす定番写真スポット">洞爺湖を見下ろす定番写真スポット</p><small>45分</small></div></li>
+<li><time>14:00</time><span class="tag see">観光</span><div><strong>壮瞥方面</strong><p title="果物直売所、道の駅、湖畔ドライブ">果物直売所、道の駅、湖畔ドライブ</p><small>90分</small></div></li>
+<li><time>15:45</time><span class="tag rest">休憩</span><div><strong>洞爺湖温泉街</strong><p title="カフェまたは日帰り温泉候補">カフェまたは日帰り温泉候補</p><small>60分</small></div></li>
+<li><time>17:00</time><span class="tag move">移動</span><div><strong>洞爺湖温泉街 → キャンプ場</strong><p title="夕食前に戻る">夕食前に戻る</p><small>30分</small></div></li>
+<li><time>18:00</time><span class="tag food">夕食</span><div><strong>キャンプ場</strong><p title="キャンプ飯。翌日の札幌移動準備">キャンプ飯。翌日の札幌移動準備</p><small>90分</small></div></li>
             </ol>
           </section>
           <aside class="side-panel">
-            <section class="meal-recs"><h3>今日の食事メモ</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>昭和新山周辺レストハウス</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>有珠山 / ロープウェイ後に使いやすい</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>バンガローでキャンプ飯</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>食材費中心</dd></div><div><dt>人気メニュー</dt><dd>簡単キャンプ飯</dd></div></dl><p>Green stay Toya / 翌日の移動に備えて早めに済ませる</p></article></section>
+            <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>昭和新山周辺レストハウス</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>ロープウェイ後に使いやすい</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>バンガローでキャンプ飯</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>食材費中心</dd></div><div><dt>人気メニュー</dt><dd>簡単キャンプ飯</dd></div></dl><p>翌日の移動に備えて早めに済ませる</p></article></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>有珠山ロープウェイは天候と運行状況を当日確認。</li>
 <li>翌日は札幌移動なので、夜に荷物を少しまとめる。</li>
-<li>雨や霧の日は展望系を短縮し、屋内休憩を増やす。</li>
-<li>夕方の光がきれいな場所は、短時間でも写真休憩を。</li></ul></section>
+<li>雨や霧の日は展望系を短縮し、屋内休憩を増やす。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>観光スポット写真</h3><div class="spot-grid"><figure><div class="spot-placeholder">有珠山ロープウェイ</div><figcaption><strong>有珠山ロープウェイ</strong><span>ロープウェイと展望台。天候が悪ければ短縮</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>90分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%9C%89%E7%8F%A0%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%89%E7%8F%A0%E5%B1%B1+%2F+%E5%A3%AE%E7%9E%A5" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
-<figure><div class="spot-placeholder">サイロ展望台</div><figcaption><strong>サイロ展望台</strong><span>洞爺湖を見下ろす定番写真スポット</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>45分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%82%B5%E3%82%A4%E3%83%AD%E5%B1%95%E6%9C%9B%E5%8F%B0+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%89%E7%8F%A0%E5%B1%B1+%2F+%E5%A3%AE%E7%9E%A5" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
-<figure><div class="spot-placeholder">壮瞥方面</div><figcaption><strong>壮瞥方面</strong><span>果物直売所、道の駅、湖畔ドライブ</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>90分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%A3%AE%E7%9E%A5+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%89%E7%8F%A0%E5%B1%B1+%2F+%E5%A3%AE%E7%9E%A5" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
+        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><div class="spot-placeholder">有珠山ロープウェイ</div><figcaption><strong>有珠山ロープウェイ</strong><span>ロープウェイと展望台。天候が悪ければ短縮</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>90分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%9C%89%E7%8F%A0%E5%B1%B1%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%89%E7%8F%A0%E5%B1%B1+%2F+%E5%A3%AE%E7%9E%A5" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
+<figure><div class="spot-placeholder">サイロ展望台</div><figcaption><strong>サイロ展望台</strong><span>洞爺湖を見下ろす定番写真スポット</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>45分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%82%B5%E3%82%A4%E3%83%AD%E5%B1%95%E6%9C%9B%E5%8F%B0+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%89%E7%8F%A0%E5%B1%B1+%2F+%E5%A3%AE%E7%9E%A5" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
 
@@ -910,32 +1007,32 @@
           <div class="hero-photo placeholder"><span>北海道大学</span><small>写真準備中</small></div>
         </header>
         <div class="guide-intro">
-          <section class="route-card"><h3>Today's Route</h3><ol class="route-map"><li class="route-point"><strong>洞爺湖</strong><div class="route-leg"><i></i><span>約2時間</span></div></li><li class="route-point"><strong>中山峠</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>札幌市内</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>HOTEL MYSTAYS Sapporo Aspen</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>北海道大学</strong></li></ol></section>
-          <section class="theme-card"><h3>Today's Theme</h3><p>洞爺湖のキャンプ滞在を終えて札幌へ。ホテルに入り、北海道大学の緑の多いキャンパスを散策します。夜は札幌駅前の串鳥で夕食予定です。 洞爺湖から札幌へ、北大散策と串鳥をテーマに、洞爺湖 / 札幌駅前 / 北海道大学の見どころを無理なく巡ります。</p></section>
+          <section class="route-card"><div class="card-title-row"><h3>Today's Map</h3><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%E6%B4%9E%E7%88%BA%E6%B9%96&amp;destination=%E5%8C%97%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%A6&amp;travelmode=driving&amp;waypoints=%E4%B8%AD%E5%B1%B1%E5%B3%A0|%E6%9C%AD%E5%B9%8C%E5%B8%82%E5%86%85|HOTEL+MYSTAYS+Sapporo+Aspen" target="_blank" rel="noreferrer">Google Map</a></div><div class="route-card-body"><div class="sketch-map" aria-label="簡易ルートマップ"><span class="map-node start" style="--x:18%;--y:13%"><i>1</i><b>洞爺湖</b></span><span class="map-node" style="--x:46%;--y:31%"><i>2</i><b>中山峠</b></span><span class="map-node" style="--x:74%;--y:50%"><i>3</i><b>札幌市内</b></span><span class="map-node" style="--x:58%;--y:69%"><i>4</i><b>HOTEL MYSTAY…</b></span><span class="map-node end" style="--x:28%;--y:87%"><i>5</i><b>北海道大学</b></span></div><ol class="route-map"><li class="route-point"><strong>洞爺湖</strong><div class="route-leg"><i></i><span>約2時間</span></div></li><li class="route-point"><strong>中山峠</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>札幌市内</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>HOTEL MYSTAYS Sapporo Aspen</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>北海道大学</strong></li></ol></div></section>
+          <section class="theme-card"><h3>Today's Theme</h3><p>洞爺湖のキャンプ滞在を終えて札幌へ。ホテルに入り、北海道大学の緑の多いキャンパスを散策します。夜は札幌駅前の串鳥で夕食予定です。</p></section>
         </div>
         <div class="day-layout">
           <section class="timeline-wrap">
-            <h3>時刻ベース詳細スケジュール</h3>
+            <h3>時刻表</h3>
             <ol class="timeline">
-              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>Green stay Toya</strong><p>朝食、片付け、チェックアウト準備</p><small>75分</small></div></li>
-<li><time>09:30</time><span class="tag move">移動</span><div><strong>洞爺湖 → 中山峠方面</strong><p>札幌へ移動。途中で休憩を入れる</p><small>約2時間</small></div></li>
-<li><time>11:30</time><span class="tag rest">休憩</span><div><strong>中山峠 / 定山渓方面</strong><p>トイレ、軽食、天気確認</p><small>30分</small></div></li>
-<li><time>12:30</time><span class="tag food">昼食</span><div><strong>札幌市内</strong><p>駐車しやすい場所で昼食</p><small>60分</small></div></li>
-<li><time>14:00</time><span class="tag prep">手続き</span><div><strong>HOTEL MYSTAYS Sapporo Aspen</strong><p>荷物預けまたはチェックイン</p><small>45分</small></div></li>
-<li><time>15:00</time><span class="tag see">観光</span><div><strong>北海道大学</strong><p>ポプラ並木、総合博物館周辺、キャンパス散策</p><small>120分</small></div></li>
-<li><time>17:30</time><span class="tag rest">休憩</span><div><strong>ホテル</strong><p>夕食前に休憩、着替え、洗濯</p><small>60分</small></div></li>
-<li><time>19:00</time><span class="tag food">夕食</span><div><strong>串鳥 札幌駅前</strong><p>札幌駅前の串鳥で夜ご飯</p><small>90分</small></div></li>
-<li><time>21:00</time><span class="tag rest">休憩</span><div><strong>ホテル</strong><p>翌日の富良野・層雲峡移動に備えて早寝</p><small>-</small></div></li>
+              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>Green stay Toya</strong><p title="朝食、片付け、チェックアウト準備">朝食、片付け、チェックアウト準備</p><small>75分</small></div></li>
+<li><time>09:30</time><span class="tag move">移動</span><div><strong>洞爺湖 → 中山峠方面</strong><p title="札幌へ移動。途中で休憩を入れる">札幌へ移動。途中で休憩を入れる</p><small>約2時間</small></div></li>
+<li><time>11:30</time><span class="tag rest">休憩</span><div><strong>中山峠 / 定山渓方面</strong><p title="トイレ、軽食、天気確認">トイレ、軽食、天気確認</p><small>30分</small></div></li>
+<li><time>12:30</time><span class="tag food">昼食</span><div><strong>札幌市内</strong><p title="駐車しやすい場所で昼食">駐車しやすい場所で昼食</p><small>60分</small></div></li>
+<li><time>14:00</time><span class="tag prep">手続き</span><div><strong>HOTEL MYSTAYS Sapporo Aspen</strong><p title="荷物預けまたはチェックイン">荷物預けまたはチェックイン</p><small>45分</small></div></li>
+<li><time>15:00</time><span class="tag see">観光</span><div><strong>北海道大学</strong><p title="ポプラ並木、総合博物館周辺、キャンパス散策">ポプラ並木、総合博物館周辺、キャンパス散策</p><small>120分</small></div></li>
+<li><time>17:30</time><span class="tag rest">休憩</span><div><strong>ホテル</strong><p title="夕食前に休憩、着替え、洗濯">夕食前に休憩、着替え、洗濯</p><small>60分</small></div></li>
+<li><time>19:00</time><span class="tag food">夕食</span><div><strong>串鳥 札幌駅前</strong><p title="札幌駅前の串鳥で夜ご飯">札幌駅前の串鳥で夜ご飯</p><small>90分</small></div></li>
+<li><time>21:00</time><span class="tag rest">休憩</span><div><strong>ホテル</strong><p title="翌日の富良野・層雲峡移動に備えて早寝">翌日の富良野・層雲峡移動に備えて早寝</p><small>-</small></div></li>
             </ol>
           </section>
           <aside class="side-panel">
-            <section class="meal-recs"><h3>今日の食事メモ</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>札幌駅周辺ランチ</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>札幌駅 / ホテル近くで駐車しやすい店を選ぶ</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>串鳥 札幌駅前</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,200〜2,800円</dd></div><div><dt>人気メニュー</dt><dd>串焼き・焼鳥</dd></div></dl><p>札幌駅前 / この日の予約・本命候補</p></article></section>
+            <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>札幌駅周辺ランチ</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>ホテル近くで駐車しやすい店を選ぶ</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>串鳥 札幌駅前</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,200〜2,800円</dd></div><div><dt>人気メニュー</dt><dd>串焼き・焼鳥</dd></div></dl><p>この日の予約・本命候補</p></article></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>北海道大学は歩く距離が長くなりやすいので、子どもの疲れを見て短縮する。</li>
 <li>串鳥は混雑する可能性があるため、できれば事前予約または早め入店。</li>
 <li>トイレ休憩は道の駅やPAでこまめに確保。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>観光スポット写真</h3><div class="spot-grid"><figure><div class="spot-placeholder">北海道大学</div><figcaption><strong>北海道大学</strong><span>ポプラ並木、総合博物館周辺、キャンパス散策</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>120分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%8C%97%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%A6+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%AD%E5%B9%8C%E9%A7%85%E5%89%8D+%2F+%E5%8C%97%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%A6" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
+        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><div class="spot-placeholder">北海道大学</div><figcaption><strong>北海道大学</strong><span>ポプラ並木、総合博物館周辺、キャンパス散策</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>120分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%8C%97%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%A6+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%AD%E5%B9%8C%E9%A7%85%E5%89%8D+%2F+%E5%8C%97%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%A6" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
 
@@ -949,33 +1046,33 @@
           <div class="hero-photo placeholder"><span>ファーム富田</span><small>写真準備中</small></div>
         </header>
         <div class="guide-intro">
-          <section class="route-card"><h3>Today's Route</h3><ol class="route-map"><li class="route-point"><strong>札幌</strong><div class="route-leg"><i></i><span>約2時間15分</span></div></li><li class="route-point"><strong>富良野</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>富良野市内</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>ファーム富田</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>美瑛</strong><div class="route-leg"><i></i><span>約2時間</span></div></li><li class="route-point"><strong>層雲峡</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>Sounkyo Auto Camp</strong></li></ol></section>
-          <section class="theme-card"><h3>Today's Theme</h3><p>札幌を11時ごろ出発し、富良野周辺の花畑や美瑛の景色を楽しみながら層雲峡へ向かいます。観光を入れつつも移動日なので、夕方のチェックインを優先します。 札幌11時発、富良野・美瑛を抜けて層雲峡へをテーマに、札幌 / 富良野 / 美瑛 / 層雲峡の見どころを無理なく巡ります。</p></section>
+          <section class="route-card"><div class="card-title-row"><h3>Today's Map</h3><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%E6%9C%AD%E5%B9%8C&amp;destination=Sounkyo+Auto+Camp&amp;travelmode=driving&amp;waypoints=%E5%AF%8C%E8%89%AF%E9%87%8E|%E5%AF%8C%E8%89%AF%E9%87%8E%E5%B8%82%E5%86%85|%E3%83%95%E3%82%A1%E3%83%BC%E3%83%A0%E5%AF%8C%E7%94%B0|%E7%BE%8E%E7%91%9B|%E5%B1%A4%E9%9B%B2%E5%B3%A1" target="_blank" rel="noreferrer">Google Map</a></div><div class="route-card-body"><div class="sketch-map" aria-label="簡易ルートマップ"><span class="map-node start" style="--x:18%;--y:13%"><i>1</i><b>札幌</b></span><span class="map-node" style="--x:46%;--y:25%"><i>2</i><b>富良野</b></span><span class="map-node" style="--x:74%;--y:38%"><i>3</i><b>富良野市内</b></span><span class="map-node" style="--x:58%;--y:50%"><i>4</i><b>ファーム富田</b></span><span class="map-node" style="--x:28%;--y:62%"><i>5</i><b>美瑛</b></span><span class="map-node" style="--x:50%;--y:75%"><i>6</i><b>層雲峡</b></span><span class="map-node end" style="--x:80%;--y:87%"><i>7</i><b>Sounkyo Auto…</b></span></div><ol class="route-map"><li class="route-point"><strong>札幌</strong><div class="route-leg"><i></i><span>約2時間15分</span></div></li><li class="route-point"><strong>富良野</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>富良野市内</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>ファーム富田</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>美瑛</strong><div class="route-leg"><i></i><span>約2時間</span></div></li><li class="route-point"><strong>層雲峡</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>Sounkyo Auto Camp</strong></li></ol></div></section>
+          <section class="theme-card"><h3>Today's Theme</h3><p>札幌を11時ごろ出発し、富良野周辺の花畑や美瑛の景色を楽しみながら層雲峡へ向かいます。観光を入れつつも移動日なので、夕方のチェックインを優先します。</p></section>
         </div>
         <div class="day-layout">
           <section class="timeline-wrap">
-            <h3>時刻ベース詳細スケジュール</h3>
+            <h3>時刻表</h3>
             <ol class="timeline">
-              <li><time>08:30</time><span class="tag food">朝食</span><div><strong>札幌駅周辺</strong><p>ゆっくり朝食。車内飲み物と軽食を補充</p><small>60分</small></div></li>
-<li><time>10:00</time><span class="tag prep">準備</span><div><strong>HOTEL MYSTAYS Sapporo Aspen</strong><p>チェックアウト、荷物積み込み</p><small>45分</small></div></li>
-<li><time>11:00</time><span class="tag move">移動</span><div><strong>札幌 → 富良野</strong><p>高速と一般道で富良野方面へ</p><small>約2時間15分</small></div></li>
-<li><time>13:15</time><span class="tag food">昼食</span><div><strong>富良野市内</strong><p>富良野オムカレー、カフェ、道の駅系候補</p><small>60分</small></div></li>
-<li><time>14:30</time><span class="tag see">観光</span><div><strong>ファーム富田周辺</strong><p>花畑、カフェ、写真撮影。混雑時は短縮</p><small>75分</small></div></li>
-<li><time>15:45</time><span class="tag see">観光</span><div><strong>美瑛方面</strong><p>青い池または丘の景色を1か所だけ選ぶ</p><small>60分</small></div></li>
-<li><time>16:45</time><span class="tag move">移動</span><div><strong>美瑛 → 層雲峡</strong><p>大雪山方面へ移動。途中休憩を挟む</p><small>約2時間</small></div></li>
-<li><time>18:45</time><span class="tag prep">手続き</span><div><strong>Sounkyo Auto Camp</strong><p>チェックイン、コテージ確認、荷下ろし</p><small>45分</small></div></li>
-<li><time>19:30</time><span class="tag food">夕食</span><div><strong>層雲峡 / コテージ</strong><p>外食または簡単調理。遅くなる前提で軽め</p><small>60分</small></div></li>
-<li><time>21:00</time><span class="tag rest">休憩</span><div><strong>コテージ</strong><p>翌日の黒岳・滝観光に備えて休む</p><small>-</small></div></li>
+              <li><time>08:30</time><span class="tag food">朝食</span><div><strong>札幌駅周辺</strong><p title="ゆっくり朝食。車内飲み物と軽食を補充">ゆっくり朝食。車内飲み物と軽食を補充</p><small>60分</small></div></li>
+<li><time>10:00</time><span class="tag prep">準備</span><div><strong>HOTEL MYSTAYS Sapporo Aspen</strong><p title="チェックアウト、荷物積み込み">チェックアウト、荷物積み込み</p><small>45分</small></div></li>
+<li><time>11:00</time><span class="tag move">移動</span><div><strong>札幌 → 富良野</strong><p title="高速と一般道で富良野方面へ">高速と一般道で富良野方面へ</p><small>約2時間15分</small></div></li>
+<li><time>13:15</time><span class="tag food">昼食</span><div><strong>富良野市内</strong><p title="富良野オムカレー、カフェ、道の駅系候補">富良野オムカレー、カフェ、道の駅系候補</p><small>60分</small></div></li>
+<li><time>14:30</time><span class="tag see">観光</span><div><strong>ファーム富田周辺</strong><p title="花畑、カフェ、写真撮影。混雑時は短縮">花畑、カフェ、写真撮影。混雑時は短縮</p><small>75分</small></div></li>
+<li><time>15:45</time><span class="tag see">観光</span><div><strong>美瑛方面</strong><p title="青い池または丘の景色を1か所だけ選ぶ">青い池または丘の景色を1か所だけ選ぶ</p><small>60分</small></div></li>
+<li><time>16:45</time><span class="tag move">移動</span><div><strong>美瑛 → 層雲峡</strong><p title="大雪山方面へ移動。途中休憩を挟む">大雪山方面へ移動。途中休憩を挟む</p><small>約2時間</small></div></li>
+<li><time>18:45</time><span class="tag prep">手続き</span><div><strong>Sounkyo Auto Camp</strong><p title="チェックイン、コテージ確認、荷下ろし">チェックイン、コテージ確認、荷下ろし</p><small>45分</small></div></li>
+<li><time>19:30</time><span class="tag food">夕食</span><div><strong>層雲峡 / コテージ</strong><p title="外食または簡単調理。遅くなる前提で軽め">外食または簡単調理。遅くなる前提で軽め</p><small>60分</small></div></li>
+<li><time>21:00</time><span class="tag rest">休憩</span><div><strong>コテージ</strong><p title="翌日の黒岳・滝観光に備えて休む">翌日の黒岳・滝観光に備えて休む</p><small>-</small></div></li>
             </ol>
           </section>
           <aside class="side-panel">
-            <section class="meal-recs"><h3>今日の食事メモ</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>富良野オムカレー候補</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>富良野オムカレー</dd></div></dl><p>富良野 / 富良野らしさを入れる第一候補</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>層雲峡温泉街の食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>層雲峡 / 到着が遅くなった場合は営業確認</p></article></section>
+            <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>富良野オムカレー候補</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>富良野オムカレー</dd></div></dl><p>富良野らしさを入れる第一候補</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>層雲峡温泉街の食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>到着が遅くなった場合は営業確認</p></article></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>「フラ」は富良野方面として扱う。</li>
 <li>富良野・美瑛は寄り道を増やしすぎず、花畑か青い池のどちらかを優先。</li>
 <li>層雲峡到着が遅くなるので、夕食は軽めのバックアップを持つ。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>観光スポット写真</h3><div class="spot-grid"><figure><div class="spot-placeholder">ファーム富田周辺</div><figcaption><strong>ファーム富田周辺</strong><span>花畑、カフェ、写真撮影。混雑時は短縮</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>75分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%95%E3%82%A1%E3%83%BC%E3%83%A0%E5%AF%8C%E7%94%B0+%E6%9C%AD%E5%B9%8C+%2F+%E5%AF%8C%E8%89%AF%E9%87%8E+%2F+%E7%BE%8E%E7%91%9B+%2F+%E5%B1%A4%E9%9B%B2%E5%B3%A1" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
+        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><div class="spot-placeholder">ファーム富田周辺</div><figcaption><strong>ファーム富田周辺</strong><span>花畑、カフェ、写真撮影。混雑時は短縮</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>75分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%95%E3%82%A1%E3%83%BC%E3%83%A0%E5%AF%8C%E7%94%B0+%E6%9C%AD%E5%B9%8C+%2F+%E5%AF%8C%E8%89%AF%E9%87%8E+%2F+%E7%BE%8E%E7%91%9B+%2F+%E5%B1%A4%E9%9B%B2%E5%B3%A1" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
 <figure><div class="spot-placeholder">美瑛方面</div><figcaption><strong>美瑛方面</strong><span>青い池または丘の景色を1か所だけ選ぶ</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%BE%8E%E7%91%9B+%E6%9C%AD%E5%B9%8C+%2F+%E5%AF%8C%E8%89%AF%E9%87%8E+%2F+%E7%BE%8E%E7%91%9B+%2F+%E5%B1%A4%E9%9B%B2%E5%B3%A1" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
@@ -990,35 +1087,33 @@
           <div class="hero-photo placeholder"><span>黒岳ロープウェイ</span><small>写真準備中</small></div>
         </header>
         <div class="guide-intro">
-          <section class="route-card"><h3>Today's Route</h3><ol class="route-map"><li class="route-point"><strong>コテージ</strong><div class="route-leg"><i></i><span>15分</span></div></li><li class="route-point"><strong>黒岳ロープウェイ</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>層雲峡温泉街</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>銀河・流星の滝</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>大函 / 層雲峡散策</strong></li></ol></section>
-          <section class="theme-card"><h3>Today's Theme</h3><p>層雲峡滞在日。黒岳ロープウェイ、銀河・流星の滝、温泉街散策を組み合わせ、大雪山の自然を無理なく楽しみます。天候が悪い場合は温泉と短時間散策に切り替えます。 層雲峡で大雪山の自然を満喫をテーマに、層雲峡 / 黒岳 / 銀河・流星の滝の見どころを無理なく巡ります。</p></section>
+          <section class="route-card"><div class="card-title-row"><h3>Today's Map</h3><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%E3%82%B3%E3%83%86%E3%83%BC%E3%82%B8&amp;destination=%E5%A4%A7%E5%87%BD+%2F+%E5%B1%A4%E9%9B%B2%E5%B3%A1%E6%95%A3%E7%AD%96&amp;travelmode=driving&amp;waypoints=%E9%BB%92%E5%B2%B3%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4|%E5%B1%A4%E9%9B%B2%E5%B3%A1%E6%B8%A9%E6%B3%89%E8%A1%97|%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D" target="_blank" rel="noreferrer">Google Map</a></div><div class="route-card-body"><div class="sketch-map" aria-label="簡易ルートマップ"><span class="map-node start" style="--x:18%;--y:13%"><i>1</i><b>コテージ</b></span><span class="map-node" style="--x:46%;--y:31%"><i>2</i><b>黒岳ロープウェイ</b></span><span class="map-node" style="--x:74%;--y:50%"><i>3</i><b>層雲峡温泉街</b></span><span class="map-node" style="--x:58%;--y:69%"><i>4</i><b>銀河・流星の滝</b></span><span class="map-node end" style="--x:28%;--y:87%"><i>5</i><b>大函 / 層雲峡散策</b></span></div><ol class="route-map"><li class="route-point"><strong>コテージ</strong><div class="route-leg"><i></i><span>15分</span></div></li><li class="route-point"><strong>黒岳ロープウェイ</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>層雲峡温泉街</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>銀河・流星の滝</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>大函 / 層雲峡散策</strong></li></ol></div></section>
+          <section class="theme-card"><h3>Today's Theme</h3><p>層雲峡滞在日。黒岳ロープウェイ、銀河・流星の滝、温泉街散策を組み合わせ、大雪山の自然を無理なく楽しみます。天候が悪い場合は温泉と短時間散策に切り替えます。</p></section>
         </div>
         <div class="day-layout">
           <section class="timeline-wrap">
-            <h3>時刻ベース詳細スケジュール</h3>
+            <h3>時刻表</h3>
             <ol class="timeline">
-              <li><time>07:30</time><span class="tag food">朝食</span><div><strong>コテージ</strong><p>朝食、山の天気とロープウェイ運行状況を確認</p><small>60分</small></div></li>
-<li><time>09:00</time><span class="tag move">移動</span><div><strong>コテージ → 黒岳ロープウェイ</strong><p>駐車場へ移動</p><small>15分</small></div></li>
-<li><time>09:30</time><span class="tag see">観光</span><div><strong>黒岳ロープウェイ</strong><p>ロープウェイで展望。余力があれば散策路へ</p><small>120分</small></div></li>
-<li><time>11:45</time><span class="tag food">昼食</span><div><strong>層雲峡温泉街</strong><p>食堂、カフェ、または軽食</p><small>60分</small></div></li>
-<li><time>13:00</time><span class="tag rest">休憩</span><div><strong>コテージ</strong><p>午後に備えて休憩、洗濯、荷物整理</p><small>90分</small></div></li>
-<li><time>14:45</time><span class="tag see">観光</span><div><strong>銀河・流星の滝</strong><p>滝見学と写真撮影。歩く距離は短め</p><small>75分</small></div></li>
-<li><time>16:15</time><span class="tag see">観光</span><div><strong>大函 / 層雲峡散策</strong><p>天候と体力に応じて短時間散策</p><small>60分</small></div></li>
-<li><time>17:30</time><span class="tag rest">休憩</span><div><strong>温泉街 / コテージ</strong><p>温泉または早めの休憩</p><small>60分</small></div></li>
-<li><time>18:45</time><span class="tag food">夕食</span><div><strong>コテージ</strong><p>キャンプ飯。翌日の道東移動準備</p><small>90分</small></div></li>
+              <li><time>07:30</time><span class="tag food">朝食</span><div><strong>コテージ</strong><p title="朝食、山の天気とロープウェイ運行状況を確認">朝食、山の天気とロープウェイ運行状況を確認</p><small>60分</small></div></li>
+<li><time>09:00</time><span class="tag move">移動</span><div><strong>コテージ → 黒岳ロープウェイ</strong><p title="駐車場へ移動">駐車場へ移動</p><small>15分</small></div></li>
+<li><time>09:30</time><span class="tag see">観光</span><div><strong>黒岳ロープウェイ</strong><p title="ロープウェイで展望。余力があれば散策路へ">ロープウェイで展望。余力があれば散策路へ</p><small>120分</small></div></li>
+<li><time>11:45</time><span class="tag food">昼食</span><div><strong>層雲峡温泉街</strong><p title="食堂、カフェ、または軽食">食堂、カフェ、または軽食</p><small>60分</small></div></li>
+<li><time>13:00</time><span class="tag rest">休憩</span><div><strong>コテージ</strong><p title="午後に備えて休憩、洗濯、荷物整理">午後に備えて休憩、洗濯、荷物整理</p><small>90分</small></div></li>
+<li><time>14:45</time><span class="tag see">観光</span><div><strong>銀河・流星の滝</strong><p title="滝見学と写真撮影。歩く距離は短め">滝見学と写真撮影。歩く距離は短め</p><small>75分</small></div></li>
+<li><time>16:15</time><span class="tag see">観光</span><div><strong>大函 / 層雲峡散策</strong><p title="天候と体力に応じて短時間散策">天候と体力に応じて短時間散策</p><small>60分</small></div></li>
+<li><time>17:30</time><span class="tag rest">休憩</span><div><strong>温泉街 / コテージ</strong><p title="温泉または早めの休憩">温泉または早めの休憩</p><small>60分</small></div></li>
+<li><time>18:45</time><span class="tag food">夕食</span><div><strong>コテージ</strong><p title="キャンプ飯。翌日の道東移動準備">キャンプ飯。翌日の道東移動準備</p><small>90分</small></div></li>
             </ol>
           </section>
           <aside class="side-panel">
-            <section class="meal-recs"><h3>今日の食事メモ</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>層雲峡温泉街の食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>層雲峡 / 黒岳後に使いやすい</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>コテージでキャンプ飯</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>食材費中心</dd></div><div><dt>人気メニュー</dt><dd>簡単キャンプ飯</dd></div></dl><p>Sounkyo Auto Camp / 翌日の移動に備えて早めに済ませる</p></article></section>
+            <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>層雲峡温泉街の食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>黒岳後に使いやすい</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>コテージでキャンプ飯</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>食材費中心</dd></div><div><dt>人気メニュー</dt><dd>簡単キャンプ飯</dd></div></dl><p>翌日の移動に備えて早めに済ませる</p></article></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>黒岳は天候優先。風や雨が強ければ滝と温泉中心にする。</li>
 <li>翌日は中標津方面へ長距離移動のため、夜に荷物をまとめる。</li>
-<li>雨や霧の日は展望系を短縮し、屋内休憩を増やす。</li>
-<li>夕方の光がきれいな場所は、短時間でも写真休憩を。</li></ul></section>
+<li>雨や霧の日は展望系を短縮し、屋内休憩を増やす。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>観光スポット写真</h3><div class="spot-grid"><figure><div class="spot-placeholder">黒岳ロープウェイ</div><figcaption><strong>黒岳ロープウェイ</strong><span>ロープウェイで展望。余力があれば散策路へ</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>120分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%BB%92%E5%B2%B3%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%BB%92%E5%B2%B3+%2F+%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
-<figure><div class="spot-placeholder">銀河・流星の滝</div><figcaption><strong>銀河・流星の滝</strong><span>滝見学と写真撮影。歩く距離は短め</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>75分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%BB%92%E5%B2%B3+%2F+%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
-<figure><div class="spot-placeholder">大函 / 層雲峡散策</div><figcaption><strong>大函 / 層雲峡散策</strong><span>天候と体力に応じて短時間散策</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%A4%A7%E5%87%BD+%2F+%E5%B1%A4%E9%9B%B2%E5%B3%A1%E6%95%A3%E7%AD%96+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%BB%92%E5%B2%B3+%2F+%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
+        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><div class="spot-placeholder">黒岳ロープウェイ</div><figcaption><strong>黒岳ロープウェイ</strong><span>ロープウェイで展望。余力があれば散策路へ</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>120分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%BB%92%E5%B2%B3%E3%83%AD%E3%83%BC%E3%83%97%E3%82%A6%E3%82%A7%E3%82%A4+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%BB%92%E5%B2%B3+%2F+%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
+<figure><div class="spot-placeholder">銀河・流星の滝</div><figcaption><strong>銀河・流星の滝</strong><span>滝見学と写真撮影。歩く距離は短め</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>75分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%BB%92%E5%B2%B3+%2F+%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
 
@@ -1032,34 +1127,32 @@
           <div class="hero-photo placeholder"><span>摩周湖</span><small>写真準備中</small></div>
         </header>
         <div class="guide-intro">
-          <section class="route-card"><h3>Today's Route</h3><ol class="route-map"><li class="route-point"><strong>層雲峡</strong><div class="route-leg"><i></i><span>約2時間</span></div></li><li class="route-point"><strong>北見</strong><div class="route-leg"><i></i><span>約2時間</span></div></li><li class="route-point"><strong>阿寒湖</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>阿寒湖 / 摩周湖候補</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>阿寒・摩周</strong><div class="route-leg"><i></i><span>約90分</span></div></li><li class="route-point"><strong>中標津</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>Shinrin Koen Camp</strong></li></ol></section>
-          <section class="theme-card"><h3>Today's Theme</h3><p>層雲峡から道東へ大きく移動する日。阿寒湖または摩周湖周辺で休憩と観光を挟み、中標津の拠点へ入ります。移動負荷が高いので、観光は1〜2か所に絞ります。 層雲峡から阿寒・摩周を経て中標津へをテーマに、層雲峡 / 阿寒 / 摩周 / 中標津の見どころを無理なく巡ります。</p></section>
+          <section class="route-card"><div class="card-title-row"><h3>Today's Map</h3><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%E5%B1%A4%E9%9B%B2%E5%B3%A1&amp;destination=Shinrin+Koen+Camp&amp;travelmode=driving&amp;waypoints=%E5%8C%97%E8%A6%8B|%E9%98%BF%E5%AF%92%E6%B9%96|%E9%98%BF%E5%AF%92%E6%B9%96+%2F+%E6%91%A9%E5%91%A8%E6%B9%96%E5%80%99%E8%A3%9C|%E9%98%BF%E5%AF%92%E3%83%BB%E6%91%A9%E5%91%A8|%E4%B8%AD%E6%A8%99%E6%B4%A5" target="_blank" rel="noreferrer">Google Map</a></div><div class="route-card-body"><div class="sketch-map" aria-label="簡易ルートマップ"><span class="map-node start" style="--x:18%;--y:13%"><i>1</i><b>層雲峡</b></span><span class="map-node" style="--x:46%;--y:25%"><i>2</i><b>北見</b></span><span class="map-node" style="--x:74%;--y:38%"><i>3</i><b>阿寒湖</b></span><span class="map-node" style="--x:58%;--y:50%"><i>4</i><b>阿寒湖 / 摩周湖候補</b></span><span class="map-node" style="--x:28%;--y:62%"><i>5</i><b>阿寒・摩周</b></span><span class="map-node" style="--x:50%;--y:75%"><i>6</i><b>中標津</b></span><span class="map-node end" style="--x:80%;--y:87%"><i>7</i><b>Shinrin Koen…</b></span></div><ol class="route-map"><li class="route-point"><strong>層雲峡</strong><div class="route-leg"><i></i><span>約2時間</span></div></li><li class="route-point"><strong>北見</strong><div class="route-leg"><i></i><span>約2時間</span></div></li><li class="route-point"><strong>阿寒湖</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>阿寒湖 / 摩周湖候補</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>阿寒・摩周</strong><div class="route-leg"><i></i><span>約90分</span></div></li><li class="route-point"><strong>中標津</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>Shinrin Koen Camp</strong></li></ol></div></section>
+          <section class="theme-card"><h3>Today's Theme</h3><p>層雲峡から道東へ大きく移動する日。阿寒湖または摩周湖周辺で休憩と観光を挟み、中標津の拠点へ入ります。移動負荷が高いので、観光は1〜2か所に絞ります。</p></section>
         </div>
         <div class="day-layout">
           <section class="timeline-wrap">
-            <h3>時刻ベース詳細スケジュール</h3>
+            <h3>時刻表</h3>
             <ol class="timeline">
-              <li><time>07:30</time><span class="tag food">朝食</span><div><strong>コテージ</strong><p>朝食、チェックアウト準備</p><small>60分</small></div></li>
-<li><time>08:45</time><span class="tag move">移動</span><div><strong>層雲峡 → 北見方面</strong><p>道東方面へ移動開始。途中休憩を必ず入れる</p><small>約2時間</small></div></li>
-<li><time>10:45</time><span class="tag rest">休憩</span><div><strong>北見 / 道の駅周辺</strong><p>トイレ、給油、飲み物補充</p><small>30分</small></div></li>
-<li><time>11:15</time><span class="tag move">移動</span><div><strong>北見 → 阿寒湖方面</strong><p>阿寒方面へ移動</p><small>約2時間</small></div></li>
-<li><time>13:15</time><span class="tag food">昼食</span><div><strong>阿寒湖周辺</strong><p>湖畔で昼食。時間がなければ軽食</p><small>60分</small></div></li>
-<li><time>14:30</time><span class="tag see">観光</span><div><strong>阿寒湖 / 摩周湖候補</strong><p>天候に合わせて湖畔散策または展望台</p><small>75分</small></div></li>
-<li><time>16:00</time><span class="tag move">移動</span><div><strong>阿寒・摩周 → 中標津</strong><p>中標津方面へ移動</p><small>約90分</small></div></li>
-<li><time>17:30</time><span class="tag prep">手続き</span><div><strong>Shinrin Koen Camp</strong><p>バンガローへチェックイン、荷下ろし</p><small>60分</small></div></li>
-<li><time>18:45</time><span class="tag food">夕食</span><div><strong>中標津市街 / キャンプ場</strong><p>外食または簡単調理</p><small>90分</small></div></li>
+              <li><time>07:30</time><span class="tag food">朝食</span><div><strong>コテージ</strong><p title="朝食、チェックアウト準備">朝食、チェックアウト準備</p><small>60分</small></div></li>
+<li><time>08:45</time><span class="tag move">移動</span><div><strong>層雲峡 → 北見方面</strong><p title="道東方面へ移動開始。途中休憩を必ず入れる">道東方面へ移動開始。途中休憩を必ず入れる</p><small>約2時間</small></div></li>
+<li><time>10:45</time><span class="tag rest">休憩</span><div><strong>北見 / 道の駅周辺</strong><p title="トイレ、給油、飲み物補充">トイレ、給油、飲み物補充</p><small>30分</small></div></li>
+<li><time>11:15</time><span class="tag move">移動</span><div><strong>北見 → 阿寒湖方面</strong><p title="阿寒方面へ移動">阿寒方面へ移動</p><small>約2時間</small></div></li>
+<li><time>13:15</time><span class="tag food">昼食</span><div><strong>阿寒湖周辺</strong><p title="湖畔で昼食。時間がなければ軽食">湖畔で昼食。時間がなければ軽食</p><small>60分</small></div></li>
+<li><time>14:30</time><span class="tag see">観光</span><div><strong>阿寒湖 / 摩周湖候補</strong><p title="天候に合わせて湖畔散策または展望台">天候に合わせて湖畔散策または展望台</p><small>75分</small></div></li>
+<li><time>16:00</time><span class="tag move">移動</span><div><strong>阿寒・摩周 → 中標津</strong><p title="中標津方面へ移動">中標津方面へ移動</p><small>約90分</small></div></li>
+<li><time>17:30</time><span class="tag prep">手続き</span><div><strong>Shinrin Koen Camp</strong><p title="バンガローへチェックイン、荷下ろし">バンガローへチェックイン、荷下ろし</p><small>60分</small></div></li>
+<li><time>18:45</time><span class="tag food">夕食</span><div><strong>中標津市街 / キャンプ場</strong><p title="外食または簡単調理">外食または簡単調理</p><small>90分</small></div></li>
             </ol>
           </section>
           <aside class="side-panel">
-            <section class="meal-recs"><h3>今日の食事メモ</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>阿寒湖温泉街の食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>阿寒湖 / 湖畔休憩とセットにしやすい</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>中標津市街の回転寿司・定食</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>中標津 / 到着後に外食する場合の候補</p></article></section>
+            <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>阿寒湖温泉街の食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>湖畔休憩とセットにしやすい</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>中標津市街の回転寿司・定食</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>到着後に外食する場合の候補</p></article></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>この日は長距離移動日。眠気対策で休憩を多めに取る。</li>
 <li>阿寒湖と摩周湖を両方詰め込まず、天気が良い方を選ぶ。</li>
-<li>長距離区間は早めの給油と休憩を入れると安心。</li>
-<li>トイレ休憩は道の駅やPAでこまめに確保。</li>
-<li>雨や霧の日は展望系を短縮し、屋内休憩を増やす。</li></ul></section>
+<li>長距離区間は早めの給油と休憩を入れると安心。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>観光スポット写真</h3><div class="spot-grid"><figure><div class="spot-placeholder">阿寒湖 / 摩周湖候補</div><figcaption><strong>阿寒湖 / 摩周湖候補</strong><span>天候に合わせて湖畔散策または展望台</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>75分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%98%BF%E5%AF%92%E6%B9%96+%2F+%E6%91%A9%E5%91%A8%E6%B9%96%E5%80%99%E8%A3%9C+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%98%BF%E5%AF%92+%2F+%E6%91%A9%E5%91%A8+%2F+%E4%B8%AD%E6%A8%99%E6%B4%A5" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
+        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><div class="spot-placeholder">阿寒湖 / 摩周湖候補</div><figcaption><strong>阿寒湖 / 摩周湖候補</strong><span>天候に合わせて湖畔散策または展望台</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>75分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%98%BF%E5%AF%92%E6%B9%96+%2F+%E6%91%A9%E5%91%A8%E6%B9%96%E5%80%99%E8%A3%9C+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%98%BF%E5%AF%92+%2F+%E6%91%A9%E5%91%A8+%2F+%E4%B8%AD%E6%A8%99%E6%B4%A5" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
 
@@ -1073,44 +1166,40 @@
           <div class="hero-photo placeholder"><span>知床五湖</span><small>写真準備中</small></div>
         </header>
         <div class="guide-intro">
-          <section class="route-card"><h3>Today's Route</h3><ol class="route-map"><li class="route-point"><strong>中標津</strong><div class="route-leg"><i></i><span>約75分</span></div></li><li class="route-point"><strong>羅臼</strong><div class="route-leg"><i></i><span>約30分</span></div></li><li class="route-point"><strong>知床峠</strong><div class="route-leg"><i></i><span>約45分</span></div></li><li class="route-point"><strong>知床五湖</strong><div class="route-leg"><i></i><span>約30分</span></div></li><li class="route-point"><strong>ウトロ</strong><span>昼食</span><div class="route-leg"><i></i><span>約15分</span></div></li><li class="route-point"><strong>フレペの滝遊歩道</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>オシンコシンの滝</strong><div class="route-leg"><i></i><span>約2時間15分</span></div></li><li class="route-point"><strong>中標津へ帰着</strong></li></ol></section>
+          <section class="route-card"><div class="card-title-row"><h3>Today's Map</h3><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&amp;destination=%E4%B8%AD%E6%A8%99%E6%B4%A5%E3%81%B8%E5%B8%B0%E7%9D%80&amp;travelmode=driving&amp;waypoints=%E7%BE%85%E8%87%BC|%E7%9F%A5%E5%BA%8A%E5%B3%A0|%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96|%E3%82%A6%E3%83%88%E3%83%AD|%E3%83%95%E3%83%AC%E3%83%9A%E3%81%AE%E6%BB%9D%E9%81%8A%E6%AD%A9%E9%81%93|%E3%82%AA%E3%82%B7%E3%83%B3%E3%82%B3%E3%82%B7%E3%83%B3%E3%81%AE%E6%BB%9D" target="_blank" rel="noreferrer">Google Map</a></div><div class="route-card-body"><div class="sketch-map" aria-label="簡易ルートマップ"><span class="map-node start" style="--x:18%;--y:13%"><i>1</i><b>中標津</b></span><span class="map-node" style="--x:46%;--y:25%"><i>2</i><b>羅臼</b></span><span class="map-node" style="--x:74%;--y:38%"><i>3</i><b>知床峠</b></span><span class="map-node" style="--x:58%;--y:50%"><i>4</i><b>知床五湖</b></span><span class="map-node" style="--x:28%;--y:62%"><i>5</i><b>ウトロ</b></span><span class="map-node" style="--x:50%;--y:75%"><i>6</i><b>フレペの滝遊歩道</b></span><span class="map-node end" style="--x:80%;--y:87%"><i>7</i><b>中標津へ帰着</b></span></div><ol class="route-map"><li class="route-point"><strong>中標津</strong><div class="route-leg"><i></i><span>約75分</span></div></li><li class="route-point"><strong>羅臼</strong><div class="route-leg"><i></i><span>約30分</span></div></li><li class="route-point"><strong>知床峠</strong><div class="route-leg"><i></i><span>約45分</span></div></li><li class="route-point"><strong>知床五湖</strong><div class="route-leg"><i></i><span>約30分</span></div></li><li class="route-point"><strong>ウトロ</strong><span>昼食</span><div class="route-leg"><i></i><span>約15分</span></div></li><li class="route-point"><strong>フレペの滝遊歩道</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>中標津へ帰着</strong></li></ol></div></section>
           <section class="theme-card"><h3>Today's Theme</h3><p>中標津から羅臼側へ入り、知床峠を越えて知床五湖、フレペの滝、オシンコシンの滝を巡る一日。観光船には乗らず、世界自然遺産・知床の森、山、滝を陸上から満喫します。早朝出発ですが、夕食は中標津に戻ってゆっくり取れる計画です。</p></section>
         </div>
         <div class="day-layout">
           <section class="timeline-wrap">
-            <h3>時刻ベース詳細スケジュール</h3>
+            <h3>時刻表</h3>
             <ol class="timeline">
-              <li><time>06:15</time><span class="tag food">朝食</span><div><strong>バンガロー</strong><p>朝食、飲み物と軽食の準備。上着、歩きやすい靴を用意</p><small>45分</small></div></li>
-<li><time>07:00</time><span class="tag move">移動</span><div><strong>中標津 → 羅臼</strong><p>国道272号・335号方面。途中でコンビニ休憩も可能</p><small>約75分</small></div></li>
-<li><time>08:15</time><span class="tag rest">休憩</span><div><strong>道の駅 知床・らうす周辺</strong><p>トイレ休憩、海と羅臼岳の天候を確認</p><small>20分</small></div></li>
-<li><time>08:35</time><span class="tag move">移動</span><div><strong>羅臼 → 知床峠</strong><p>知床横断道路を上る。動物の飛び出しに注意</p><small>約30分</small></div></li>
-<li><time>09:05</time><span class="tag see">観光</span><div><strong>知床峠</strong><p>羅臼岳と国後島方面の展望。強風・霧の場合は短時間</p><small>25分</small></div></li>
-<li><time>09:30</time><span class="tag move">移動</span><div><strong>知床峠 → 知床五湖</strong><p>ウトロ側へ下り、知床五湖へ</p><small>約45分</small></div></li>
-<li><time>10:15</time><span class="tag see">観光</span><div><strong>知床五湖</strong><p>高架木道を基本に散策。地上遊歩道は当日の開放状況・受付条件・ヒグマ情報を確認</p><small>105分</small></div></li>
-<li><time>12:00</time><span class="tag move">移動</span><div><strong>知床五湖 → ウトロ</strong><p>海沿いへ移動</p><small>約30分</small></div></li>
-<li><time>12:30</time><span class="tag food">昼食</span><div><strong>ウトロ</strong><p>海鮮、焼き魚、定食。混雑を見込み60〜75分確保</p><small>75分</small></div></li>
-<li><time>13:45</time><span class="tag move">移動</span><div><strong>ウトロ → 知床自然センター</strong><p>フレペの滝遊歩道入口へ</p><small>約15分</small></div></li>
-<li><time>14:00</time><span class="tag see">観光</span><div><strong>フレペの滝遊歩道</strong><p>往復約2kmをゆっくり散策。草原、断崖、知床連山を楽しむ</p><small>90分</small></div></li>
-<li><time>15:30</time><span class="tag move">移動</span><div><strong>知床自然センター → オシンコシンの滝</strong><p>ウトロ市街を抜けて斜里方面へ</p><small>約25分</small></div></li>
-<li><time>15:55</time><span class="tag see">観光</span><div><strong>オシンコシンの滝</strong><p>駐車場から短時間で見学。階段は濡れている場合がある</p><small>30分</small></div></li>
-<li><time>16:25</time><span class="tag move">移動</span><div><strong>オシンコシンの滝 → 中標津</strong><p>斜里・根北峠方面。途中でトイレ休憩を入れる</p><small>約2時間15分</small></div></li>
-<li><time>18:40</time><span class="tag rest">休憩</span><div><strong>中標津へ帰着 / バンガロー</strong><p>着替え、休憩、写真整理</p><small>40分</small></div></li>
-<li><time>19:20</time><span class="tag food">夕食</span><div><strong>中標津市街 / キャンプ場</strong><p>外食またはキャンプ飯。長距離運転後なので無理をしない</p><small>90分</small></div></li>
+              <li><time>06:15</time><span class="tag food">朝食</span><div><strong>バンガロー</strong><p title="朝食、飲み物と軽食の準備。上着、歩きやすい靴を用意">朝食、飲み物と軽食の準備。上着、歩きやすい靴を用意</p><small>45分</small></div></li>
+<li><time>07:00</time><span class="tag move">移動</span><div><strong>中標津 → 羅臼</strong><p title="国道272号・335号方面。途中でコンビニ休憩も可能">国道272号・335号方面。途中でコンビニ休憩も可能</p><small>約75分</small></div></li>
+<li><time>08:15</time><span class="tag rest">休憩</span><div><strong>道の駅 知床・らうす周辺</strong><p title="トイレ休憩、海と羅臼岳の天候を確認">トイレ休憩、海と羅臼岳の天候を確認</p><small>20分</small></div></li>
+<li><time>08:35</time><span class="tag move">移動</span><div><strong>羅臼 → 知床峠</strong><p title="知床横断道路を上る。動物の飛び出しに注意">知床横断道路を上る。動物の飛び出しに注意</p><small>約30分</small></div></li>
+<li><time>09:05</time><span class="tag see">観光</span><div><strong>知床峠</strong><p title="羅臼岳と国後島方面の展望。強風・霧の場合は短時間">羅臼岳と国後島方面の展望。強風・霧の場合は短時間</p><small>25分</small></div></li>
+<li><time>09:30</time><span class="tag move">移動</span><div><strong>知床峠 → 知床五湖</strong><p title="ウトロ側へ下り、知床五湖へ">ウトロ側へ下り、知床五湖へ</p><small>約45分</small></div></li>
+<li><time>10:15</time><span class="tag see">観光</span><div><strong>知床五湖</strong><p title="高架木道を基本に散策。地上遊歩道は当日の開放状況・受付条件・ヒグマ情報を確認">高架木道を基本に散策。地上遊歩道は当日の開放状況・受付条件・ヒグマ情報を確認</p><small>105分</small></div></li>
+<li><time>12:00</time><span class="tag move">移動</span><div><strong>知床五湖 → ウトロ</strong><p title="海沿いへ移動">海沿いへ移動</p><small>約30分</small></div></li>
+<li><time>12:30</time><span class="tag food">昼食</span><div><strong>ウトロ</strong><p title="海鮮、焼き魚、定食。混雑を見込み60〜75分確保">海鮮、焼き魚、定食。混雑を見込み60〜75分確保</p><small>75分</small></div></li>
+<li><time>13:45</time><span class="tag move">移動</span><div><strong>ウトロ → 知床自然センター</strong><p title="フレペの滝遊歩道入口へ">フレペの滝遊歩道入口へ</p><small>約15分</small></div></li>
+<li><time>14:00</time><span class="tag see">観光</span><div><strong>フレペの滝遊歩道</strong><p title="往復約2kmをゆっくり散策。草原、断崖、知床連山を楽しむ">往復約2kmをゆっくり散策。草原、断崖、知床連山を楽しむ</p><small>90分</small></div></li>
+<li><time>15:30</time><span class="tag move">移動</span><div><strong>知床自然センター → オシンコシンの滝</strong><p title="ウトロ市街を抜けて斜里方面へ">ウトロ市街を抜けて斜里方面へ</p><small>約25分</small></div></li>
+<li><time>15:55</time><span class="tag see">観光</span><div><strong>オシンコシンの滝</strong><p title="駐車場から短時間で見学。階段は濡れている場合がある">駐車場から短時間で見学。階段は濡れている場合がある</p><small>30分</small></div></li>
+<li><time>16:25</time><span class="tag move">移動</span><div><strong>オシンコシンの滝 → 中標津</strong><p title="斜里・根北峠方面。途中でトイレ休憩を入れる">斜里・根北峠方面。途中でトイレ休憩を入れる</p><small>約2時間15分</small></div></li>
+<li><time>18:40</time><span class="tag rest">休憩</span><div><strong>中標津へ帰着 / バンガロー</strong><p title="着替え、休憩、写真整理">着替え、休憩、写真整理</p><small>40分</small></div></li>
+<li><time>19:20</time><span class="tag food">夕食</span><div><strong>中標津市街 / キャンプ場</strong><p title="外食またはキャンプ飯。長距離運転後なので無理をしない">外食またはキャンプ飯。長距離運転後なので無理をしない</p><small>90分</small></div></li>
             </ol>
           </section>
           <aside class="side-panel">
-            <section class="meal-recs"><h3>今日の食事メモ</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>ウトロ漁協婦人部食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,500〜3,000円</dd></div><div><dt>人気メニュー</dt><dd>海鮮丼・焼き魚</dd></div></dl><p>ウトロ / 営業日・営業時間を直前確認。海鮮や焼き魚の第一候補</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>中標津市街の焼肉・定食店</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,200〜2,800円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>中標津 / 帰着時刻に合わせ、遅めでも入りやすい店を選ぶ</p></article></section>
+            <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>ウトロ漁協婦人部食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,500〜3,000円</dd></div><div><dt>人気メニュー</dt><dd>海鮮丼・焼き魚</dd></div></dl><p>営業日・営業時間を直前確認。海鮮や焼き魚の第一候補</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>中標津市街の焼肉・定食店</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,200〜2,800円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>帰着時刻に合わせ、遅めでも入りやすい店を選ぶ</p></article></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>知床横断道路は濃霧、強風、野生動物の飛び出しに注意する。</li>
 <li>知床五湖はヒグマ出没や天候により利用方法が変わる。高架木道を基本プランとし、地上遊歩道は当日判断にする。</li>
-<li>フレペの滝遊歩道でも野生動物との距離を取り、食べ物を出したまま歩かない。</li>
-<li>予定が30分以上遅れた場合は、オシンコシンの滝を短縮または省略し、明るいうちの帰路を優先する。</li>
-<li>雨天時は知床自然センター、知床世界遺産センター、羅臼ビジターセンターを組み合わせる。</li></ul></section>
+<li>フレペの滝遊歩道でも野生動物との距離を取り、食べ物を出したまま歩かない。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>観光スポット写真</h3><div class="spot-grid"><figure><div class="spot-placeholder">知床峠</div><figcaption><strong>知床峠</strong><span>羅臼岳と国後島方面の展望。強風・霧の場合は短時間</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>25分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%9F%A5%E5%BA%8A%E5%B3%A0+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E7%BE%85%E8%87%BC+%2F+%E7%9F%A5%E5%BA%8A%E5%B3%A0+%2F+%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%2F+%E3%82%A6%E3%83%88%E3%83%AD" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
-<figure><div class="spot-placeholder">知床五湖</div><figcaption><strong>知床五湖</strong><span>高架木道を基本に散策。地上遊歩道は当日の開放状況・受付条件・ヒグマ情報を確認</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>105分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E7%BE%85%E8%87%BC+%2F+%E7%9F%A5%E5%BA%8A%E5%B3%A0+%2F+%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%2F+%E3%82%A6%E3%83%88%E3%83%AD" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
-<figure><div class="spot-placeholder">フレペの滝遊歩道</div><figcaption><strong>フレペの滝遊歩道</strong><span>往復約2kmをゆっくり散策。草原、断崖、知床連山を楽しむ</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>90分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%83%95%E3%83%AC%E3%83%9A%E3%81%AE%E6%BB%9D%E9%81%8A%E6%AD%A9%E9%81%93+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E7%BE%85%E8%87%BC+%2F+%E7%9F%A5%E5%BA%8A%E5%B3%A0+%2F+%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%2F+%E3%82%A6%E3%83%88%E3%83%AD" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
-<figure><div class="spot-placeholder">オシンコシンの滝</div><figcaption><strong>オシンコシンの滝</strong><span>駐車場から短時間で見学。階段は濡れている場合がある</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>30分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%82%AA%E3%82%B7%E3%83%B3%E3%82%B3%E3%82%B7%E3%83%B3%E3%81%AE%E6%BB%9D+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E7%BE%85%E8%87%BC+%2F+%E7%9F%A5%E5%BA%8A%E5%B3%A0+%2F+%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%2F+%E3%82%A6%E3%83%88%E3%83%AD" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
+        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><div class="spot-placeholder">知床峠</div><figcaption><strong>知床峠</strong><span>羅臼岳と国後島方面の展望。強風・霧の場合は短時間</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>25分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%9F%A5%E5%BA%8A%E5%B3%A0+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E7%BE%85%E8%87%BC+%2F+%E7%9F%A5%E5%BA%8A%E5%B3%A0+%2F+%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%2F+%E3%82%A6%E3%83%88%E3%83%AD" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
+<figure><div class="spot-placeholder">知床五湖</div><figcaption><strong>知床五湖</strong><span>高架木道を基本に散策。地上遊歩道は当日の開放状況・受付条件・ヒグマ情報を確認</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>105分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E7%BE%85%E8%87%BC+%2F+%E7%9F%A5%E5%BA%8A%E5%B3%A0+%2F+%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%2F+%E3%82%A6%E3%83%88%E3%83%AD" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
 
@@ -1124,32 +1213,32 @@
           <div class="hero-photo placeholder"><span>野付半島</span><small>写真準備中</small></div>
         </header>
         <div class="guide-intro">
-          <section class="route-card"><h3>Today's Route</h3><ol class="route-map"><li class="route-point"><strong>中標津</strong><div class="route-leg"><i></i><span>約45分</span></div></li><li class="route-point"><strong>標津</strong><div class="route-leg"><i></i><span>約45分</span></div></li><li class="route-point"><strong>野付半島</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>野付半島 / 尾岱沼</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>野付半島ネイチャーセンター</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>野付半島</strong><div class="route-leg"><i></i><span>約90分</span></div></li><li class="route-point"><strong>中標津</strong></li></ol></section>
-          <section class="theme-card"><h3>Today's Theme</h3><p>中標津から標津・野付半島方面へ。海、湿原、野鳥、立ち枯れたトドワラの風景など、道東らしい自然を味わいます。移動はあるものの、日帰りで戻れる範囲にします。 野付半島と海辺の道東自然ドライブをテーマに、中標津 / 標津 / 野付半島の見どころを無理なく巡ります。</p></section>
+          <section class="route-card"><div class="card-title-row"><h3>Today's Map</h3><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&amp;destination=%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6%E3%83%8D%E3%82%A4%E3%83%81%E3%83%A3%E3%83%BC%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC&amp;travelmode=driving&amp;waypoints=%E6%A8%99%E6%B4%A5|%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6|%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6+%2F+%E5%B0%BE%E5%B2%B1%E6%B2%BC" target="_blank" rel="noreferrer">Google Map</a></div><div class="route-card-body"><div class="sketch-map" aria-label="簡易ルートマップ"><span class="map-node start" style="--x:18%;--y:13%"><i>1</i><b>中標津</b></span><span class="map-node" style="--x:46%;--y:25%"><i>2</i><b>標津</b></span><span class="map-node" style="--x:74%;--y:38%"><i>3</i><b>野付半島</b></span><span class="map-node" style="--x:58%;--y:50%"><i>4</i><b>野付半島 / 尾岱沼</b></span><span class="map-node" style="--x:28%;--y:62%"><i>5</i><b>野付半島ネイチャーセンタ…</b></span><span class="map-node" style="--x:50%;--y:75%"><i>6</i><b>野付半島</b></span><span class="map-node end" style="--x:80%;--y:87%"><i>7</i><b>中標津</b></span></div><ol class="route-map"><li class="route-point"><strong>中標津</strong><div class="route-leg"><i></i><span>約45分</span></div></li><li class="route-point"><strong>標津</strong><div class="route-leg"><i></i><span>約45分</span></div></li><li class="route-point"><strong>野付半島</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>野付半島 / 尾岱沼</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>野付半島ネイチャーセンター</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>野付半島</strong><div class="route-leg"><i></i><span>約90分</span></div></li><li class="route-point"><strong>中標津</strong></li></ol></div></section>
+          <section class="theme-card"><h3>Today's Theme</h3><p>中標津から標津・野付半島方面へ。海、湿原、野鳥、立ち枯れたトドワラの風景など、道東らしい自然を味わいます。移動はあるものの、日帰りで戻れる範囲にします。</p></section>
         </div>
         <div class="day-layout">
           <section class="timeline-wrap">
-            <h3>時刻ベース詳細スケジュール</h3>
+            <h3>時刻表</h3>
             <ol class="timeline">
-              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>バンガロー</strong><p>朝食、飲み物準備、双眼鏡や上着を用意</p><small>60分</small></div></li>
-<li><time>09:15</time><span class="tag move">移動</span><div><strong>中標津 → 標津</strong><p>海沿い方面へ移動</p><small>約45分</small></div></li>
-<li><time>10:00</time><span class="tag see">観光</span><div><strong>標津周辺</strong><p>海辺散策、資料館や道の駅候補</p><small>60分</small></div></li>
-<li><time>11:15</time><span class="tag move">移動</span><div><strong>標津 → 野付半島</strong><p>半島方面へ移動。景色の良い場所で休憩</p><small>約45分</small></div></li>
-<li><time>12:15</time><span class="tag food">昼食</span><div><strong>野付半島 / 尾岱沼方面</strong><p>海鮮または軽食。混雑時は標津へ戻る</p><small>60分</small></div></li>
-<li><time>13:30</time><span class="tag see">観光</span><div><strong>野付半島ネイチャーセンター周辺</strong><p>トドワラ、野鳥、湿原風景を短時間散策</p><small>120分</small></div></li>
-<li><time>15:45</time><span class="tag move">移動</span><div><strong>野付半島 → 中標津</strong><p>バンガローへ戻る</p><small>約90分</small></div></li>
-<li><time>17:30</time><span class="tag rest">休憩</span><div><strong>バンガロー</strong><p>休憩、洗濯、翌日の天気確認</p><small>60分</small></div></li>
-<li><time>18:45</time><span class="tag food">夕食</span><div><strong>中標津市街 / キャンプ場</strong><p>外食またはキャンプ飯</p><small>90分</small></div></li>
+              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>バンガロー</strong><p title="朝食、飲み物準備、双眼鏡や上着を用意">朝食、飲み物準備、双眼鏡や上着を用意</p><small>60分</small></div></li>
+<li><time>09:15</time><span class="tag move">移動</span><div><strong>中標津 → 標津</strong><p title="海沿い方面へ移動">海沿い方面へ移動</p><small>約45分</small></div></li>
+<li><time>10:00</time><span class="tag see">観光</span><div><strong>標津周辺</strong><p title="海辺散策、資料館や道の駅候補">海辺散策、資料館や道の駅候補</p><small>60分</small></div></li>
+<li><time>11:15</time><span class="tag move">移動</span><div><strong>標津 → 野付半島</strong><p title="半島方面へ移動。景色の良い場所で休憩">半島方面へ移動。景色の良い場所で休憩</p><small>約45分</small></div></li>
+<li><time>12:15</time><span class="tag food">昼食</span><div><strong>野付半島 / 尾岱沼方面</strong><p title="海鮮または軽食。混雑時は標津へ戻る">海鮮または軽食。混雑時は標津へ戻る</p><small>60分</small></div></li>
+<li><time>13:30</time><span class="tag see">観光</span><div><strong>野付半島ネイチャーセンター周辺</strong><p title="トドワラ、野鳥、湿原風景を短時間散策">トドワラ、野鳥、湿原風景を短時間散策</p><small>120分</small></div></li>
+<li><time>15:45</time><span class="tag move">移動</span><div><strong>野付半島 → 中標津</strong><p title="バンガローへ戻る">バンガローへ戻る</p><small>約90分</small></div></li>
+<li><time>17:30</time><span class="tag rest">休憩</span><div><strong>バンガロー</strong><p title="休憩、洗濯、翌日の天気確認">休憩、洗濯、翌日の天気確認</p><small>60分</small></div></li>
+<li><time>18:45</time><span class="tag food">夕食</span><div><strong>中標津市街 / キャンプ場</strong><p title="外食またはキャンプ飯">外食またはキャンプ飯</p><small>90分</small></div></li>
             </ol>
           </section>
           <aside class="side-panel">
-            <section class="meal-recs"><h3>今日の食事メモ</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>尾岱沼・標津の海鮮候補</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,500〜3,000円</dd></div><div><dt>人気メニュー</dt><dd>海鮮丼・焼き魚</dd></div></dl><p>別海 / 標津 / 海辺の日らしい第一候補</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>中標津市街のレストラン</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>中標津 / 戻ってからゆっくり食べる候補</p></article></section>
+            <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>尾岱沼・標津の海鮮候補</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,500〜3,000円</dd></div><div><dt>人気メニュー</dt><dd>海鮮丼・焼き魚</dd></div></dl><p>海辺の日らしい第一候補</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>中標津市街のレストラン</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>戻ってからゆっくり食べる候補</p></article></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>野付半島は風が強いことがあるので上着を持つ。</li>
 <li>野生動物や鳥との距離を守り、立入禁止エリアに入らない。</li>
 <li>雨や霧の日は展望系を短縮し、屋内休憩を増やす。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>観光スポット写真</h3><div class="spot-grid"><figure><div class="spot-placeholder">標津周辺</div><figcaption><strong>標津周辺</strong><span>海辺散策、資料館や道の駅候補</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%A8%99%E6%B4%A5+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E6%A8%99%E6%B4%A5+%2F+%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
+        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><div class="spot-placeholder">標津周辺</div><figcaption><strong>標津周辺</strong><span>海辺散策、資料館や道の駅候補</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%A8%99%E6%B4%A5+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E6%A8%99%E6%B4%A5+%2F+%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
 <figure><div class="spot-placeholder">野付半島ネイチャーセンター周辺</div><figcaption><strong>野付半島ネイチャーセンター周辺</strong><span>トドワラ、野鳥、湿原風景を短時間散策</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>120分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6%E3%83%8D%E3%82%A4%E3%83%81%E3%83%A3%E3%83%BC%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E6%A8%99%E6%B4%A5+%2F+%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
@@ -1164,31 +1253,31 @@
           <div class="hero-photo placeholder"><span>釧路湿原</span><small>写真準備中</small></div>
         </header>
         <div class="guide-intro">
-          <section class="route-card"><h3>Today's Route</h3><ol class="route-map"><li class="route-point"><strong>中標津</strong><div class="route-leg"><i></i><span>約2時間</span></div></li><li class="route-point"><strong>釧路湿原</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>達古武湖 / 釧路湿原</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>釧路町 / 釧路市内</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>細岡展望台候補</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>釧路湿原</strong><div class="route-leg"><i></i><span>約2時間</span></div></li><li class="route-point"><strong>中標津</strong></li></ol></section>
-          <section class="theme-card"><h3>Today's Theme</h3><p>中標津滞在の最終日。天候と体力が合えば、釧路湿原・達古武湖方面へ足を伸ばします。無理に遠出しない場合は、中標津周辺で休養と自然観光に切り替えます。 釧路湿原・達古武方面の自然予備日をテーマに、中標津 / 釧路湿原 / 達古武の見どころを無理なく巡ります。</p></section>
+          <section class="route-card"><div class="card-title-row"><h3>Today's Map</h3><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&amp;destination=%E7%B4%B0%E5%B2%A1%E5%B1%95%E6%9C%9B%E5%8F%B0%E5%80%99%E8%A3%9C&amp;travelmode=driving&amp;waypoints=%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F|%E9%81%94%E5%8F%A4%E6%AD%A6%E6%B9%96+%2F+%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F|%E9%87%A7%E8%B7%AF%E7%94%BA+%2F+%E9%87%A7%E8%B7%AF%E5%B8%82%E5%86%85" target="_blank" rel="noreferrer">Google Map</a></div><div class="route-card-body"><div class="sketch-map" aria-label="簡易ルートマップ"><span class="map-node start" style="--x:18%;--y:13%"><i>1</i><b>中標津</b></span><span class="map-node" style="--x:46%;--y:25%"><i>2</i><b>釧路湿原</b></span><span class="map-node" style="--x:74%;--y:38%"><i>3</i><b>達古武湖 / 釧路湿原</b></span><span class="map-node" style="--x:58%;--y:50%"><i>4</i><b>釧路町 / 釧路市内</b></span><span class="map-node" style="--x:28%;--y:62%"><i>5</i><b>細岡展望台候補</b></span><span class="map-node" style="--x:50%;--y:75%"><i>6</i><b>釧路湿原</b></span><span class="map-node end" style="--x:80%;--y:87%"><i>7</i><b>中標津</b></span></div><ol class="route-map"><li class="route-point"><strong>中標津</strong><div class="route-leg"><i></i><span>約2時間</span></div></li><li class="route-point"><strong>釧路湿原</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>達古武湖 / 釧路湿原</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>釧路町 / 釧路市内</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>細岡展望台候補</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>釧路湿原</strong><div class="route-leg"><i></i><span>約2時間</span></div></li><li class="route-point"><strong>中標津</strong></li></ol></div></section>
+          <section class="theme-card"><h3>Today's Theme</h3><p>中標津滞在の最終日。天候と体力が合えば、釧路湿原・達古武湖方面へ足を伸ばします。無理に遠出しない場合は、中標津周辺で休養と自然観光に切り替えます。</p></section>
         </div>
         <div class="day-layout">
           <section class="timeline-wrap">
-            <h3>時刻ベース詳細スケジュール</h3>
+            <h3>時刻表</h3>
             <ol class="timeline">
-              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>バンガロー</strong><p>朝食、釧路方面の天気と体力を確認</p><small>60分</small></div></li>
-<li><time>09:15</time><span class="tag move">移動</span><div><strong>中標津 → 釧路湿原方面</strong><p>釧路湿原・達古武方面へ移動</p><small>約2時間</small></div></li>
-<li><time>11:15</time><span class="tag see">観光</span><div><strong>達古武湖 / 釧路湿原</strong><p>湖畔、展望、短時間散策。水辺と湿原の景色を楽しむ</p><small>90分</small></div></li>
-<li><time>12:45</time><span class="tag food">昼食</span><div><strong>釧路町 / 釧路市内</strong><p>海鮮、定食、または道の駅系で昼食</p><small>60分</small></div></li>
-<li><time>14:00</time><span class="tag see">観光</span><div><strong>細岡展望台候補</strong><p>湿原を見渡す展望スポット。天気優先</p><small>75分</small></div></li>
-<li><time>15:30</time><span class="tag move">移動</span><div><strong>釧路湿原 → 中標津</strong><p>翌日の帯広移動に備えて戻る</p><small>約2時間</small></div></li>
-<li><time>17:30</time><span class="tag rest">休憩</span><div><strong>バンガロー</strong><p>荷物整理、車内整理、洗濯</p><small>60分</small></div></li>
-<li><time>18:45</time><span class="tag food">夕食</span><div><strong>中標津市街</strong><p>中標津最後の夕食。早めに済ませる</p><small>90分</small></div></li>
+              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>バンガロー</strong><p title="朝食、釧路方面の天気と体力を確認">朝食、釧路方面の天気と体力を確認</p><small>60分</small></div></li>
+<li><time>09:15</time><span class="tag move">移動</span><div><strong>中標津 → 釧路湿原方面</strong><p title="釧路湿原・達古武方面へ移動">釧路湿原・達古武方面へ移動</p><small>約2時間</small></div></li>
+<li><time>11:15</time><span class="tag see">観光</span><div><strong>達古武湖 / 釧路湿原</strong><p title="湖畔、展望、短時間散策。水辺と湿原の景色を楽しむ">湖畔、展望、短時間散策。水辺と湿原の景色を楽しむ</p><small>90分</small></div></li>
+<li><time>12:45</time><span class="tag food">昼食</span><div><strong>釧路町 / 釧路市内</strong><p title="海鮮、定食、または道の駅系で昼食">海鮮、定食、または道の駅系で昼食</p><small>60分</small></div></li>
+<li><time>14:00</time><span class="tag see">観光</span><div><strong>細岡展望台候補</strong><p title="湿原を見渡す展望スポット。天気優先">湿原を見渡す展望スポット。天気優先</p><small>75分</small></div></li>
+<li><time>15:30</time><span class="tag move">移動</span><div><strong>釧路湿原 → 中標津</strong><p title="翌日の帯広移動に備えて戻る">翌日の帯広移動に備えて戻る</p><small>約2時間</small></div></li>
+<li><time>17:30</time><span class="tag rest">休憩</span><div><strong>バンガロー</strong><p title="荷物整理、車内整理、洗濯">荷物整理、車内整理、洗濯</p><small>60分</small></div></li>
+<li><time>18:45</time><span class="tag food">夕食</span><div><strong>中標津市街</strong><p title="中標津最後の夕食。早めに済ませる">中標津最後の夕食。早めに済ませる</p><small>90分</small></div></li>
             </ol>
           </section>
           <aside class="side-panel">
-            <section class="meal-recs"><h3>今日の食事メモ</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>釧路市内の海鮮・炉端候補</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,500〜3,000円</dd></div><div><dt>人気メニュー</dt><dd>海鮮丼・焼き魚</dd></div></dl><p>釧路 / 湿原方面へ行けた場合の候補</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>中標津市街の定食店</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>中標津 / 翌日の移動に備えて早めに</p></article></section>
+            <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>釧路市内の海鮮・炉端候補</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,500〜3,000円</dd></div><div><dt>人気メニュー</dt><dd>海鮮丼・焼き魚</dd></div></dl><p>湿原方面へ行けた場合の候補</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>中標津市街の定食店</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>翌日の移動に備えて早めに</p></article></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>釧路方面に行く場合も、翌日の帯広移動を考えて早めに戻る。</li>
 <li>天候が悪い場合は中標津周辺の休養日に切り替える。</li>
 <li>夕方の光がきれいな場所は、短時間でも写真休憩を。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>観光スポット写真</h3><div class="spot-grid"><figure><div class="spot-placeholder">達古武湖 / 釧路湿原</div><figcaption><strong>達古武湖 / 釧路湿原</strong><span>湖畔、展望、短時間散策。水辺と湿原の景色を楽しむ</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>90分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%81%94%E5%8F%A4%E6%AD%A6%E6%B9%96+%2F+%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F+%2F+%E9%81%94%E5%8F%A4%E6%AD%A6" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
+        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><div class="spot-placeholder">達古武湖 / 釧路湿原</div><figcaption><strong>達古武湖 / 釧路湿原</strong><span>湖畔、展望、短時間散策。水辺と湿原の景色を楽しむ</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>90分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%81%94%E5%8F%A4%E6%AD%A6%E6%B9%96+%2F+%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F+%2F+%E9%81%94%E5%8F%A4%E6%AD%A6" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
 <figure><div class="spot-placeholder">細岡展望台候補</div><figcaption><strong>細岡展望台候補</strong><span>湿原を見渡す展望スポット。天気優先</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>75分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%B4%B0%E5%B2%A1%E5%B1%95%E6%9C%9B%E5%8F%B0%E5%80%99%E8%A3%9C+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F+%2F+%E9%81%94%E5%8F%A4%E6%AD%A6" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
@@ -1203,34 +1292,33 @@
           <div class="hero-photo placeholder"><span>十勝平野</span><small>写真準備中</small></div>
         </header>
         <div class="guide-intro">
-          <section class="route-card"><h3>Today's Route</h3><ol class="route-map"><li class="route-point"><strong>中標津</strong><div class="route-leg"><i></i><span>約90分</span></div></li><li class="route-point"><strong>弟子屈</strong><div class="route-leg"><i></i><span>約90分</span></div></li><li class="route-point"><strong>足寄</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>足寄 / 道の駅</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>足寄</strong><div class="route-leg"><i></i><span>約90分</span></div></li><li class="route-point"><strong>帯広</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>帯広市内</strong></li></ol></section>
-          <section class="theme-card"><h3>Today's Theme</h3><p>当初の苫小牧直行ではなく、移動負荷を考慮して帯広に滞在する日。道東から十勝へ移動し、途中は休憩を多めに取ります。夜は帯広で豚丼など十勝グルメを楽しみます。 中標津から帯広へ、移動負荷を下げる日をテーマに、中標津 / 弟子屈 / 足寄 / 帯広の見どころを無理なく巡ります。</p></section>
+          <section class="route-card"><div class="card-title-row"><h3>Today's Map</h3><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&amp;destination=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85&amp;travelmode=driving&amp;waypoints=%E5%BC%9F%E5%AD%90%E5%B1%88|%E8%B6%B3%E5%AF%84|%E8%B6%B3%E5%AF%84+%2F+%E9%81%93%E3%81%AE%E9%A7%85|%E5%B8%AF%E5%BA%83" target="_blank" rel="noreferrer">Google Map</a></div><div class="route-card-body"><div class="sketch-map" aria-label="簡易ルートマップ"><span class="map-node start" style="--x:18%;--y:13%"><i>1</i><b>中標津</b></span><span class="map-node" style="--x:46%;--y:25%"><i>2</i><b>弟子屈</b></span><span class="map-node" style="--x:74%;--y:38%"><i>3</i><b>足寄</b></span><span class="map-node" style="--x:58%;--y:50%"><i>4</i><b>足寄 / 道の駅</b></span><span class="map-node" style="--x:28%;--y:62%"><i>5</i><b>足寄</b></span><span class="map-node" style="--x:50%;--y:75%"><i>6</i><b>帯広</b></span><span class="map-node end" style="--x:80%;--y:87%"><i>7</i><b>帯広市内</b></span></div><ol class="route-map"><li class="route-point"><strong>中標津</strong><div class="route-leg"><i></i><span>約90分</span></div></li><li class="route-point"><strong>弟子屈</strong><div class="route-leg"><i></i><span>約90分</span></div></li><li class="route-point"><strong>足寄</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>足寄 / 道の駅</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>足寄</strong><div class="route-leg"><i></i><span>約90分</span></div></li><li class="route-point"><strong>帯広</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>帯広市内</strong></li></ol></div></section>
+          <section class="theme-card"><h3>Today's Theme</h3><p>当初の苫小牧直行ではなく、移動負荷を考慮して帯広に滞在する日。道東から十勝へ移動し、途中は休憩を多めに取ります。夜は帯広で豚丼など十勝グルメを楽しみます。</p></section>
         </div>
         <div class="day-layout">
           <section class="timeline-wrap">
-            <h3>時刻ベース詳細スケジュール</h3>
+            <h3>時刻表</h3>
             <ol class="timeline">
-              <li><time>07:30</time><span class="tag food">朝食</span><div><strong>バンガロー</strong><p>朝食、チェックアウト、忘れ物確認</p><small>75分</small></div></li>
-<li><time>09:00</time><span class="tag move">移動</span><div><strong>中標津 → 弟子屈方面</strong><p>摩周・阿寒方面を抜けて十勝へ</p><small>約90分</small></div></li>
-<li><time>10:30</time><span class="tag rest">休憩</span><div><strong>弟子屈 / 道の駅候補</strong><p>トイレ、飲み物、天気確認</p><small>30分</small></div></li>
-<li><time>11:00</time><span class="tag move">移動</span><div><strong>弟子屈 → 足寄</strong><p>休憩を挟みながら移動</p><small>約90分</small></div></li>
-<li><time>12:30</time><span class="tag food">昼食</span><div><strong>足寄 / 道の駅</strong><p>軽めの昼食、給油、休憩</p><small>60分</small></div></li>
-<li><time>13:30</time><span class="tag move">移動</span><div><strong>足寄 → 帯広</strong><p>十勝平野へ移動</p><small>約90分</small></div></li>
-<li><time>15:00</time><span class="tag rest">休憩</span><div><strong>帯広市内</strong><p>ホテルチェックイン前後に休憩</p><small>60分</small></div></li>
-<li><time>16:30</time><span class="tag see">観光</span><div><strong>帯広市内</strong><p>六花亭、ばんえい競馬周辺、真鍋庭園など体力で選択</p><small>90分</small></div></li>
-<li><time>18:30</time><span class="tag food">夕食</span><div><strong>帯広市内</strong><p>豚丼または十勝グルメ</p><small>90分</small></div></li>
-<li><time>20:30</time><span class="tag rest">休憩</span><div><strong>帯広宿泊先</strong><p>翌日の苫小牧移動に備えて休む</p><small>-</small></div></li>
+              <li><time>07:30</time><span class="tag food">朝食</span><div><strong>バンガロー</strong><p title="朝食、チェックアウト、忘れ物確認">朝食、チェックアウト、忘れ物確認</p><small>75分</small></div></li>
+<li><time>09:00</time><span class="tag move">移動</span><div><strong>中標津 → 弟子屈方面</strong><p title="摩周・阿寒方面を抜けて十勝へ">摩周・阿寒方面を抜けて十勝へ</p><small>約90分</small></div></li>
+<li><time>10:30</time><span class="tag rest">休憩</span><div><strong>弟子屈 / 道の駅候補</strong><p title="トイレ、飲み物、天気確認">トイレ、飲み物、天気確認</p><small>30分</small></div></li>
+<li><time>11:00</time><span class="tag move">移動</span><div><strong>弟子屈 → 足寄</strong><p title="休憩を挟みながら移動">休憩を挟みながら移動</p><small>約90分</small></div></li>
+<li><time>12:30</time><span class="tag food">昼食</span><div><strong>足寄 / 道の駅</strong><p title="軽めの昼食、給油、休憩">軽めの昼食、給油、休憩</p><small>60分</small></div></li>
+<li><time>13:30</time><span class="tag move">移動</span><div><strong>足寄 → 帯広</strong><p title="十勝平野へ移動">十勝平野へ移動</p><small>約90分</small></div></li>
+<li><time>15:00</time><span class="tag rest">休憩</span><div><strong>帯広市内</strong><p title="ホテルチェックイン前後に休憩">ホテルチェックイン前後に休憩</p><small>60分</small></div></li>
+<li><time>16:30</time><span class="tag see">観光</span><div><strong>帯広市内</strong><p title="六花亭、ばんえい競馬周辺、真鍋庭園など体力で選択">六花亭、ばんえい競馬周辺、真鍋庭園など体力で選択</p><small>90分</small></div></li>
+<li><time>18:30</time><span class="tag food">夕食</span><div><strong>帯広市内</strong><p title="豚丼または十勝グルメ">豚丼または十勝グルメ</p><small>90分</small></div></li>
+<li><time>20:30</time><span class="tag rest">休憩</span><div><strong>帯広宿泊先</strong><p title="翌日の苫小牧移動に備えて休む">翌日の苫小牧移動に備えて休む</p><small>-</small></div></li>
             </ol>
           </section>
           <aside class="side-panel">
-            <section class="meal-recs"><h3>今日の食事メモ</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>道の駅あしょろ銀河ホール21周辺</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>足寄 / 移動途中で休みやすい</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>帯広豚丼候補</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,200〜2,800円</dd></div><div><dt>人気メニュー</dt><dd>豚丼</dd></div></dl><p>帯広 / この日の本命。混雑時は時間をずらす</p></article></section>
+            <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>道の駅あしょろ銀河ホール21周辺</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>移動途中で休みやすい</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>帯広豚丼候補</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,200〜2,800円</dd></div><div><dt>人気メニュー</dt><dd>豚丼</dd></div></dl><p>この日の本命。混雑時は時間をずらす</p></article></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>8/11は帯広泊に変更し、苫小牧まで一気に走らない。</li>
 <li>宿泊先は帯広駅周辺または駐車しやすいホテルを優先。</li>
-<li>長距離区間は早めの給油と休憩を入れると安心。</li>
-<li>トイレ休憩は道の駅やPAでこまめに確保。</li></ul></section>
+<li>長距離区間は早めの給油と休憩を入れると安心。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>観光スポット写真</h3><div class="spot-grid"><figure><div class="spot-placeholder">帯広市内</div><figcaption><strong>帯広市内</strong><span>六花亭、ばんえい競馬周辺、真鍋庭園など体力で選択</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>90分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E5%BC%9F%E5%AD%90%E5%B1%88+%2F+%E8%B6%B3%E5%AF%84+%2F+%E5%B8%AF%E5%BA%83" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
+        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><div class="spot-placeholder">帯広市内</div><figcaption><strong>帯広市内</strong><span>六花亭、ばんえい競馬周辺、真鍋庭園など体力で選択</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>90分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E5%BC%9F%E5%AD%90%E5%B1%88+%2F+%E8%B6%B3%E5%AF%84+%2F+%E5%B8%AF%E5%BA%83" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
 
@@ -1244,34 +1332,32 @@
           <div class="hero-photo placeholder"><span>苫小牧港</span><small>写真準備中</small></div>
         </header>
         <div class="guide-intro">
-          <section class="route-card"><h3>Today's Route</h3><ol class="route-map"><li class="route-point"><strong>帯広市内</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>帯広</strong><div class="route-leg"><i></i><span>約3時間</span></div></li><li class="route-point"><strong>苫小牧</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>苫小牧港</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>苫小牧港 / 船内</strong><span>夕食</span></li></ol></section>
-          <section class="theme-card"><h3>Today's Theme</h3><p>帯広で朝を迎え、十勝で軽く観光・買い物をしてから苫小牧へ移動します。夕方に苫小牧港へ入り、夜のフェリーで仙台へ向かいます。仙台到着は翌朝想定です。 帯広から苫小牧へ、フェリーで仙台へをテーマに、帯広 / 十勝 / 苫小牧 / 太平洋フェリーの見どころを無理なく巡ります。</p></section>
+          <section class="route-card"><div class="card-title-row"><h3>Today's Map</h3><a href="https://www.google.com/maps/dir/?api=1&amp;origin=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85&amp;destination=%E8%8B%AB%E5%B0%8F%E7%89%A7%E6%B8%AF+%2F+%E8%88%B9%E5%86%85&amp;travelmode=driving&amp;waypoints=%E5%B8%AF%E5%BA%83|%E8%8B%AB%E5%B0%8F%E7%89%A7|%E8%8B%AB%E5%B0%8F%E7%89%A7%E6%B8%AF" target="_blank" rel="noreferrer">Google Map</a></div><div class="route-card-body"><div class="sketch-map" aria-label="簡易ルートマップ"><span class="map-node start" style="--x:18%;--y:13%"><i>1</i><b>帯広市内</b></span><span class="map-node" style="--x:46%;--y:31%"><i>2</i><b>帯広</b></span><span class="map-node" style="--x:74%;--y:50%"><i>3</i><b>苫小牧</b></span><span class="map-node" style="--x:58%;--y:69%"><i>4</i><b>苫小牧港</b></span><span class="map-node end" style="--x:28%;--y:87%"><i>5</i><b>苫小牧港 / 船内</b></span></div><ol class="route-map"><li class="route-point"><strong>帯広市内</strong><span>昼食</span><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>帯広</strong><div class="route-leg"><i></i><span>約3時間</span></div></li><li class="route-point"><strong>苫小牧</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>苫小牧港</strong><div class="route-leg"><i></i><span></span></div></li><li class="route-point"><strong>苫小牧港 / 船内</strong><span>夕食</span></li></ol></div></section>
+          <section class="theme-card"><h3>Today's Theme</h3><p>帯広で朝を迎え、十勝で軽く観光・買い物をしてから苫小牧へ移動します。夕方に苫小牧港へ入り、夜のフェリーで仙台へ向かいます。仙台到着は翌朝想定です。</p></section>
         </div>
         <div class="day-layout">
           <section class="timeline-wrap">
-            <h3>時刻ベース詳細スケジュール</h3>
+            <h3>時刻表</h3>
             <ol class="timeline">
-              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>帯広宿泊先</strong><p>朝食、荷物整理、フェリー用バッグを分ける</p><small>60分</small></div></li>
-<li><time>09:30</time><span class="tag see">観光</span><div><strong>帯広市内</strong><p>六花亭、真鍋庭園、十勝牧場方面のどれかを短時間</p><small>90分</small></div></li>
-<li><time>11:15</time><span class="tag food">昼食</span><div><strong>帯広市内</strong><p>豚丼、カフェ、または軽食。早めに済ませる</p><small>60分</small></div></li>
-<li><time>12:30</time><span class="tag move">移動</span><div><strong>帯広 → 苫小牧</strong><p>道東道で苫小牧方面へ。途中休憩を必ず入れる</p><small>約3時間</small></div></li>
-<li><time>15:30</time><span class="tag rest">休憩</span><div><strong>占冠PA / 由仁PAなど</strong><p>トイレ、給油、眠気対策</p><small>30分</small></div></li>
-<li><time>17:00</time><span class="tag prep">手続き</span><div><strong>苫小牧港</strong><p>乗船手続き、車両乗船準備</p><small>75分</small></div></li>
-<li><time>18:15</time><span class="tag food">夕食</span><div><strong>苫小牧港 / 船内</strong><p>乗船前後で夕食。船内レストランも候補</p><small>60分</small></div></li>
-<li><time>19:00</time><span class="tag move">移動</span><div><strong>太平洋フェリー</strong><p>苫小牧港を出港。仙台へ</p><small>一晩</small></div></li>
-<li><time>21:00</time><span class="tag rest">休憩</span><div><strong>客室</strong><p>旅の写真整理、早めに就寝</p><small>-</small></div></li>
+              <li><time>08:00</time><span class="tag food">朝食</span><div><strong>帯広宿泊先</strong><p title="朝食、荷物整理、フェリー用バッグを分ける">朝食、荷物整理、フェリー用バッグを分ける</p><small>60分</small></div></li>
+<li><time>09:30</time><span class="tag see">観光</span><div><strong>帯広市内</strong><p title="六花亭、真鍋庭園、十勝牧場方面のどれかを短時間">六花亭、真鍋庭園、十勝牧場方面のどれかを短時間</p><small>90分</small></div></li>
+<li><time>11:15</time><span class="tag food">昼食</span><div><strong>帯広市内</strong><p title="豚丼、カフェ、または軽食。早めに済ませる">豚丼、カフェ、または軽食。早めに済ませる</p><small>60分</small></div></li>
+<li><time>12:30</time><span class="tag move">移動</span><div><strong>帯広 → 苫小牧</strong><p title="道東道で苫小牧方面へ。途中休憩を必ず入れる">道東道で苫小牧方面へ。途中休憩を必ず入れる</p><small>約3時間</small></div></li>
+<li><time>15:30</time><span class="tag rest">休憩</span><div><strong>占冠PA / 由仁PAなど</strong><p title="トイレ、給油、眠気対策">トイレ、給油、眠気対策</p><small>30分</small></div></li>
+<li><time>17:00</time><span class="tag prep">手続き</span><div><strong>苫小牧港</strong><p title="乗船手続き、車両乗船準備">乗船手続き、車両乗船準備</p><small>75分</small></div></li>
+<li><time>18:15</time><span class="tag food">夕食</span><div><strong>苫小牧港 / 船内</strong><p title="乗船前後で夕食。船内レストランも候補">乗船前後で夕食。船内レストランも候補</p><small>60分</small></div></li>
+<li><time>19:00</time><span class="tag move">移動</span><div><strong>太平洋フェリー</strong><p title="苫小牧港を出港。仙台へ">苫小牧港を出港。仙台へ</p><small>一晩</small></div></li>
+<li><time>21:00</time><span class="tag rest">休憩</span><div><strong>客室</strong><p title="旅の写真整理、早めに就寝">旅の写真整理、早めに就寝</p><small>-</small></div></li>
             </ol>
           </section>
           <aside class="side-panel">
-            <section class="meal-recs"><h3>今日の食事メモ</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>帯広豚丼候補</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,200〜2,800円</dd></div><div><dt>人気メニュー</dt><dd>豚丼</dd></div></dl><p>帯広 / 前日に食べられなかった場合の候補</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>太平洋フェリー船内レストラン</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,500〜3,000円</dd></div><div><dt>人気メニュー</dt><dd>船内レストラン定食</dd></div></dl><p>船内 / 乗船後の第一候補</p></article></section>
+            <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>帯広豚丼候補</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,200〜2,800円</dd></div><div><dt>人気メニュー</dt><dd>豚丼</dd></div></dl><p>前日に食べられなかった場合の候補</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>太平洋フェリー船内レストラン</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,500〜3,000円</dd></div><div><dt>人気メニュー</dt><dd>船内レストラン定食</dd></div></dl><p>乗船後の第一候補</p></article></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>8/12はフェリー出港日。仙台到着は翌朝想定。</li>
 <li>帯広観光は1か所だけに絞り、苫小牧到着を優先する。</li>
-<li>長距離区間は早めの給油と休憩を入れると安心。</li>
-<li>トイレ休憩は道の駅やPAでこまめに確保。</li>
-<li>船内バッグは先に分けて、乗船後に慌てない。</li></ul></section>
+<li>長距離区間は早めの給油と休憩を入れると安心。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>観光スポット写真</h3><div class="spot-grid"><figure><div class="spot-placeholder">帯広市内</div><figcaption><strong>帯広市内</strong><span>六花亭、真鍋庭園、十勝牧場方面のどれかを短時間</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>90分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85+%E5%B8%AF%E5%BA%83+%2F+%E5%8D%81%E5%8B%9D+%2F+%E8%8B%AB%E5%B0%8F%E7%89%A7+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
+        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><div class="spot-placeholder">帯広市内</div><figcaption><strong>帯広市内</strong><span>六花亭、真鍋庭園、十勝牧場方面のどれかを短時間</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>90分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85+%E5%B8%AF%E5%BA%83+%2F+%E5%8D%81%E5%8B%9D+%2F+%E8%8B%AB%E5%B0%8F%E7%89%A7+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
     </section>

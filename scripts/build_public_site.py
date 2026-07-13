@@ -9,9 +9,10 @@ from urllib.parse import quote
 
 from guidebook_common import (
     guide_spots,
-    map_url,
     meal_recommendations,
+    route_map_url,
     route_points,
+    short_text,
     today_theme,
     todays_tips,
 )
@@ -208,7 +209,7 @@ def render_timeline(day: Day) -> str:
             f'<span class="tag {kind_class(item.kind)}">{esc(item.kind)}</span>'
             "<div>"
             f"<strong>{esc(item.place)}</strong>"
-            f"<p>{render_text(item.detail)}</p>"
+            f'<p title="{esc(item.detail)}">{render_text(short_text(item.detail, 86))}</p>'
             f"<small>{esc(item.duration)}</small>"
             "</div>"
             "</li>"
@@ -232,7 +233,7 @@ def render_restaurants(day: Day) -> str:
 
 
 def render_photo_spots(day: Day) -> str:
-    spots = guide_spots(day)
+    spots = guide_spots(day, max_items=2)
     if not spots:
         return ""
     items = []
@@ -258,7 +259,7 @@ def render_photo_spots(day: Day) -> str:
         )
     return (
         '<section class="photo-spots">'
-        "<h3>観光スポット写真</h3>"
+        "<h3>より道スポット</h3>"
         '<div class="spot-grid">'
         + "\n".join(items)
         + "</div>"
@@ -266,8 +267,30 @@ def render_photo_spots(day: Day) -> str:
     )
 
 
+def route_node_position(index: int, total: int) -> tuple[int, int]:
+    xs = [18, 46, 74, 58, 28, 50, 80]
+    if total <= 1:
+        return 48, 50
+    y = 13 + round(index * (74 / max(total - 1, 1)))
+    return xs[index % len(xs)], y
+
+
+def render_route_sketch(points: list[dict[str, str]]) -> str:
+    nodes = []
+    visible = points[:7]
+    for index, point in enumerate(visible):
+        x, y = route_node_position(index, len(visible))
+        kind = " start" if index == 0 else " end" if index == len(visible) - 1 else ""
+        nodes.append(
+            f'<span class="map-node{kind}" style="--x:{x}%;--y:{y}%">'
+            f"<i>{index + 1}</i><b>{esc(short_text(point['place'], 12))}</b>"
+            "</span>"
+        )
+    return '<div class="sketch-map" aria-label="簡易ルートマップ">' + "".join(nodes) + "</div>"
+
+
 def render_route(day: Day) -> str:
-    points = route_points(day)
+    points = route_points(day, max_points=7)
     if not points:
         return ""
     rows = []
@@ -285,8 +308,12 @@ def render_route(day: Day) -> str:
         )
     return (
         '<section class="route-card">'
-        "<h3>Today's Route</h3>"
+        '<div class="card-title-row"><h3>Today\'s Map</h3>'
+        f'<a href="{esc(route_map_url(day))}" target="_blank" rel="noreferrer">Google Map</a></div>'
+        '<div class="route-card-body">'
+        f"{render_route_sketch(points)}"
         f'<ol class="route-map">{"".join(rows)}</ol>'
+        "</div>"
         "</section>"
     )
 
@@ -302,7 +329,7 @@ def render_theme(day: Day) -> str:
 
 def render_recommendations(day: Day) -> str:
     items = []
-    for rec in meal_recommendations(day):
+    for rec in meal_recommendations(day)[:2]:
         items.append(
             '<article class="meal-card">'
             f'<p class="meal-label">{esc(rec["label"])}</p>'
@@ -310,12 +337,12 @@ def render_recommendations(day: Day) -> str:
             f'<p class="stars" aria-label="おすすめ度5">{esc(rec["stars"])}</p>'
             f'<dl><div><dt>予算</dt><dd>{esc(rec["budget"])}</dd></div>'
             f'<div><dt>人気メニュー</dt><dd>{esc(rec["popular"])}</dd></div></dl>'
-            f'<p>{esc(rec["area"])} / {esc(rec["memo"])}</p>'
+            f'<p>{esc(short_text(rec["memo"], 48))}</p>'
             "</article>"
         )
     if not items:
         return ""
-    return '<section class="meal-recs"><h3>今日の食事メモ</h3>' + "".join(items) + "</section>"
+    return '<section class="meal-recs"><h3>ごはん候補</h3>' + "".join(items) + "</section>"
 
 
 def render_tips(day: Day) -> str:
@@ -349,7 +376,7 @@ def render_day(day: Day) -> str:
         </div>
         <div class="day-layout">
           <section class="timeline-wrap">
-            <h3>時刻ベース詳細スケジュール</h3>
+            <h3>時刻表</h3>
             <ol class="timeline">
               {render_timeline(day)}
             </ol>
@@ -661,7 +688,7 @@ def render_page(days: list[Day]) -> str:
 
     .guide-intro {{
       display: grid;
-      grid-template-columns: minmax(260px, 0.9fr) minmax(0, 1.1fr);
+      grid-template-columns: minmax(0, 1.22fr) minmax(260px, 0.78fr);
       gap: 18px;
       margin-top: 22px;
       align-items: stretch;
@@ -682,6 +709,29 @@ def render_page(days: list[Day]) -> str:
       padding: 18px;
     }}
 
+    .card-title-row {{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }}
+
+    .card-title-row h3 {{
+      margin: 0;
+    }}
+
+    .card-title-row a {{
+      flex: 0 0 auto;
+      border-radius: 999px;
+      padding: 4px 10px;
+      background: var(--lake);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 900;
+      text-decoration: none;
+    }}
+
     .route-card h3,
     .theme-card h3,
     .meal-recs h3,
@@ -694,6 +744,81 @@ def render_page(days: list[Day]) -> str:
       color: var(--lake);
       font-family: Georgia, "Times New Roman", serif;
       font-size: 1.22rem;
+    }}
+
+    .route-card-body {{
+      display: grid;
+      grid-template-columns: minmax(180px, 0.8fr) minmax(0, 1fr);
+      gap: 16px;
+      align-items: stretch;
+    }}
+
+    .sketch-map {{
+      position: relative;
+      min-height: 240px;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid rgba(20, 107, 124, 0.18);
+      background:
+        linear-gradient(135deg, rgba(231, 241, 244, 0.95), rgba(255, 250, 240, 0.92)),
+        radial-gradient(circle at 18% 20%, rgba(63, 107, 69, 0.16) 0 10%, transparent 11%),
+        radial-gradient(circle at 72% 72%, rgba(62, 127, 168, 0.18) 0 13%, transparent 14%);
+    }}
+
+    .sketch-map::before {{
+      content: "";
+      position: absolute;
+      inset: 12% 16%;
+      border: 3px dashed rgba(20, 107, 124, 0.55);
+      border-left-width: 0;
+      border-bottom-width: 0;
+      border-radius: 52% 42% 48% 36%;
+      transform: rotate(13deg);
+    }}
+
+    .map-node {{
+      position: absolute;
+      left: var(--x);
+      top: var(--y);
+      transform: translate(-50%, -50%);
+      display: grid;
+      justify-items: center;
+      gap: 3px;
+      max-width: 78px;
+      text-align: center;
+      z-index: 1;
+    }}
+
+    .map-node i {{
+      display: grid;
+      place-items: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 3px solid var(--lake);
+      color: var(--lake);
+      font-size: 0.76rem;
+      font-style: normal;
+      font-weight: 900;
+      box-shadow: 0 3px 12px rgba(23, 32, 38, 0.12);
+    }}
+
+    .map-node.start i,
+    .map-node.end i {{
+      background: var(--berry);
+      border-color: var(--berry);
+      color: #fff;
+    }}
+
+    .map-node b {{
+      display: block;
+      padding: 2px 5px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--ink);
+      font-size: 0.7rem;
+      line-height: 1.25;
     }}
 
     .route-map {{
@@ -738,13 +863,13 @@ def render_page(days: list[Day]) -> str:
     }}
 
     .route-leg {{
-      min-height: 26px;
+      min-height: 20px;
       display: grid;
       grid-template-columns: 2px minmax(0, 1fr);
       gap: 12px;
       margin: 3px 0 4px 9px;
       color: var(--muted);
-      font-size: 0.86rem;
+      font-size: 0.78rem;
       font-weight: 800;
     }}
 
@@ -757,13 +882,13 @@ def render_page(days: list[Day]) -> str:
 
     .theme-card p {{
       margin: 0;
-      font-size: 1.08rem;
-      line-height: 1.85;
+      font-size: 1rem;
+      line-height: 1.75;
     }}
 
     .day-layout {{
       display: grid;
-      grid-template-columns: minmax(0, 1.45fr) minmax(280px, 0.75fr);
+      grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
       gap: 22px;
       margin-top: 24px;
       align-items: start;
@@ -777,7 +902,7 @@ def render_page(days: list[Day]) -> str:
 
     .timeline {{
       display: grid;
-      gap: 10px;
+      gap: 6px;
       margin: 0;
       padding: 0;
       list-style: none;
@@ -787,7 +912,7 @@ def render_page(days: list[Day]) -> str:
       display: grid;
       grid-template-columns: 72px 64px minmax(0, 1fr);
       gap: 12px;
-      padding: 14px 0;
+      padding: 10px 0;
       border-top: 1px solid var(--line);
     }}
 
@@ -828,6 +953,10 @@ def render_page(days: list[Day]) -> str:
     .timeline p {{
       margin: 3px 0;
       color: var(--muted);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }}
 
     .timeline small {{
@@ -837,7 +966,7 @@ def render_page(days: list[Day]) -> str:
 
     .side-panel {{
       display: grid;
-      gap: 18px;
+      gap: 14px;
     }}
 
     .side-panel section {{
@@ -893,13 +1022,13 @@ def render_page(days: list[Day]) -> str:
     }}
 
     .meal-card {{
-      padding: 16px;
+      padding: 13px;
       background: #fffaf0;
     }}
 
     .meal-card h4 {{
       margin: 2px 0 2px;
-      font-size: 1.05rem;
+      font-size: 0.98rem;
     }}
 
     .meal-label {{
@@ -910,17 +1039,18 @@ def render_page(days: list[Day]) -> str:
     }}
 
     .stars {{
-      margin: 2px 0 8px;
+      margin: 0 0 5px;
       color: #d27d22;
       letter-spacing: 0;
       font-weight: 900;
+      font-size: 0.82rem;
     }}
 
     .meal-card dl,
     .spot-meta {{
       display: grid;
-      gap: 6px;
-      margin: 0 0 8px;
+      gap: 4px;
+      margin: 0 0 5px;
     }}
 
     .meal-card dl div,
@@ -948,7 +1078,7 @@ def render_page(days: list[Day]) -> str:
     }}
 
     .tips-card {{
-      padding: 18px;
+      padding: 14px;
       background: #f4f8ef;
     }}
 
@@ -959,19 +1089,19 @@ def render_page(days: list[Day]) -> str:
     }}
 
     .tips-card li + li {{
-      margin-top: 8px;
+      margin-top: 6px;
     }}
 
     .photo-spots {{
       margin-top: 24px;
-      padding: 20px;
+      padding: 18px;
       border-radius: 8px;
       background: #f8f2e8;
     }}
 
     .spot-grid {{
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       gap: 14px;
     }}
 
@@ -1021,6 +1151,7 @@ def render_page(days: list[Day]) -> str:
       .day-header,
       .guide-intro,
       .day-layout,
+      .route-card-body,
       .spot-grid {{
         grid-template-columns: 1fr;
       }}
