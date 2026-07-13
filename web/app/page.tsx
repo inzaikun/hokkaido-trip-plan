@@ -23,12 +23,12 @@ export default function Page() {
           <h1>{itinerary.title}</h1>
           <p className="period">{itinerary.period}</p>
           <p className="lead">
-            洞爺湖、札幌、富良野・美瑛、層雲峡、中標津、帯広をめぐる時刻ベースの旅行ガイド。
-            PowerPoint版の原稿と同じMarkdownから生成しています。
+            洞爺湖、札幌、富良野・美瑛、層雲峡、中標津、帯広へ。
+            出発前にめくりたくなる、家族旅行のための北海道ガイドです。
           </p>
           <div className="hero__actions">
             <a href="#days">日別ガイドを見る</a>
-            <a href="https://github.com/inzaikun/hokkaido-trip-plan/tree/main/itinerary/days">Markdownを編集</a>
+            <a href="https://github.com/inzaikun/hokkaido-trip-plan/raw/main/output/hokkaido-family-travel-guide.pdf">PDFを見る</a>
           </div>
         </div>
         <div className="hero__panel">
@@ -76,23 +76,41 @@ export default function Page() {
                 )}
               </div>
             </header>
-            <p className="summary">{day.summary}</p>
+            <div className="guideIntro">
+              <section className="routeCard">
+                <h3>Today&apos;s Route</h3>
+                <ol>
+                  {day.route.map((point) => (
+                    <li key={`${day.date}-${point.place}-${point.note}`}>
+                      <strong>{point.place}</strong>
+                      {point.note ? <span>{point.note}</span> : null}
+                      {point.leg ? <small>{point.leg}</small> : null}
+                    </li>
+                  ))}
+                </ol>
+              </section>
+              <section className="themeCard">
+                <h3>Today&apos;s Theme</h3>
+                <p>{day.todayTheme}</p>
+              </section>
+            </div>
 
-            {day.photos.length > 0 ? (
+            {day.guideSpots.length > 0 ? (
               <section className="photoSpots">
-                <h3>写真で見る立ち寄り名所</h3>
+                <h3>観光スポット写真</h3>
                 <div className="photoSpots__grid">
-                  {day.photos.map((photo) => (
-                    <figure key={`${day.date}-${photo.place}`}>
-                      {photo.image ? (
-                        <img src={`/images/${photo.image}`} alt={photo.place} />
+                  {day.guideSpots.map((spot) => (
+                    <figure key={`${day.date}-${spot.place}`}>
+                      {spot.image ? (
+                        <img src={`/images/${spot.image}`} alt={spot.place} />
                       ) : (
-                        <div className="photoSpots__placeholder">{photo.place}</div>
+                        <div className="photoSpots__placeholder">{spot.place}</div>
                       )}
                       <figcaption>
-                        <strong>{photo.place}</strong>
-                        <span>{photo.caption}</span>
-                        <small>{photo.credit}</small>
+                        <strong>{spot.place}</strong>
+                        <span>{spot.caption}</span>
+                        <small>滞在 {spot.stay} / {spot.parking}</small>
+                        <a href={spot.map_url} target="_blank" rel="noreferrer">Google Map</a>
                       </figcaption>
                     </figure>
                   ))}
@@ -120,23 +138,25 @@ export default function Page() {
 
               <aside className="side">
                 <section className="card">
-                  <h3>レストラン候補</h3>
+                  <h3>今日の食事メモ</h3>
                   <div className="restaurants">
-                    {day.restaurants.map((restaurant) => (
-                      <div key={`${day.date}-${restaurant.meal}-${restaurant.name}`}>
-                        <span>{restaurant.meal}</span>
+                    {day.mealRecommendations.map((restaurant) => (
+                      <div key={`${day.date}-${restaurant.label}-${restaurant.name}`}>
+                        <span>{restaurant.label}</span>
                         <strong>{restaurant.name}</strong>
+                        <em>{restaurant.stars}</em>
+                        <p>{restaurant.budget} / {restaurant.popular}</p>
                         <p>{restaurant.area} / {restaurant.memo}</p>
                       </div>
                     ))}
                   </div>
                 </section>
 
-                {day.notes.length > 0 ? (
+                {day.todaysTips.length > 0 ? (
                   <section className="card memo">
-                    <h3>メモ</h3>
+                    <h3>Today&apos;s Tips</h3>
                     <ul>
-                      {day.notes.map((note) => (
+                      {day.todaysTips.map((note) => (
                         <li key={note}>{note}</li>
                       ))}
                     </ul>

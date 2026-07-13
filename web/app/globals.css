@@ -225,9 +225,89 @@ h1 {
   object-fit: cover;
 }
 
-.summary {
-  margin: 0;
+.guideIntro {
+  display: grid;
+  grid-template-columns: minmax(260px, .9fr) minmax(0, 1.1fr);
+  gap: 18px;
   padding: 22px 28px 0;
+}
+
+.routeCard,
+.themeCard {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 18px;
+  background: #fffdf8;
+}
+
+.routeCard h3,
+.themeCard h3 {
+  margin: 0 0 12px;
+  color: var(--blue);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 20px;
+}
+
+.routeCard ol {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.routeCard li {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 4px 8px;
+  padding-left: 22px;
+}
+
+.routeCard li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: .45em;
+  width: 11px;
+  height: 11px;
+  border: 3px solid var(--blue);
+  border-radius: 999px;
+  background: white;
+}
+
+.routeCard li + li::after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: -13px;
+  width: 2px;
+  height: 14px;
+  background: #b8d2dc;
+}
+
+.routeCard strong {
+  color: var(--deep);
+}
+
+.routeCard span {
+  width: fit-content;
+  border-radius: 999px;
+  padding: 1px 8px;
+  background: var(--gold);
+  color: white;
+  font-size: 12px;
+  font-weight: 900;
+}
+
+.routeCard small {
+  grid-column: 1 / -1;
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.themeCard p {
+  margin: 0;
   color: #2f3d4b;
   font-size: 16px;
 }
@@ -299,6 +379,14 @@ h1 {
 .photoSpots figcaption small {
   color: var(--muted);
   font-size: 12px;
+}
+
+.photoSpots figcaption a {
+  color: var(--blue);
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
 }
 
 .day__grid {
@@ -409,6 +497,13 @@ time {
   color: var(--deep);
 }
 
+.restaurants em {
+  display: block;
+  color: var(--gold);
+  font-style: normal;
+  font-weight: 900;
+}
+
 .restaurants p,
 .memo li {
   margin: 4px 0 0;
@@ -424,6 +519,7 @@ time {
 @media (max-width: 900px) {
   .hero,
   .day__header,
+  .guideIntro,
   .day__grid {
     grid-template-columns: 1fr;
   }
