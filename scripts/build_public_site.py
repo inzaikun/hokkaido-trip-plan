@@ -28,6 +28,7 @@ OUT = ROOT / "docs" / "index.html"
 RAW_IMAGE_BASE = "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/"
 RAW_MAP_BASE = "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/"
 COVER_IMAGE_NAME = "cover.png"
+BACK_COVER_IMAGE_NAME = "inside-cover.jpg"
 WEEKDAYS = ["月", "火", "水", "木", "金", "土", "日"]
 
 
@@ -237,37 +238,30 @@ def render_restaurants(day: Day) -> str:
     return "\n".join(rows)
 
 
-def render_photo_spots(day: Day) -> str:
-    spots = guide_spots(day, max_items=2)
+def render_side_trip(day: Day) -> str:
+    spots = guide_spots(day, max_items=1)
     if not spots:
         return ""
-    items = []
-    for spot in spots:
-        if spot["image"]:
-            visual = f'<img src="{image_src(spot["image"])}" alt="{esc(spot["place"])}">'
-        else:
-            visual = f'<div class="spot-placeholder">{esc(spot["place"])}</div>'
-        items.append(
-            "<figure>"
-            f"{visual}"
-            "<figcaption>"
-            f"<strong>{esc(spot['place'])}</strong>"
-            f"<span>{esc(spot['caption'])}</span>"
-            '<dl class="spot-meta">'
-            f"<div><dt>駐車場</dt><dd>{esc(spot['parking'])}</dd></div>"
-            f"<div><dt>滞在</dt><dd>{esc(spot['stay'])}</dd></div>"
-            f'<div><dt>地図</dt><dd><a href="{esc(spot["map_url"])}" target="_blank" rel="noreferrer">Google Map</a></dd></div>'
-            "</dl>"
-            f"<small>{esc(spot['credit'])}</small>"
-            "</figcaption>"
-            "</figure>"
-        )
+    spot = spots[0]
+    if spot["image"]:
+        visual = f'<img src="{image_src(spot["image"])}" alt="{esc(spot["place"])}">'
+    else:
+        visual = f'<div class="spot-placeholder">{esc(spot["place"])}</div>'
     return (
-        '<section class="photo-spots">'
+        '<section class="side-trip-card">'
         "<h3>より道スポット</h3>"
-        '<div class="spot-grid">'
-        + "\n".join(items)
-        + "</div>"
+        "<figure>"
+        f"{visual}"
+        "<figcaption>"
+        f"<strong>{esc(spot['place'])}</strong>"
+        f"<span>{esc(short_text(spot['caption'], 64))}</span>"
+        '<dl class="spot-meta">'
+        f"<div><dt>駐車場</dt><dd>{esc(spot['parking'])}</dd></div>"
+        f"<div><dt>滞在</dt><dd>{esc(spot['stay'])}</dd></div>"
+        f'<div><dt>地図</dt><dd><a href="{esc(spot["map_url"])}" target="_blank" rel="noreferrer">Google Map</a></dd></div>'
+        "</dl>"
+        "</figcaption>"
+        "</figure>"
         "</section>"
     )
 
@@ -380,10 +374,10 @@ def render_day(day: Day) -> str:
           </section>
           <aside class="side-panel">
             {render_recommendations(day)}
+            {render_side_trip(day)}
             {render_tips(day)}
           </aside>
         </div>
-        {render_photo_spots(day)}
       </article>
 """
 
@@ -519,6 +513,22 @@ def render_page(days: list[Day]) -> str:
       margin-top: 8px;
       color: var(--muted);
       font-weight: 700;
+    }}
+
+    .inside-cover {{
+      margin: 0 0 34px;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      box-shadow: 0 18px 42px rgba(23, 32, 38, 0.09);
+    }}
+
+    .inside-cover img {{
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 8.8;
+      object-fit: cover;
     }}
 
     .section-title {{
@@ -733,7 +743,7 @@ def render_page(days: list[Day]) -> str:
     .theme-card h3,
     .meal-recs h3,
     .tips-card h3,
-    .photo-spots h3 {{
+    .side-trip-card h3 {{
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -1022,6 +1032,48 @@ def render_page(days: list[Day]) -> str:
       color: var(--muted);
     }}
 
+    .side-trip-card {{
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(20, 107, 124, 0.18);
+      background: #f8f2e8;
+    }}
+
+    .side-trip-card figure {{
+      margin: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      background: var(--surface);
+    }}
+
+    .side-trip-card img {{
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }}
+
+    .side-trip-card figcaption {{
+      display: grid;
+      gap: 5px;
+      padding: 11px;
+    }}
+
+    .side-trip-card figcaption strong {{
+      color: var(--ink);
+      line-height: 1.35;
+    }}
+
+    .side-trip-card figcaption span {{
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }}
+
     .tips-card {{
       padding: 14px;
       background: #f4f8ef;
@@ -1037,35 +1089,6 @@ def render_page(days: list[Day]) -> str:
       margin-top: 6px;
     }}
 
-    .photo-spots {{
-      margin-top: 24px;
-      padding: 18px;
-      border-radius: 8px;
-      background: #f8f2e8;
-    }}
-
-    .spot-grid {{
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }}
-
-    .spot-grid figure {{
-      margin: 0;
-      border-radius: 8px;
-      overflow: hidden;
-      background: var(--surface);
-      display: grid;
-      grid-template-rows: auto 1fr;
-    }}
-
-    .spot-grid img {{
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      object-fit: cover;
-      display: block;
-    }}
-
     .spot-placeholder {{
       width: 100%;
       aspect-ratio: 16 / 10;
@@ -1076,31 +1099,6 @@ def render_page(days: list[Day]) -> str:
       color: var(--lake);
       text-align: center;
       font-weight: 900;
-    }}
-
-    .spot-grid figcaption {{
-      display: grid;
-      gap: 4px;
-      padding: 12px;
-      min-height: 150px;
-      align-content: start;
-    }}
-
-    .spot-grid figcaption strong {{
-      line-height: 1.35;
-    }}
-
-    .spot-grid span {{
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      line-height: 1.55;
-    }}
-
-    .spot-grid span,
-    .spot-grid small {{
-      color: var(--muted);
     }}
 
     footer {{
@@ -1117,8 +1115,7 @@ def render_page(days: list[Day]) -> str:
       .day-header,
       .guide-intro,
       .day-layout,
-      .route-card-body,
-      .spot-grid {{
+      .route-card-body {{
         grid-template-columns: 1fr;
       }}
 
@@ -1170,6 +1167,10 @@ def render_page(days: list[Day]) -> str:
       <div class="stat"><strong>{len(days)}</strong><span>日分の旅程</span></div>
       <div class="stat"><strong>{timeline_count}</strong><span>時刻ベース予定</span></div>
       <div class="stat"><strong>{restaurant_count}</strong><span>食事候補</span></div>
+    </section>
+
+    <section class="inside-cover" aria-label="表紙裏">
+      <img src="{image_src(BACK_COVER_IMAGE_NAME)}" alt="北海道の空と草原">
     </section>
 
     <section>

@@ -122,6 +122,22 @@
       font-weight: 700;
     }
 
+    .inside-cover {
+      margin: 0 0 34px;
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      box-shadow: 0 18px 42px rgba(23, 32, 38, 0.09);
+    }
+
+    .inside-cover img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 8.8;
+      object-fit: cover;
+    }
+
     .section-title {
       margin: 0 0 16px;
       font-size: clamp(1.45rem, 3vw, 2.25rem);
@@ -334,7 +350,7 @@
     .theme-card h3,
     .meal-recs h3,
     .tips-card h3,
-    .photo-spots h3 {
+    .side-trip-card h3 {
       display: inline-flex;
       align-items: center;
       gap: 8px;
@@ -623,6 +639,48 @@
       color: var(--muted);
     }
 
+    .side-trip-card {
+      padding: 14px;
+      border-radius: 8px;
+      border: 1px solid rgba(20, 107, 124, 0.18);
+      background: #f8f2e8;
+    }
+
+    .side-trip-card figure {
+      margin: 0;
+      overflow: hidden;
+      border-radius: 8px;
+      background: var(--surface);
+    }
+
+    .side-trip-card img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+    }
+
+    .side-trip-card figcaption {
+      display: grid;
+      gap: 5px;
+      padding: 11px;
+    }
+
+    .side-trip-card figcaption strong {
+      color: var(--ink);
+      line-height: 1.35;
+    }
+
+    .side-trip-card figcaption span {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
     .tips-card {
       padding: 14px;
       background: #f4f8ef;
@@ -638,35 +696,6 @@
       margin-top: 6px;
     }
 
-    .photo-spots {
-      margin-top: 24px;
-      padding: 18px;
-      border-radius: 8px;
-      background: #f8f2e8;
-    }
-
-    .spot-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-    }
-
-    .spot-grid figure {
-      margin: 0;
-      border-radius: 8px;
-      overflow: hidden;
-      background: var(--surface);
-      display: grid;
-      grid-template-rows: auto 1fr;
-    }
-
-    .spot-grid img {
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      object-fit: cover;
-      display: block;
-    }
-
     .spot-placeholder {
       width: 100%;
       aspect-ratio: 16 / 10;
@@ -677,31 +706,6 @@
       color: var(--lake);
       text-align: center;
       font-weight: 900;
-    }
-
-    .spot-grid figcaption {
-      display: grid;
-      gap: 4px;
-      padding: 12px;
-      min-height: 150px;
-      align-content: start;
-    }
-
-    .spot-grid figcaption strong {
-      line-height: 1.35;
-    }
-
-    .spot-grid span {
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      line-height: 1.55;
-    }
-
-    .spot-grid span,
-    .spot-grid small {
-      color: var(--muted);
     }
 
     footer {
@@ -718,8 +722,7 @@
       .day-header,
       .guide-intro,
       .day-layout,
-      .route-card-body,
-      .spot-grid {
+      .route-card-body {
         grid-template-columns: 1fr;
       }
 
@@ -771,6 +774,10 @@
       <div class="stat"><strong>13</strong><span>日分の旅程</span></div>
       <div class="stat"><strong>130</strong><span>時刻ベース予定</span></div>
       <div class="stat"><strong>55</strong><span>食事候補</span></div>
+    </section>
+
+    <section class="inside-cover" aria-label="表紙裏">
+      <img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/inside-cover.jpg" alt="北海道の空と草原">
     </section>
 
     <section>
@@ -838,13 +845,12 @@
           </section>
           <aside class="side-panel">
             <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>牛たん炭焼 利久 仙台駅周辺</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,200〜2,800円</dd></div><div><dt>人気メニュー</dt><dd>牛たん定食</dd></div></dl><p>仙台らしい昼食の第一候補。混雑時は近隣店舗に切替</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>太平洋フェリー船内レストラン</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,500〜3,000円</dd></div><div><dt>人気メニュー</dt><dd>海鮮丼・焼き魚</dd></div></dl><p>出港前後に利用しやすい第一候補</p></article></section>
+            <section class="side-trip-card"><h3>より道スポット</h3><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E7%91%9E%E9%B3%B3%E6%AE%BF.jpg" alt="瑞鳳殿"><figcaption><strong>瑞鳳殿</strong><span>桃山文化の装飾が美しい伊達政宗公の霊屋。午後の短時間観光に組み込みやすい</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%91%9E%E9%B3%B3%E6%AE%BF+%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82+%2F+%E4%BB%99%E5%8F%B0+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl></figcaption></figure></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>フェリーWi-Fiは有料1,500円。使うか当日判断。</li>
 <li>船内用バッグに、着替え、洗面具、充電器、酔い止めを分ける。</li>
 <li>苫小牧到着は翌日11:00予定。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E7%91%9E%E9%B3%B3%E6%AE%BF.jpg" alt="瑞鳳殿"><figcaption><strong>瑞鳳殿</strong><span>桃山文化の装飾が美しい伊達政宗公の霊屋。午後の短時間観光に組み込みやすい</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%91%9E%E9%B3%B3%E6%AE%BF+%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82+%2F+%E4%BB%99%E5%8F%B0+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons</small></figcaption></figure>
-<figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC.jpg" alt="太平洋フェリー"><figcaption><strong>太平洋フェリー</strong><span>北海道へ向かう船旅のイメージ。乗船前から旅気分が上がる移動パート</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>一晩</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC+%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82+%2F+%E4%BB%99%E5%8F%B0+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons / CC BY-SA</small></figcaption></figure></div></section>
       </article>
 
 
@@ -878,13 +884,12 @@
           </section>
           <aside class="side-panel">
             <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>苫小牧海鮮系食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,500〜3,000円</dd></div><div><dt>人気メニュー</dt><dd>海鮮丼・焼き魚</dd></div></dl><p>下船後の第一候補。混雑なら回避</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>洞爺湖温泉街の食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>外食にする場合の候補</p></article></section>
+            <section class="side-trip-card"><h3>より道スポット</h3><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E3%82%B5%E3%82%A4%E3%83%AD%E5%B1%95%E6%9C%9B%E5%8F%B0.jpg" alt="サイロ展望台"><figcaption><strong>サイロ展望台</strong><span>洞爺湖を高台から見下ろす、到着日の短時間休憩に使いやすい展望スポット</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>30分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%82%B5%E3%82%A4%E3%83%AD%E5%B1%95%E6%9C%9B%E5%8F%B0+%E8%8B%AB%E5%B0%8F%E7%89%A7+%2F+%E6%94%AF%E7%AC%8F%E6%B9%96+%2F+%E6%B4%9E%E7%88%BA%E6%B9%96" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl></figcaption></figure></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>初日は北海道到着の余韻を優先し、観光を詰め込みすぎない。</li>
 <li>バンガロー滞在中の食材・飲み物をこの日に少し補充する。</li>
 <li>夕方の光がきれいな場所は、短時間でも写真休憩を。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E3%82%B5%E3%82%A4%E3%83%AD%E5%B1%95%E6%9C%9B%E5%8F%B0.jpg" alt="サイロ展望台"><figcaption><strong>サイロ展望台</strong><span>洞爺湖を高台から見下ろす、到着日の短時間休憩に使いやすい展望スポット</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>30分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%82%B5%E3%82%A4%E3%83%AD%E5%B1%95%E6%9C%9B%E5%8F%B0+%E8%8B%AB%E5%B0%8F%E7%89%A7+%2F+%E6%94%AF%E7%AC%8F%E6%B9%96+%2F+%E6%B4%9E%E7%88%BA%E6%B9%96" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons / CC BY-SA</small></figcaption></figure>
-<figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E8%8B%AB%E5%B0%8F%E7%89%A7%E6%B8%AF.jpg" alt="苫小牧港"><figcaption><strong>苫小牧港</strong><span>フェリー下船後に北海道ドライブが始まる港</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>30分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E8%8B%AB%E5%B0%8F%E7%89%A7%E6%B8%AF+%E8%8B%AB%E5%B0%8F%E7%89%A7+%2F+%E6%94%AF%E7%AC%8F%E6%B9%96+%2F+%E6%B4%9E%E7%88%BA%E6%B9%96" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons / CC BY-SA</small></figcaption></figure></div></section>
       </article>
 
 
@@ -917,13 +922,12 @@
           </section>
           <aside class="side-panel">
             <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>洞爺湖温泉街の湖畔カフェ</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 700〜1,500円</dd></div><div><dt>人気メニュー</dt><dd>軽食・スイーツ</dd></div></dl><p>湖から出ない日の第一候補</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>バンガローでキャンプ飯</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>食材費中心</dd></div><div><dt>人気メニュー</dt><dd>簡単キャンプ飯</dd></div></dl><p>この日の本命。移動しない</p></article></section>
+            <section class="side-trip-card"><h3>より道スポット</h3><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E3%82%B5%E3%82%A4%E3%83%AD%E5%B1%95%E6%9C%9B%E5%8F%B0.jpg" alt="洞爺湖温泉街"><figcaption><strong>洞爺湖温泉街</strong><span>湖を眺める休憩候補。天気が良ければ写真時間を多めに取りたい</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>45分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B8%A9%E6%B3%89%E8%A1%97+%E6%B4%9E%E7%88%BA%E6%B9%96" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl></figcaption></figure></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>この日は洞爺湖エリアから出ない。</li>
 <li>天気が悪い場合は温泉街、カフェ、早めの休憩に切り替える。</li>
 <li>夕方の光がきれいな場所は、短時間でも写真休憩を。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E3%82%B5%E3%82%A4%E3%83%AD%E5%B1%95%E6%9C%9B%E5%8F%B0.jpg" alt="洞爺湖温泉街"><figcaption><strong>洞爺湖温泉街</strong><span>湖を眺める休憩候補。天気が良ければ写真時間を多めに取りたい</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>45分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B8%A9%E6%B3%89%E8%A1%97+%E6%B4%9E%E7%88%BA%E6%B9%96" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons / CC BY-SA</small></figcaption></figure>
-<figure><div class="spot-placeholder">洞爺湖汽船</div><figcaption><strong>洞爺湖汽船</strong><span>遊覧船で湖上から中島方面を眺める</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%B4%9E%E7%88%BA%E6%B9%96%E6%B1%BD%E8%88%B9+%E6%B4%9E%E7%88%BA%E6%B9%96" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
 
@@ -957,13 +961,12 @@
           </section>
           <aside class="side-panel">
             <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>昭和新山周辺レストハウス</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>ロープウェイ後に使いやすい</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>バンガローでキャンプ飯</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>食材費中心</dd></div><div><dt>人気メニュー</dt><dd>簡単キャンプ飯</dd></div></dl><p>翌日の移動に備えて早めに済ませる</p></article></section>
+            <section class="side-trip-card"><h3>より道スポット</h3><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E6%98%AD%E5%92%8C%E6%96%B0%E5%B1%B1.jpg" alt="昭和新山"><figcaption><strong>昭和新山</strong><span>火山活動の迫力を近くで感じる、洞爺湖周辺観光の定番スポット</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%98%AD%E5%92%8C%E6%96%B0%E5%B1%B1+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%89%E7%8F%A0%E5%B1%B1+%2F+%E5%A3%AE%E7%9E%A5" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl></figcaption></figure></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>有珠山ロープウェイは天候と運行状況を当日確認。</li>
 <li>翌日は札幌移動なので、夜に荷物を少しまとめる。</li>
 <li>雨や霧の日は展望系を短縮し、屋内休憩を増やす。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E6%98%AD%E5%92%8C%E6%96%B0%E5%B1%B1.jpg" alt="昭和新山"><figcaption><strong>昭和新山</strong><span>火山活動の迫力を近くで感じる、洞爺湖周辺観光の定番スポット</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%98%AD%E5%92%8C%E6%96%B0%E5%B1%B1+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%89%E7%8F%A0%E5%B1%B1+%2F+%E5%A3%AE%E7%9E%A5" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons / CC BY</small></figcaption></figure>
-<figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E3%82%B5%E3%82%A4%E3%83%AD%E5%B1%95%E6%9C%9B%E5%8F%B0.jpg" alt="サイロ展望台"><figcaption><strong>サイロ展望台</strong><span>洞爺湖を一望する写真スポット。短時間でも立ち寄りやすい</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>45分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%82%B5%E3%82%A4%E3%83%AD%E5%B1%95%E6%9C%9B%E5%8F%B0+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%89%E7%8F%A0%E5%B1%B1+%2F+%E5%A3%AE%E7%9E%A5" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons / CC BY-SA</small></figcaption></figure></div></section>
       </article>
 
 
@@ -997,13 +1000,12 @@
           </section>
           <aside class="side-panel">
             <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>札幌駅周辺ランチ</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>ホテル近くで駐車しやすい店を選ぶ</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>串鳥 札幌駅前</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,200〜2,800円</dd></div><div><dt>人気メニュー</dt><dd>串焼き・焼鳥</dd></div></dl><p>この日の予約・本命候補</p></article></section>
+            <section class="side-trip-card"><h3>より道スポット</h3><figure><div class="spot-placeholder">中山峠 / 定山渓方面</div><figcaption><strong>中山峠 / 定山渓方面</strong><span>トイレ、軽食、天気確認</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>30分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%B8%AD%E5%B1%B1%E5%B3%A0+%2F+%E5%AE%9A%E5%B1%B1%E6%B8%93+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%AD%E5%B9%8C%E9%A7%85%E5%89%8D+%2F+%E5%8C%97%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%A6" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl></figcaption></figure></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>北海道大学は歩く距離が長くなりやすいので、子どもの疲れを見て短縮する。</li>
 <li>串鳥は混雑する可能性があるため、できれば事前予約または早め入店。</li>
 <li>トイレ休憩は道の駅やPAでこまめに確保。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><div class="spot-placeholder">中山峠 / 定山渓方面</div><figcaption><strong>中山峠 / 定山渓方面</strong><span>トイレ、軽食、天気確認</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>30分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%B8%AD%E5%B1%B1%E5%B3%A0+%2F+%E5%AE%9A%E5%B1%B1%E6%B8%93+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%AD%E5%B9%8C%E9%A7%85%E5%89%8D+%2F+%E5%8C%97%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%A6" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
-<figure><div class="spot-placeholder">札幌市内</div><figcaption><strong>札幌市内</strong><span>駐車しやすい場所で昼食</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%9C%AD%E5%B9%8C%E5%B8%82%E5%86%85+%E6%B4%9E%E7%88%BA%E6%B9%96+%2F+%E6%9C%AD%E5%B9%8C%E9%A7%85%E5%89%8D+%2F+%E5%8C%97%E6%B5%B7%E9%81%93%E5%A4%A7%E5%AD%A6" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
 
@@ -1038,13 +1040,12 @@
           </section>
           <aside class="side-panel">
             <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>富良野オムカレー候補</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>富良野オムカレー</dd></div></dl><p>富良野らしさを入れる第一候補</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>層雲峡温泉街の食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>到着が遅くなった場合は営業確認</p></article></section>
+            <section class="side-trip-card"><h3>より道スポット</h3><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E7%BE%8E%E7%91%9B.jpg" alt="美瑛"><figcaption><strong>美瑛</strong><span>丘と畑の景色が広がる、美瑛方面の短時間観光イメージ</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%BE%8E%E7%91%9B+%E6%9C%AD%E5%B9%8C+%2F+%E5%AF%8C%E8%89%AF%E9%87%8E+%2F+%E7%BE%8E%E7%91%9B+%2F+%E5%B1%A4%E9%9B%B2%E5%B3%A1" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl></figcaption></figure></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>「フラ」は富良野方面として扱う。</li>
 <li>富良野・美瑛は寄り道を増やしすぎず、花畑か青い池のどちらかを優先。</li>
 <li>層雲峡到着が遅くなるので、夕食は軽めのバックアップを持つ。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E7%BE%8E%E7%91%9B.jpg" alt="美瑛"><figcaption><strong>美瑛</strong><span>丘と畑の景色が広がる、美瑛方面の短時間観光イメージ</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%BE%8E%E7%91%9B+%E6%9C%AD%E5%B9%8C+%2F+%E5%AF%8C%E8%89%AF%E9%87%8E+%2F+%E7%BE%8E%E7%91%9B+%2F+%E5%B1%A4%E9%9B%B2%E5%B3%A1" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons / CC BY</small></figcaption></figure>
-<figure><div class="spot-placeholder">富良野市内</div><figcaption><strong>富良野市内</strong><span>富良野オムカレー、カフェ、道の駅系候補</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%AF%8C%E8%89%AF%E9%87%8E%E5%B8%82%E5%86%85+%E6%9C%AD%E5%B9%8C+%2F+%E5%AF%8C%E8%89%AF%E9%87%8E+%2F+%E7%BE%8E%E7%91%9B+%2F+%E5%B1%A4%E9%9B%B2%E5%B3%A1" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
 
@@ -1078,13 +1079,12 @@
           </section>
           <aside class="side-panel">
             <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>層雲峡温泉街の食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>黒岳後に使いやすい</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>コテージでキャンプ飯</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>食材費中心</dd></div><div><dt>人気メニュー</dt><dd>簡単キャンプ飯</dd></div></dl><p>翌日の移動に備えて早めに済ませる</p></article></section>
+            <section class="side-trip-card"><h3>より道スポット</h3><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D.jpg" alt="銀河・流星の滝"><figcaption><strong>銀河・流星の滝</strong><span>層雲峡らしい柱状節理と滝を短時間で楽しめる名所</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>75分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%BB%92%E5%B2%B3+%2F+%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl></figcaption></figure></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>黒岳は天候優先。風や雨が強ければ滝と温泉中心にする。</li>
 <li>翌日は中標津方面へ長距離移動のため、夜に荷物をまとめる。</li>
 <li>雨や霧の日は展望系を短縮し、屋内休憩を増やす。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D.jpg" alt="銀河・流星の滝"><figcaption><strong>銀河・流星の滝</strong><span>層雲峡らしい柱状節理と滝を短時間で楽しめる名所</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>75分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%BB%92%E5%B2%B3+%2F+%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons / Public domain</small></figcaption></figure>
-<figure><div class="spot-placeholder">大函 / 層雲峡散策</div><figcaption><strong>大函 / 層雲峡散策</strong><span>天候と体力に応じて短時間散策</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%A4%A7%E5%87%BD+%2F+%E5%B1%A4%E9%9B%B2%E5%B3%A1%E6%95%A3%E7%AD%96+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%BB%92%E5%B2%B3+%2F+%E9%8A%80%E6%B2%B3%E3%83%BB%E6%B5%81%E6%98%9F%E3%81%AE%E6%BB%9D" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
 
@@ -1118,13 +1118,12 @@
           </section>
           <aside class="side-panel">
             <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>阿寒湖温泉街の食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>湖畔休憩とセットにしやすい</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>中標津市街の回転寿司・定食</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>到着後に外食する場合の候補</p></article></section>
+            <section class="side-trip-card"><h3>より道スポット</h3><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E9%98%BF%E5%AF%92%E6%B9%96.jpg" alt="阿寒湖"><figcaption><strong>阿寒湖</strong><span>道東移動中に湖畔で休憩を入れる場合の自然スポット</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>約2時間</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%98%BF%E5%AF%92%E6%B9%96+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%98%BF%E5%AF%92+%2F+%E6%91%A9%E5%91%A8+%2F+%E4%B8%AD%E6%A8%99%E6%B4%A5" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl></figcaption></figure></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>この日は長距離移動日。眠気対策で休憩を多めに取る。</li>
 <li>阿寒湖と摩周湖を両方詰め込まず、天気が良い方を選ぶ。</li>
 <li>長距離区間は早めの給油と休憩を入れると安心。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E9%98%BF%E5%AF%92%E6%B9%96.jpg" alt="阿寒湖"><figcaption><strong>阿寒湖</strong><span>道東移動中に湖畔で休憩を入れる場合の自然スポット</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>約2時間</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%98%BF%E5%AF%92%E6%B9%96+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%98%BF%E5%AF%92+%2F+%E6%91%A9%E5%91%A8+%2F+%E4%B8%AD%E6%A8%99%E6%B4%A5" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons / CC BY</small></figcaption></figure>
-<figure><div class="spot-placeholder">北見 / 道の駅周辺</div><figcaption><strong>北見 / 道の駅周辺</strong><span>トイレ、給油、飲み物補充</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>30分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%8C%97%E8%A6%8B+%2F+%E9%81%93%E3%81%AE%E9%A7%85+%E5%B1%A4%E9%9B%B2%E5%B3%A1+%2F+%E9%98%BF%E5%AF%92+%2F+%E6%91%A9%E5%91%A8+%2F+%E4%B8%AD%E6%A8%99%E6%B4%A5" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
 
@@ -1165,13 +1164,12 @@
           </section>
           <aside class="side-panel">
             <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>ウトロ漁協婦人部食堂</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,500〜3,000円</dd></div><div><dt>人気メニュー</dt><dd>海鮮丼・焼き魚</dd></div></dl><p>営業日・営業時間を直前確認。海鮮や焼き魚の第一候補</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>中標津市街の焼肉・定食店</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,200〜2,800円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>帰着時刻に合わせ、遅めでも入りやすい店を選ぶ</p></article></section>
+            <section class="side-trip-card"><h3>より道スポット</h3><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E7%9F%A5%E5%BA%8A%E5%B3%A0.jpg" alt="知床峠"><figcaption><strong>知床峠</strong><span>羅臼岳や国後島方面を望む、知床横断道路の展望地点</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>約30分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%9F%A5%E5%BA%8A%E5%B3%A0+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E7%BE%85%E8%87%BC+%2F+%E7%9F%A5%E5%BA%8A%E5%B3%A0+%2F+%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%2F+%E3%82%A6%E3%83%88%E3%83%AD" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl></figcaption></figure></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>知床横断道路は濃霧、強風、野生動物の飛び出しに注意する。</li>
 <li>知床五湖はヒグマ出没や天候により利用方法が変わる。高架木道を基本プランとし、地上遊歩道は当日判断にする。</li>
 <li>フレペの滝遊歩道でも野生動物との距離を取り、食べ物を出したまま歩かない。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E7%9F%A5%E5%BA%8A%E5%B3%A0.jpg" alt="知床峠"><figcaption><strong>知床峠</strong><span>羅臼岳や国後島方面を望む、知床横断道路の展望地点</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>約30分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E7%9F%A5%E5%BA%8A%E5%B3%A0+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E7%BE%85%E8%87%BC+%2F+%E7%9F%A5%E5%BA%8A%E5%B3%A0+%2F+%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%2F+%E3%82%A6%E3%83%88%E3%83%AD" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons / CC BY-SA</small></figcaption></figure>
-<figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E3%82%AA%E3%82%B7%E3%83%B3%E3%82%B3%E3%82%B7%E3%83%B3%E3%81%AE%E6%BB%9D.jpg" alt="オシンコシンの滝"><figcaption><strong>オシンコシンの滝</strong><span>駐車場から短時間で見られる、知床帰路の滝スポット</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>約25分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E3%82%AA%E3%82%B7%E3%83%B3%E3%82%B3%E3%82%B7%E3%83%B3%E3%81%AE%E6%BB%9D+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E7%BE%85%E8%87%BC+%2F+%E7%9F%A5%E5%BA%8A%E5%B3%A0+%2F+%E7%9F%A5%E5%BA%8A%E4%BA%94%E6%B9%96+%2F+%E3%82%A6%E3%83%88%E3%83%AD" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons / CC BY-SA</small></figcaption></figure></div></section>
       </article>
 
 
@@ -1205,13 +1203,12 @@
           </section>
           <aside class="side-panel">
             <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>尾岱沼・標津の海鮮候補</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,500〜3,000円</dd></div><div><dt>人気メニュー</dt><dd>海鮮丼・焼き魚</dd></div></dl><p>海辺の日らしい第一候補</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>中標津市街のレストラン</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>戻ってからゆっくり食べる候補</p></article></section>
+            <section class="side-trip-card"><h3>より道スポット</h3><figure><div class="spot-placeholder">標津周辺</div><figcaption><strong>標津周辺</strong><span>海辺散策、資料館や道の駅候補</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%A8%99%E6%B4%A5+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E6%A8%99%E6%B4%A5+%2F+%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl></figcaption></figure></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>野付半島は風が強いことがあるので上着を持つ。</li>
 <li>野生動物や鳥との距離を守り、立入禁止エリアに入らない。</li>
 <li>雨や霧の日は展望系を短縮し、屋内休憩を増やす。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><div class="spot-placeholder">標津周辺</div><figcaption><strong>標津周辺</strong><span>海辺散策、資料館や道の駅候補</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>60分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E6%A8%99%E6%B4%A5+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E6%A8%99%E6%B4%A5+%2F+%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
-<figure><div class="spot-placeholder">野付半島ネイチャーセンター周辺</div><figcaption><strong>野付半島ネイチャーセンター周辺</strong><span>トドワラ、野鳥、湿原風景を短時間散策</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>120分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6%E3%83%8D%E3%82%A4%E3%83%81%E3%83%A3%E3%83%BC%E3%82%BB%E3%83%B3%E3%82%BF%E3%83%BC+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E6%A8%99%E6%B4%A5+%2F+%E9%87%8E%E4%BB%98%E5%8D%8A%E5%B3%B6" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
 
@@ -1246,13 +1243,12 @@
           </section>
           <aside class="side-panel">
             <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>道の駅あしょろ銀河ホール21周辺</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>移動途中で休みやすい</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>帯広豚丼候補</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,200〜2,800円</dd></div><div><dt>人気メニュー</dt><dd>豚丼</dd></div></dl><p>この日の本命。混雑時は時間をずらす</p></article></section>
+            <section class="side-trip-card"><h3>より道スポット</h3><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E5%B8%AF%E5%BA%83.jpg" alt="帯広"><figcaption><strong>帯広</strong><span>休憩と十勝グルメを入れる、移動負荷を下げる宿泊地</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>約90分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B8%AF%E5%BA%83+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E5%BC%9F%E5%AD%90%E5%B1%88+%2F+%E8%B6%B3%E5%AF%84+%2F+%E5%B8%AF%E5%BA%83" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl></figcaption></figure></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>8/10は帯広泊。苫小牧まで一気に走らず、十勝でいったん休む。</li>
 <li>宿泊先は帯広駅周辺または駐車しやすいホテルを優先。</li>
 <li>長距離区間は早めの給油と休憩を入れると安心。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E5%B8%AF%E5%BA%83.jpg" alt="帯広"><figcaption><strong>帯広</strong><span>休憩と十勝グルメを入れる、移動負荷を下げる宿泊地</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>約90分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B8%AF%E5%BA%83+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E5%BC%9F%E5%AD%90%E5%B1%88+%2F+%E8%B6%B3%E5%AF%84+%2F+%E5%B8%AF%E5%BA%83" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons / CC BY</small></figcaption></figure>
-<figure><div class="spot-placeholder">弟子屈 / 道の駅候補</div><figcaption><strong>弟子屈 / 道の駅候補</strong><span>トイレ、飲み物、天気確認</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>30分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%BC%9F%E5%AD%90%E5%B1%88+%2F+%E9%81%93%E3%81%AE%E9%A7%85%E5%80%99%E8%A3%9C+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E5%BC%9F%E5%AD%90%E5%B1%88+%2F+%E8%B6%B3%E5%AF%84+%2F+%E5%B8%AF%E5%BA%83" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
 
@@ -1286,13 +1282,12 @@
           </section>
           <aside class="side-panel">
             <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>帯広豚丼候補</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,200〜2,800円</dd></div><div><dt>人気メニュー</dt><dd>豚丼</dd></div></dl><p>前日に食べられなかった場合の候補</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>太平洋フェリー船内レストラン</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,500〜3,000円</dd></div><div><dt>人気メニュー</dt><dd>船内レストラン定食</dd></div></dl><p>乗船後の第一候補</p></article></section>
+            <section class="side-trip-card"><h3>より道スポット</h3><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC.jpg" alt="太平洋フェリー"><figcaption><strong>太平洋フェリー</strong><span>仙台へ向かう船旅のイメージ。船内用バッグを分けて乗船する</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>一晩</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC+%E5%B8%AF%E5%BA%83+%2F+%E5%8D%81%E5%8B%9D+%2F+%E8%8B%AB%E5%B0%8F%E7%89%A7+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl></figcaption></figure></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>8/11はフェリー出港日。仙台到着は8/12朝想定。</li>
 <li>帯広観光は1か所だけに絞り、苫小牧到着を優先する。</li>
 <li>長距離区間は早めの給油と休憩を入れると安心。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><img src="https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC.jpg" alt="太平洋フェリー"><figcaption><strong>太平洋フェリー</strong><span>仙台へ向かう船旅のイメージ。船内用バッグを分けて乗船する</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>周辺駐車場を現地確認</dd></div><div><dt>滞在</dt><dd>一晩</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC+%E5%B8%AF%E5%BA%83+%2F+%E5%8D%81%E5%8B%9D+%2F+%E8%8B%AB%E5%B0%8F%E7%89%A7+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>Wikimedia Commons / CC BY-SA</small></figcaption></figure>
-<figure><div class="spot-placeholder">帯広市内</div><figcaption><strong>帯広市内</strong><span>六花亭、真鍋庭園、十勝牧場方面のどれかを短時間</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>90分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85+%E5%B8%AF%E5%BA%83+%2F+%E5%8D%81%E5%8B%9D+%2F+%E8%8B%AB%E5%B0%8F%E7%89%A7+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
 
@@ -1328,13 +1323,12 @@
           </section>
           <aside class="side-panel">
             <section class="meal-recs"><h3>ごはん候補</h3><article class="meal-card"><p class="meal-label">おすすめランチ</p><h4>中郷SA / PA候補</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>混雑と眠気に合わせて柔軟に</p></article><article class="meal-card"><p class="meal-label">おすすめ夕食</p><h4>自宅周辺のテイクアウト</h4><p class="stars" aria-label="おすすめ度5">★★★★★</p><dl><div><dt>予算</dt><dd>目安 1,000〜2,500円</dd></div><div><dt>人気メニュー</dt><dd>現地の定番メニュー</dd></div></dl><p>帰宅後は片付け優先</p></article></section>
+            <section class="side-trip-card"><h3>より道スポット</h3><figure><div class="spot-placeholder">仙台港周辺</div><figcaption><strong>仙台港周辺</strong><span>トイレ、飲み物補充、運転前の休憩</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>30分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%BB%99%E5%8F%B0%E6%B8%AF+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC+%2F+%E4%BB%99%E5%8F%B0%E6%B8%AF+%2F+%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl></figcaption></figure></section>
             <section class="tips-card"><h3>Today's Tips</h3><ul><li>8/12は仙台港到着後、そのまま印西へ帰宅する。</li>
 <li>長距離運転になるので、SA / PA休憩は眠気優先で増やす。</li>
 <li>長距離区間は早めの給油と休憩を入れると安心。</li></ul></section>
           </aside>
         </div>
-        <section class="photo-spots"><h3>より道スポット</h3><div class="spot-grid"><figure><div class="spot-placeholder">仙台港周辺</div><figcaption><strong>仙台港周辺</strong><span>トイレ、飲み物補充、運転前の休憩</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>30分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E4%BB%99%E5%8F%B0%E6%B8%AF+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC+%2F+%E4%BB%99%E5%8F%B0%E6%B8%AF+%2F+%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure>
-<figure><div class="spot-placeholder">守谷SA / PA候補</div><figcaption><strong>守谷SA / PA候補</strong><span>最後の休憩。無理なら長めに休む</span><dl class="spot-meta"><div><dt>駐車場</dt><dd>駐車場・停車場所を現地確認</dd></div><div><dt>滞在</dt><dd>20分</dd></div><div><dt>地図</dt><dd><a href="https://www.google.com/maps/search/?api=1&amp;query=%E5%AE%88%E8%B0%B7SA+%2F+PA%E5%80%99%E8%A3%9C+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC+%2F+%E4%BB%99%E5%8F%B0%E6%B8%AF+%2F+%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82" target="_blank" rel="noreferrer">Google Map</a></dd></div></dl><small>写真準備中</small></figcaption></figure></div></section>
       </article>
 
     </section>

@@ -529,7 +529,7 @@ def stay_time_for(day, place: str) -> str:
     return "30〜60分"
 
 
-def guide_spots(day, max_items: int = 2) -> list[dict[str, str]]:
+def guide_spots(day, max_items: int = 1) -> list[dict[str, str]]:
     spots: list[dict[str, str]] = []
     used_images = {hero_photo_image(day)}
     hero_place = value(hero_photo(day), "place", value(day, "hero", ""))

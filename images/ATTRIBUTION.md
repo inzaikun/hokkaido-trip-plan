@@ -5,6 +5,7 @@
 | File | Place | Caption | Source | License | Author | URL |
 | --- | --- | --- | --- | --- | --- | --- |
 | cover.png | 北海道ドライブ風景 | 表紙写真 | User-provided image | User approved for this guide | User-provided |  |
+| inside-cover.jpg | 北海道の空と草原 | 表紙裏写真 | User-provided image | User approved for this guide | User-provided |  |
 | 仙台城跡.jpg | 仙台城跡 | 伊達政宗ゆかりの城跡 | Wikimedia Commons | Free license listed on Wikimedia Commons |  | https://commons.wikimedia.org/wiki/File:Waki-yagura_of_Sendai_Castle_20220910b.jpg |
 | 瑞鳳殿.jpg | 瑞鳳殿 | 伊達政宗公の霊屋 | Wikimedia Commons | Free license listed on Wikimedia Commons |  | https://commons.wikimedia.org/wiki/File:Zuiho-den06s3200.jpg |
 | 洞爺湖.jpg | 洞爺湖 | カルデラ湖と中島を望む、洞爺湖滞在のメイン風景 | Wikimedia Commons | CC BY 2.5 | 663highland | https://commons.wikimedia.org/wiki/File%3A130922_Lake_Toya_Toyako_Hokkaido_Japan01s5.jpg |

@@ -119,6 +119,22 @@ h1 {
   text-transform: uppercase;
 }
 
+.insideCover {
+  overflow: hidden;
+  margin: 26px clamp(18px, 5vw, 72px) 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: white;
+  box-shadow: 0 18px 40px rgba(17, 24, 39, .08);
+}
+
+.insideCover img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 8.8;
+  object-fit: cover;
+}
+
 .route,
 .days {
   padding: 36px clamp(18px, 5vw, 72px);
@@ -358,40 +374,6 @@ h1 {
   font-size: 15px;
 }
 
-.photoSpots {
-  padding: 22px 28px 0;
-}
-
-.photoSpots h3 {
-  margin: 0 0 14px;
-  color: var(--deep);
-  font-size: 20px;
-}
-
-.photoSpots__grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.photoSpots figure {
-  overflow: hidden;
-  min-height: 100%;
-  margin: 0;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: #fff;
-  display: grid;
-  grid-template-rows: auto 1fr;
-}
-
-.photoSpots img {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  display: block;
-  object-fit: cover;
-}
-
 .photoSpots__placeholder {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -406,19 +388,36 @@ h1 {
   text-align: center;
 }
 
-.photoSpots figcaption {
-  display: grid;
-  gap: 4px;
-  padding: 12px;
-  min-height: 148px;
-  align-content: start;
+.sideTrip {
+  background: #fff8ea;
 }
 
-.photoSpots figcaption strong {
+.sideTrip figure {
+  overflow: hidden;
+  margin: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+.sideTrip img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+.sideTrip figcaption {
+  display: grid;
+  gap: 5px;
+  padding: 11px;
+}
+
+.sideTrip figcaption strong {
   color: var(--deep);
 }
 
-.photoSpots figcaption span {
+.sideTrip figcaption span {
   display: -webkit-box;
   overflow: hidden;
   -webkit-line-clamp: 2;
@@ -428,17 +427,10 @@ h1 {
   line-height: 1.55;
 }
 
-.photoSpots figcaption small {
+.sideTrip figcaption small,
+.sideTrip figcaption a {
   color: var(--muted);
   font-size: 12px;
-}
-
-.photoSpots figcaption a {
-  color: var(--blue);
-  font-size: 13px;
-  font-weight: 800;
-  text-decoration-thickness: 1px;
-  text-underline-offset: 3px;
 }
 
 .day__grid {
@@ -585,10 +577,6 @@ time {
     padding-inline: 18px;
   }
 
-  .photoSpots {
-    padding-inline: 18px;
-  }
-
   .timeline li {
     grid-template-columns: 76px 56px minmax(0, 1fr);
   }
@@ -612,7 +600,4 @@ time {
     grid-template-columns: 1fr;
   }
 
-  .photoSpots__grid {
-    grid-template-columns: 1fr;
-  }
 }

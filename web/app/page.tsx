@@ -52,6 +52,10 @@ export default function Page() {
         </div>
       </section>
 
+      <section className="insideCover" aria-label="表紙裏">
+        <img src="/images/inside-cover.jpg" alt="北海道の空と草原" />
+      </section>
+
       <section className="route">
         <h2>旅の流れ</h2>
         <div className="route__rail">
@@ -142,6 +146,27 @@ export default function Page() {
                   </div>
                 </section>
 
+                {day.guideSpots.length > 0 ? (
+                  <section className="card sideTrip">
+                    <h3>より道スポット</h3>
+                    {day.guideSpots.slice(0, 1).map((spot) => (
+                      <figure key={`${day.date}-${spot.place}`}>
+                        {spot.image ? (
+                          <img src={`/images/${spot.image}`} alt={spot.place} />
+                        ) : (
+                          <div className="photoSpots__placeholder">{spot.place}</div>
+                        )}
+                        <figcaption>
+                          <strong>{spot.place}</strong>
+                          <span>{shortText(spot.caption, 64)}</span>
+                          <small>滞在 {spot.stay} / {spot.parking}</small>
+                          <a href={spot.map_url} target="_blank" rel="noreferrer">Google Map</a>
+                        </figcaption>
+                      </figure>
+                    ))}
+                  </section>
+                ) : null}
+
                 {day.todaysTips.length > 0 ? (
                   <section className="card memo">
                     <h3>Today&apos;s Tips</h3>
@@ -154,29 +179,6 @@ export default function Page() {
                 ) : null}
               </aside>
             </div>
-
-            {day.guideSpots.length > 0 ? (
-              <section className="photoSpots">
-                <h3>より道スポット</h3>
-                <div className="photoSpots__grid">
-                  {day.guideSpots.map((spot) => (
-                    <figure key={`${day.date}-${spot.place}`}>
-                      {spot.image ? (
-                        <img src={`/images/${spot.image}`} alt={spot.place} />
-                      ) : (
-                        <div className="photoSpots__placeholder">{spot.place}</div>
-                      )}
-                      <figcaption>
-                        <strong>{spot.place}</strong>
-                        <span>{shortText(spot.caption, 74)}</span>
-                        <small>滞在 {spot.stay} / {spot.parking}</small>
-                        <a href={spot.map_url} target="_blank" rel="noreferrer">Google Map</a>
-                      </figcaption>
-                    </figure>
-                  ))}
-                </div>
-              </section>
-            ) : null}
           </article>
         ))}
       </section>
