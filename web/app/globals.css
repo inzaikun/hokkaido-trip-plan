@@ -37,14 +37,18 @@ main {
 }
 
 .hero {
+  min-height: 58vh;
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
-  gap: 32px;
-  padding: 64px clamp(20px, 5vw, 72px) 44px;
+  align-items: end;
+  padding: 64px clamp(20px, 5vw, 72px) 48px;
   background:
     linear-gradient(135deg, rgba(15, 51, 68, .94), rgba(23, 107, 135, .62)),
     url("/images/cover.png") center/cover;
   color: white;
+}
+
+.hero__copy {
+  max-width: 820px;
 }
 
 .eyebrow {
@@ -72,67 +76,6 @@ h1 {
   margin: 18px 0 0;
   color: rgba(255, 255, 255, .86);
   font-size: 17px;
-}
-
-.hero__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  margin-top: 28px;
-}
-
-.hero__actions a {
-  display: inline-flex;
-  min-height: 44px;
-  align-items: center;
-  border: 1px solid rgba(255, 255, 255, .42);
-  border-radius: 999px;
-  padding: 0 18px;
-  background: rgba(255, 255, 255, .12);
-  text-decoration: none;
-  font-weight: 700;
-}
-
-.hero__panel {
-  align-self: end;
-  display: grid;
-  gap: 12px;
-}
-
-.hero__panel div {
-  border: 1px solid rgba(255, 255, 255, .28);
-  border-radius: 8px;
-  padding: 20px;
-  background: rgba(255, 255, 255, .12);
-  backdrop-filter: blur(12px);
-}
-
-.hero__panel span {
-  display: block;
-  font-size: 40px;
-  font-weight: 900;
-}
-
-.hero__panel p {
-  margin: 2px 0 0;
-  color: rgba(255, 255, 255, .76);
-  text-transform: uppercase;
-}
-
-.insideCover {
-  overflow: hidden;
-  margin: 26px clamp(18px, 5vw, 72px) 0;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: white;
-  box-shadow: 0 18px 40px rgba(17, 24, 39, .08);
-}
-
-.insideCover img {
-  display: block;
-  width: 100%;
-  aspect-ratio: 16 / 8.8;
-  object-fit: cover;
 }
 
 .route,

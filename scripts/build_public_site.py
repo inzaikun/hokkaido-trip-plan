@@ -28,7 +28,6 @@ OUT = ROOT / "docs" / "index.html"
 RAW_IMAGE_BASE = "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/"
 RAW_MAP_BASE = "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/"
 COVER_IMAGE_NAME = "cover.png"
-BACK_COVER_IMAGE_NAME = "inside-cover.jpg"
 WEEKDAYS = ["月", "火", "水", "木", "金", "土", "日"]
 
 
@@ -383,8 +382,6 @@ def render_day(day: Day) -> str:
 
 
 def render_page(days: list[Day]) -> str:
-    timeline_count = sum(len(day.timeline) for day in days)
-    restaurant_count = sum(len(day.restaurants) for day in days)
     nav_items = "\n".join(
         f'<a href="#day-{esc(day.date)}"><strong>Day {esc(day.day)}</strong><span>{formatted_date(day.date)}</span><em>{esc(day.area)}</em></a>'
         for day in days
@@ -432,7 +429,7 @@ def render_page(days: list[Day]) -> str:
     }}
 
     .hero {{
-      min-height: 52vh;
+      min-height: 58vh;
       display: grid;
       align-items: end;
       padding: 46px clamp(18px, 5vw, 72px);
@@ -440,6 +437,10 @@ def render_page(days: list[Day]) -> str:
         linear-gradient(180deg, rgba(11, 40, 47, 0.14), rgba(11, 40, 47, 0.78)),
         url("{image_src(COVER_IMAGE_NAME)}") center/cover;
       color: #fff;
+    }}
+
+    .hero > div {{
+      max-width: 980px;
     }}
 
     .hero h1 {{
@@ -456,79 +457,10 @@ def render_page(days: list[Day]) -> str:
       font-size: clamp(1rem, 2vw, 1.25rem);
     }}
 
-    .hero-actions {{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 22px;
-    }}
-
-    .hero-actions a {{
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8px 16px;
-      border: 1px solid rgba(255, 255, 255, 0.58);
-      border-radius: 6px;
-      color: #fff;
-      background: rgba(255, 255, 255, 0.12);
-      font-weight: 700;
-      text-decoration: none;
-    }}
-
     main {{
       width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 34px 0 72px;
-    }}
-
-    .stats {{
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin: -64px auto 36px;
-      position: relative;
-      z-index: 1;
-    }}
-
-    .stat {{
-      min-height: 116px;
-      padding: 20px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--surface);
-      box-shadow: 0 18px 42px rgba(23, 32, 38, 0.11);
-    }}
-
-    .stat strong {{
-      display: block;
-      font-size: 2rem;
-      line-height: 1;
-      color: var(--lake);
-    }}
-
-    .stat span {{
-      display: block;
-      margin-top: 8px;
-      color: var(--muted);
-      font-weight: 700;
-    }}
-
-    .inside-cover {{
-      margin: 0 0 34px;
-      overflow: hidden;
-      border-radius: 8px;
-      border: 1px solid var(--line);
-      background: var(--surface);
-      box-shadow: 0 18px 42px rgba(23, 32, 38, 0.09);
-    }}
-
-    .inside-cover img {{
-      display: block;
-      width: 100%;
-      aspect-ratio: 16 / 8.8;
-      object-fit: cover;
+      padding: 42px 0 72px;
     }}
 
     .section-title {{
@@ -542,26 +474,6 @@ def render_page(days: list[Day]) -> str:
       max-width: 860px;
       margin: 0;
       color: var(--muted);
-    }}
-
-    .quick-links {{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-top: 20px;
-    }}
-
-    .quick-links a {{
-      min-height: 44px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8px 16px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: var(--surface);
-      font-weight: 700;
-      text-decoration: none;
     }}
 
     .toc {{
@@ -1110,7 +1022,6 @@ def render_page(days: list[Day]) -> str:
     }}
 
     @media (max-width: 900px) {{
-      .stats,
       .day-nav,
       .day-header,
       .guide-intro,
@@ -1119,9 +1030,6 @@ def render_page(days: list[Day]) -> str:
         grid-template-columns: 1fr;
       }}
 
-      .stats {{
-        margin-top: -36px;
-      }}
     }}
 
     @media (max-width: 620px) {{
@@ -1153,45 +1061,26 @@ def render_page(days: list[Day]) -> str:
   <header class="hero">
     <div>
       <h1>北海道家族旅行ガイド 2026</h1>
-      <p>2026年7月31日から8月12日まで。印西市から仙台港へ向かい、フェリーで北海道へ渡る家族旅行の時刻ベースしおりです。</p>
-      <div class="hero-actions">
-        <a href="#days">全日程を見る</a>
-        <a href="https://github.com/inzaikun/hokkaido-trip-plan/raw/main/output/hokkaido-family-travel-guide.pdf">PDF</a>
-        <a href="https://github.com/inzaikun/hokkaido-trip-plan/raw/main/output/hokkaido-family-travel-guide.pptx">PowerPoint</a>
-      </div>
+      <p>フェリーで北の大地へ。湖、花畑、峡谷、知床の森をつなぐ13日間を、移動時間と食事候補まで読める家族旅行ガイドにまとめました。</p>
     </div>
   </header>
 
   <main>
-    <section class="stats" aria-label="旅程の概要">
-      <div class="stat"><strong>{len(days)}</strong><span>日分の旅程</span></div>
-      <div class="stat"><strong>{timeline_count}</strong><span>時刻ベース予定</span></div>
-      <div class="stat"><strong>{restaurant_count}</strong><span>食事候補</span></div>
-    </section>
-
-    <section class="inside-cover" aria-label="表紙裏">
-      <img src="{image_src(BACK_COVER_IMAGE_NAME)}" alt="北海道の空と草原">
-    </section>
-
     <section>
-      <h2 class="section-title">旅の読みどころ</h2>
-      <p class="lead">仙台港からフェリーで北海道へ渡り、洞爺湖、札幌、富良野・美瑛、層雲峡、道東の自然へ。日ごとのルートと見どころを、出発前に眺めて楽しい家族旅行ガイドとしてまとめました。</p>
-      <div class="quick-links">
-        <a href="#days">日別ガイドへ</a>
-        <a href="https://github.com/inzaikun/hokkaido-trip-plan">GitHub</a>
-      </div>
+      <h2 class="section-title">旅のハイライト</h2>
+      <p class="lead">仙台港から船で渡り、洞爺湖の湖畔、札幌の街歩き、富良野・美瑛の花と丘、層雲峡の峡谷、道東の湖と知床へ。読むだけで旅の流れが浮かぶよう、1日ごとの見どころと動き方を整理しています。</p>
     </section>
 
     <section class="toc">
-      <h2 class="section-title">日別インデックス</h2>
-      <p class="lead">各日を選ぶと、移動、昼食、夕食、観光、休憩を含む詳細スケジュールへ移動します。</p>
+      <h2 class="section-title">DAY別ガイド目次</h2>
+      <p class="lead">気になる日を選ぶと、ルート、見どころ、食事候補、時刻入りスケジュールへ移動します。</p>
       <nav class="day-nav" aria-label="日別リンク">
         {nav_items}
       </nav>
     </section>
 
     <section id="days">
-      <h2 class="section-title">全日程 詳細スケジュール</h2>
+      <h2 class="section-title">13日間の詳細ガイド</h2>
       {day_sections}
     </section>
   </main>
