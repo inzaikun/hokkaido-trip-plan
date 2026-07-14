@@ -17,7 +17,7 @@
 | 黒岳ロープウェイ.jpg | 黒岳ロープウェイ | 層雲峡から大雪山の展望へ上がる自然満喫スポット | Wikimedia Commons | CC BY-SA 3.0 | Yasu (talk) | https://commons.wikimedia.org/wiki/File%3ADaisetsuzan_Sounkyo_Kurodake_Ropeway_Kurodake_Station.jpg |
 | 銀河・流星の滝.jpg | 銀河・流星の滝 | 層雲峡らしい柱状節理と滝を短時間で楽しめる名所 | Wikimedia Commons | Public domain |  | https://commons.wikimedia.org/wiki/File%3ASounkyo1.jpg |
 | 摩周湖.jpg | 摩周湖 | 道東移動中に天候が良ければ立ち寄りたい展望湖 | Wikimedia Commons | CC BY-SA 3.0 | Miya.m | https://commons.wikimedia.org/wiki/File%3AHokkaido%2C_Japan%2C_Lake_Mash%C5%AB%2C_2008.jpg |
-| 阿寒湖.jpg | 阿寒湖 | 道東の湖畔休憩に組み込みやすい自然スポット | Wikimedia Commons | CC BY 4.0 | Nesnad | https://commons.wikimedia.org/wiki/File%3ALake_Akan_-_Hokkaido_-_2021_12_09_-_various.jpeg |
+| 阿寒湖.jpg | 阿寒湖 | 道東の湖畔休憩に組み込みやすい自然スポット | Wikimedia Commons | CC BY-SA 3.0 | (Komuke) コムケ | https://commons.wikimedia.org/wiki/File%3ALake_Akan_and_Mount_Oakan_-_2005.jpg |
 | 知床五湖.jpg | 知床五湖 | 知床連山と原生林を陸路で味わう世界自然遺産のハイライト | Wikimedia Commons | CC BY 2.5 | 663highland | https://commons.wikimedia.org/wiki/File%3A140829_Ichiko_of_Shiretoko_Goko_Lakes_Hokkaido_Japan01s5.jpg |
 | 知床峠.jpg | 知床峠 | 羅臼岳や国後島方面を望む、知床横断道路の展望地点 | Wikimedia Commons | CC BY-SA 3.0 | אלי שני (שנילי • שיחה) | https://commons.wikimedia.org/wiki/File%3AForm_Shiretoko_Pass_2010-09-22.jpg |
 | オシンコシンの滝.jpg | オシンコシンの滝 | 駐車場から短時間で見られる、知床帰路の滝スポット | Wikimedia Commons | CC BY-SA 2.0 | ながいの | https://commons.wikimedia.org/wiki/File%3AOshinkoshin_Falls_in_winter_-_Feb_13%2C_2016.jpg |

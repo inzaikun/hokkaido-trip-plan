@@ -110,7 +110,7 @@ export default function Page() {
 
             <div className="day__grid">
               <section className="card">
-                <h3>時刻表</h3>
+                <h3>時刻ベース詳細スケジュール</h3>
                 <ol className="timeline">
                   {day.timeline.map((item) => (
                     <li key={`${day.date}-${item.time}-${item.detail}`}>

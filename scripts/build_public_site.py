@@ -372,7 +372,7 @@ def render_day(day: Day) -> str:
         </div>
         <div class="day-layout">
           <section class="timeline-wrap">
-            <h3>時刻表</h3>
+            <h3>時刻ベース詳細スケジュール</h3>
             <ol class="timeline">
               {render_timeline(day)}
             </ol>
@@ -1054,13 +1054,20 @@ def render_page(days: list[Day]) -> str:
       border-radius: 8px;
       overflow: hidden;
       background: var(--surface);
+      display: grid;
+      grid-template-rows: auto 1fr;
     }}
 
-    .spot-grid img,
-    .spot-placeholder {{
+    .spot-grid img {{
       width: 100%;
       aspect-ratio: 16 / 10;
       object-fit: cover;
+      display: block;
+    }}
+
+    .spot-placeholder {{
+      width: 100%;
+      aspect-ratio: 16 / 10;
       display: grid;
       place-items: center;
       padding: 14px;
@@ -1074,6 +1081,20 @@ def render_page(days: list[Day]) -> str:
       display: grid;
       gap: 4px;
       padding: 12px;
+      min-height: 150px;
+      align-content: start;
+    }}
+
+    .spot-grid figcaption strong {{
+      line-height: 1.35;
+    }}
+
+    .spot-grid span {{
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      line-height: 1.55;
     }}
 
     .spot-grid span,

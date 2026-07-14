@@ -83,6 +83,7 @@ ASSETS = [
         "file": "阿寒湖.jpg",
         "place": "阿寒湖",
         "caption": "道東の湖畔休憩に組み込みやすい自然スポット",
+        "title": "File:Lake Akan and Mount Oakan - 2005.jpg",
         "queries": ["Lake Akan Hokkaido", "Akan lake Hokkaido"],
     },
     {
