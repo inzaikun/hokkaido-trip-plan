@@ -74,8 +74,8 @@ export default function Page() {
                 <p className="area">{day.area}</p>
               </div>
               <div className="photo">
-                {day.photos[0]?.image ? (
-                  <img src={`/images/${day.photos[0].image}`} alt={day.hero} />
+                {day.heroPhoto?.image ? (
+                  <img src={`/images/${day.heroPhoto.image}`} alt={day.heroPhoto.place || day.hero} />
                 ) : (
                   <span>{day.hero}</span>
                 )}

@@ -11,8 +11,8 @@
 | サイロ展望台.jpg | サイロ展望台 | 洞爺湖を高台から見下ろす定番の写真スポット | Wikimedia Commons | CC BY-SA 2.0 | Ray Swi-hymn from Sijhih-Taipei, Taiwan | https://commons.wikimedia.org/wiki/File%3A20181106_Toyako_5246_%2848429791186%29.jpg |
 | 有珠山ロープウェイ.jpg | 有珠山ロープウェイ | 有珠山と昭和新山、洞爺湖をまとめて楽しめる展望エリア | Wikimedia Commons | CC BY 2.5 | 663highland | https://commons.wikimedia.org/wiki/File%3A130922_Usuzan_Ropeway_Sobetsu_Hokkaido_Japan01s3.jpg |
 | 昭和新山.jpg | 昭和新山 | 洞爺湖周辺ジオパークを象徴する火山風景 | Wikimedia Commons | CC BY 2.5 | 663highland | https://commons.wikimedia.org/wiki/File%3A130922_Showa-shinzan_Sobetsu_Hokkaido_Japan01s3.jpg |
-| 北海道大学.jpg | 北海道大学 | 札幌駅近くで緑を感じられる、散策向きのキャンパス | Wikimedia Commons | CC BY-SA 4.0 | 禁樹なずな | https://commons.wikimedia.org/wiki/File%3APoplar_avenue_at_Hokkaido_University_201505.JPG |
-| ファーム富田.jpg | ファーム富田 | 富良野らしい花畑を楽しむ、移動日の華やかな寄り道 | Wikimedia Commons | CC BY-SA 3.0 | Jolly Yau | https://commons.wikimedia.org/wiki/File%3AA_Field_Of_Lavender_Farm_Tomita_%2832578019%29.jpeg |
+| 北海道大学.jpg | 北海道大学 | 札幌駅近くで緑を感じられる、散策向きのキャンパス | User-provided image | User-provided for this guide | User-provided |  |
+| ファーム富田.jpg | ファーム富田 | 富良野らしい花畑を楽しむ、移動日の華やかな寄り道 | User-provided image | User-provided for this guide | User-provided |  |
 | 美瑛.jpg | 美瑛 | 丘の連なりと畑の色が印象的な、富良野から層雲峡への寄り道候補 | Wikimedia Commons | CC BY 2.5 | 663highland | https://commons.wikimedia.org/wiki/File%3A140724_Biei_Hokkaido_Japan01s8.jpg |
 | 黒岳ロープウェイ.jpg | 黒岳ロープウェイ | 層雲峡から大雪山の展望へ上がる自然満喫スポット | Wikimedia Commons | CC BY-SA 3.0 | Yasu (talk) | https://commons.wikimedia.org/wiki/File%3ADaisetsuzan_Sounkyo_Kurodake_Ropeway_Kurodake_Station.jpg |
 | 銀河・流星の滝.jpg | 銀河・流星の滝 | 層雲峡らしい柱状節理と滝を短時間で楽しめる名所 | Wikimedia Commons | Public domain |  | https://commons.wikimedia.org/wiki/File%3ASounkyo1.jpg |

@@ -6,6 +6,7 @@ from pathlib import Path
 
 from guidebook_common import (
     guide_spots,
+    hero_photo,
     meal_recommendations,
     route_map_filename,
     route_map_points,
@@ -121,6 +122,11 @@ def parse_day(path: Path) -> dict:
     day["mealRecommendations"] = meal_recommendations(day)
     day["todaysTips"] = todays_tips(day)
     day["guideSpots"] = guide_spots(day)
+    hero = hero_photo(day)
+    day["heroPhoto"] = {
+        "place": hero.get("place", "") if hero else "",
+        "image": hero.get("image", "") if hero else "",
+    }
     return day
 
 
