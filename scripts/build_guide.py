@@ -207,8 +207,8 @@ def add_textbox(slide, x, y, w, h, text, font_size=18, color=INK, bold=False, al
     return box
 
 
-def add_label(slide, x, y, text, fill=CORAL, color=WHITE):
-    shape = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, Inches(1.45), Inches(0.36))
+def add_label(slide, x, y, text, fill=CORAL, color=WHITE, width=Inches(1.45)):
+    shape = slide.shapes.add_shape(MSO_SHAPE.ROUNDED_RECTANGLE, x, y, width, Inches(0.36))
     shape.fill.solid()
     shape.fill.fore_color.rgb = fill
     shape.line.fill.background()
@@ -472,8 +472,8 @@ def build_pptx(days: list[DayPlan]):
     add_textbox(cover, Inches(0.7), Inches(0.62), Inches(3.0), Inches(0.35), "HOKKAIDO FAMILY TRAVEL GUIDE", 12, BLUE, True)
     add_textbox(cover, Inches(0.68), Inches(1.45), Inches(6.1), Inches(1.0), "北海道家族旅行\nガイドブック", 33, NAVY, True)
     add_textbox(cover, Inches(0.78), Inches(3.1), Inches(5.2), Inches(0.48), "2026年7月31日 - 8月12日", 18, INK, True)
-    add_textbox(cover, Inches(0.78), Inches(3.72), Inches(5.6), Inches(0.75), "仙台からフェリーで北海道へ。洞爺湖、札幌、層雲峡、道東方面をめぐる家族旅行。", 15, INK)
-    add_label(cover, Inches(0.78), Inches(4.78), "2026夏版")
+    add_textbox(cover, Inches(0.78), Inches(3.72), Inches(5.6), Inches(0.75), "フェリーで北の大地へ。湖畔、花畑、峡谷、知床の森をめぐる家族の夏旅。", 15, INK)
+    add_label(cover, Inches(0.78), Inches(4.78), "2026 夏の保存版", width=Inches(1.95))
 
     inside_cover = prs.slides.add_slide(blank)
     style_background(inside_cover, SAND)
@@ -610,7 +610,7 @@ def build_pdf(days: list[DayPlan]):
         Spacer(1, 18),
         PdfImage(str(cover_image(days)), width=202 * mm, height=134 * mm),
         Spacer(1, 6),
-        p("仙台からフェリーで北海道へ。洞爺湖、札幌、層雲峡、道東方面をめぐる家族旅行。", center),
+        p("フェリーで北の大地へ。湖畔、花畑、峡谷、知床の森をめぐる家族の夏旅。", center),
         PageBreak(),
         PdfImage(str(back_cover_image(days)), width=260 * mm, height=143 * mm),
         PageBreak(),

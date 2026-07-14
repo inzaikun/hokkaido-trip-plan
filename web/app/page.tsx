@@ -17,9 +17,6 @@ function shortText(text: string, limit = 82) {
 }
 
 export default function Page() {
-  const totalStops = itinerary.days.reduce((sum, day) => sum + day.timeline.length, 0);
-  const restaurantCount = itinerary.days.reduce((sum, day) => sum + day.restaurants.length, 0);
-
   return (
     <main>
       <section className="hero">
@@ -28,36 +25,14 @@ export default function Page() {
           <h1>{itinerary.title}</h1>
           <p className="period">{itinerary.period}</p>
           <p className="lead">
-            洞爺湖、札幌、富良野・美瑛、層雲峡、中標津、帯広へ。
-            出発前にめくりたくなる、家族旅行のための北海道ガイドです。
+            フェリーで北の大地へ。湖、花畑、峡谷、知床の森をつなぐ13日間を、
+            移動時間と食事候補まで読める家族旅行ガイドにまとめました。
           </p>
-          <div className="hero__actions">
-            <a href="#days">日別ガイドを見る</a>
-            <a href="https://github.com/inzaikun/hokkaido-trip-plan/raw/main/output/hokkaido-family-travel-guide.pdf">PDFを見る</a>
-          </div>
         </div>
-        <div className="hero__panel">
-          <div>
-            <span>{itinerary.days.length}</span>
-            <p>days</p>
-          </div>
-          <div>
-            <span>{totalStops}</span>
-            <p>schedule items</p>
-          </div>
-          <div>
-            <span>{restaurantCount}</span>
-            <p>restaurant ideas</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="insideCover" aria-label="表紙裏">
-        <img src="/images/inside-cover.jpg" alt="北海道の空と草原" />
       </section>
 
       <section className="route">
-        <h2>旅の流れ</h2>
+        <h2>DAY別ガイド目次</h2>
         <div className="route__rail">
           {itinerary.days.map((day) => (
             <a href={`#day-${day.date}`} key={day.date}>
