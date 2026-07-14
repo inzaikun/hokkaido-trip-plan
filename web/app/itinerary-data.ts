@@ -2789,277 +2789,10 @@ export const itinerary = {
     {
       "date": "2026-08-10",
       "day": "11",
-      "title": "釧路湿原・達古武方面の自然予備日",
-      "area": "中標津 / 釧路湿原 / 達古武",
-      "hero": "釧路湿原",
-      "summary": "中標津滞在の最終日。天候と体力が合えば、釧路湿原・達古武湖方面へ足を伸ばします。無理に遠出しない場合は、中標津周辺で休養と自然観光に切り替えます。",
-      "timeline": [
-        {
-          "time": "08:00",
-          "type": "朝食",
-          "place": "バンガロー",
-          "detail": "朝食、釧路方面の天気と体力を確認",
-          "duration": "60分"
-        },
-        {
-          "time": "09:15",
-          "type": "移動",
-          "place": "中標津 → 釧路湿原方面",
-          "detail": "釧路湿原・達古武方面へ移動",
-          "duration": "約2時間"
-        },
-        {
-          "time": "11:15",
-          "type": "観光",
-          "place": "達古武湖 / 釧路湿原",
-          "detail": "湖畔、展望、短時間散策。水辺と湿原の景色を楽しむ",
-          "duration": "90分"
-        },
-        {
-          "time": "12:45",
-          "type": "昼食",
-          "place": "釧路町 / 釧路市内",
-          "detail": "海鮮、定食、または道の駅系で昼食",
-          "duration": "60分"
-        },
-        {
-          "time": "14:00",
-          "type": "観光",
-          "place": "細岡展望台候補",
-          "detail": "湿原を見渡す展望スポット。天気優先",
-          "duration": "75分"
-        },
-        {
-          "time": "15:30",
-          "type": "移動",
-          "place": "釧路湿原 → 中標津",
-          "detail": "翌日の帯広移動に備えて戻る",
-          "duration": "約2時間"
-        },
-        {
-          "time": "17:30",
-          "type": "休憩",
-          "place": "バンガロー",
-          "detail": "荷物整理、車内整理、洗濯",
-          "duration": "60分"
-        },
-        {
-          "time": "18:45",
-          "type": "夕食",
-          "place": "中標津市街",
-          "detail": "中標津最後の夕食。早めに済ませる",
-          "duration": "90分"
-        }
-      ],
-      "photos": [
-        {
-          "place": "釧路湿原",
-          "image": "釧路湿原.jpg",
-          "caption": "広い湿原を展望台から眺める、自然予備日のメイン候補",
-          "credit": "Wikimedia Commons / CC BY-SA"
-        },
-        {
-          "place": "達古武湖",
-          "image": "達古武湖.jpg",
-          "caption": "釧路湿原の水辺を近くに感じられる、静かな湖畔スポット",
-          "credit": "Wikimedia Commons / CC BY-SA"
-        }
-      ],
-      "restaurants": [
-        {
-          "meal": "昼食",
-          "name": "釧路市内の海鮮・炉端候補",
-          "area": "釧路",
-          "memo": "湿原方面へ行けた場合の候補"
-        },
-        {
-          "meal": "昼食",
-          "name": "道の駅・軽食",
-          "area": "釧路町方面",
-          "memo": "移動優先のバックアップ"
-        },
-        {
-          "meal": "夕食",
-          "name": "中標津市街の定食店",
-          "area": "中標津",
-          "memo": "翌日の移動に備えて早めに"
-        },
-        {
-          "meal": "予備",
-          "name": "バンガローで簡単調理",
-          "area": "Shinrin Koen Camp",
-          "memo": "疲れた場合の安全策"
-        }
-      ],
-      "notes": [
-        "釧路方面に行く場合も、翌日の帯広移動を考えて早めに戻る。",
-        "天候が悪い場合は中標津周辺の休養日に切り替える。"
-      ],
-      "route": [
-        {
-          "place": "中標津",
-          "note": "",
-          "kind": "移動",
-          "leg": "約2時間"
-        },
-        {
-          "place": "釧路湿原",
-          "note": "",
-          "kind": "移動",
-          "leg": ""
-        },
-        {
-          "place": "達古武湖 / 釧路湿原",
-          "note": "",
-          "kind": "観光",
-          "leg": ""
-        },
-        {
-          "place": "釧路町 / 釧路市内",
-          "note": "昼食",
-          "kind": "昼食",
-          "leg": ""
-        },
-        {
-          "place": "細岡展望台候補",
-          "note": "",
-          "kind": "観光",
-          "leg": ""
-        },
-        {
-          "place": "釧路湿原",
-          "note": "",
-          "kind": "移動",
-          "leg": "約2時間"
-        },
-        {
-          "place": "中標津",
-          "note": "",
-          "kind": "移動",
-          "leg": ""
-        }
-      ],
-      "routeMapPoints": [
-        {
-          "place": "中標津",
-          "note": "",
-          "kind": "移動",
-          "leg": "約2時間",
-          "x": 87.0,
-          "y": 13.0,
-          "known": true
-        },
-        {
-          "place": "釧路湿原",
-          "note": "",
-          "kind": "移動",
-          "leg": "",
-          "x": 13.0,
-          "y": 72.6,
-          "known": true
-        },
-        {
-          "place": "達古武湖 / 釧路湿原",
-          "note": "",
-          "kind": "観光",
-          "leg": "",
-          "x": 33.7,
-          "y": 75.1,
-          "known": true
-        },
-        {
-          "place": "釧路町 / 釧路市内",
-          "note": "昼食",
-          "kind": "昼食",
-          "leg": "",
-          "x": 17.9,
-          "y": 87.0,
-          "known": true
-        },
-        {
-          "place": "細岡展望台候補",
-          "note": "",
-          "kind": "観光",
-          "leg": "",
-          "x": 21.5,
-          "y": 82.8,
-          "known": true
-        },
-        {
-          "place": "釧路湿原",
-          "note": "",
-          "kind": "移動",
-          "leg": "約2時間",
-          "x": 6,
-          "y": 71.7,
-          "known": true
-        },
-        {
-          "place": "中標津",
-          "note": "",
-          "kind": "移動",
-          "leg": "",
-          "x": 72.0,
-          "y": 12.1,
-          "known": true
-        }
-      ],
-      "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&destination=%E7%B4%B0%E5%B2%A1%E5%B1%95%E6%9C%9B%E5%8F%B0%E5%80%99%E8%A3%9C&travelmode=driving&waypoints=%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F|%E9%81%94%E5%8F%A4%E6%AD%A6%E6%B9%96+%2F+%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F|%E9%87%A7%E8%B7%AF%E7%94%BA+%2F+%E9%87%A7%E8%B7%AF%E5%B8%82%E5%86%85",
-      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-10.png",
-      "todayTheme": "中標津滞在の最終日。天候と体力が合えば、釧路湿原・達古武湖方面へ足を伸ばします。無理に遠出しない場合は、中標津周辺で休養と自然観光に切り替えます。",
-      "mealRecommendations": [
-        {
-          "label": "おすすめランチ",
-          "name": "釧路市内の海鮮・炉端候補",
-          "area": "釧路",
-          "memo": "湿原方面へ行けた場合の候補",
-          "stars": "★★★★★",
-          "budget": "目安 1,500〜3,000円",
-          "popular": "海鮮丼・焼き魚"
-        },
-        {
-          "label": "おすすめ夕食",
-          "name": "中標津市街の定食店",
-          "area": "中標津",
-          "memo": "翌日の移動に備えて早めに",
-          "stars": "★★★★★",
-          "budget": "目安 1,000〜2,500円",
-          "popular": "現地の定番メニュー"
-        }
-      ],
-      "todaysTips": [
-        "釧路方面に行く場合も、翌日の帯広移動を考えて早めに戻る。",
-        "天候が悪い場合は中標津周辺の休養日に切り替える。",
-        "夕方の光がきれいな場所は、短時間でも写真休憩を。"
-      ],
-      "guideSpots": [
-        {
-          "place": "釧路湿原",
-          "image": "釧路湿原.jpg",
-          "caption": "広い湿原を展望台から眺める、自然予備日のメイン候補",
-          "credit": "Wikimedia Commons / CC BY-SA",
-          "parking": "周辺駐車場を現地確認",
-          "stay": "約2時間",
-          "map_url": "https://www.google.com/maps/search/?api=1&query=%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F+%2F+%E9%81%94%E5%8F%A4%E6%AD%A6"
-        },
-        {
-          "place": "達古武湖",
-          "image": "達古武湖.jpg",
-          "caption": "釧路湿原の水辺を近くに感じられる、静かな湖畔スポット",
-          "credit": "Wikimedia Commons / CC BY-SA",
-          "parking": "周辺駐車場を現地確認",
-          "stay": "90分",
-          "map_url": "https://www.google.com/maps/search/?api=1&query=%E9%81%94%E5%8F%A4%E6%AD%A6%E6%B9%96+%E4%B8%AD%E6%A8%99%E6%B4%A5+%2F+%E9%87%A7%E8%B7%AF%E6%B9%BF%E5%8E%9F+%2F+%E9%81%94%E5%8F%A4%E6%AD%A6"
-        }
-      ]
-    },
-    {
-      "date": "2026-08-11",
-      "day": "12",
       "title": "中標津から帯広へ、移動負荷を下げる日",
       "area": "中標津 / 弟子屈 / 足寄 / 帯広",
       "hero": "十勝平野",
-      "summary": "当初の苫小牧直行ではなく、移動負荷を考慮して帯広に滞在する日。道東から十勝へ移動し、途中は休憩を多めに取ります。夜は帯広で豚丼など十勝グルメを楽しみます。",
+      "summary": "道東から十勝へ移動し、帯広で宿泊する日。中標津から苫小牧まで一気に走らず、弟子屈・足寄で休憩を挟みながら移動負荷を下げます。夜は帯広で豚丼など十勝グルメを楽しみます。",
       "timeline": [
         {
           "time": "07:30",
@@ -3092,8 +2825,8 @@ export const itinerary = {
         {
           "time": "12:30",
           "type": "昼食",
-          "place": "足寄 / 道の駅",
-          "detail": "軽めの昼食、給油、休憩",
+          "place": "足寄",
+          "detail": "道の駅周辺で軽めの昼食、給油、休憩",
           "duration": "60分"
         },
         {
@@ -3173,7 +2906,7 @@ export const itinerary = {
         }
       ],
       "notes": [
-        "8/11は帯広泊に変更し、苫小牧まで一気に走らない。",
+        "8/10は帯広泊。苫小牧まで一気に走らず、十勝でいったん休む。",
         "宿泊先は帯広駅周辺または駐車しやすいホテルを優先。"
       ],
       "route": [
@@ -3191,19 +2924,7 @@ export const itinerary = {
         },
         {
           "place": "足寄",
-          "note": "",
-          "kind": "移動",
-          "leg": ""
-        },
-        {
-          "place": "足寄 / 道の駅",
           "note": "昼食",
-          "kind": "昼食",
-          "leg": ""
-        },
-        {
-          "place": "足寄",
-          "note": "",
           "kind": "移動",
           "leg": "約90分"
         },
@@ -3241,29 +2962,11 @@ export const itinerary = {
         },
         {
           "place": "足寄",
-          "note": "",
-          "kind": "移動",
-          "leg": "",
-          "x": 27.9,
-          "y": 49.4,
-          "known": true
-        },
-        {
-          "place": "足寄 / 道の駅",
           "note": "昼食",
-          "kind": "昼食",
-          "leg": "",
-          "x": 12.9,
-          "y": 48.5,
-          "known": true
-        },
-        {
-          "place": "足寄",
-          "note": "",
           "kind": "移動",
           "leg": "約90分",
-          "x": 41.8,
-          "y": 38.1,
+          "x": 27.9,
+          "y": 49.4,
           "known": true
         },
         {
@@ -3285,9 +2988,9 @@ export const itinerary = {
           "known": true
         }
       ],
-      "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&destination=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85&travelmode=driving&waypoints=%E5%BC%9F%E5%AD%90%E5%B1%88|%E8%B6%B3%E5%AF%84|%E8%B6%B3%E5%AF%84+%2F+%E9%81%93%E3%81%AE%E9%A7%85|%E5%B8%AF%E5%BA%83",
-      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-11.png",
-      "todayTheme": "当初の苫小牧直行ではなく、移動負荷を考慮して帯広に滞在する日。道東から十勝へ移動し、途中は休憩を多めに取ります。夜は帯広で豚丼など十勝グルメを楽しみます。",
+      "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E4%B8%AD%E6%A8%99%E6%B4%A5&destination=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85&travelmode=driving&waypoints=%E5%BC%9F%E5%AD%90%E5%B1%88|%E8%B6%B3%E5%AF%84|%E5%B8%AF%E5%BA%83",
+      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-10.png",
+      "todayTheme": "道東から十勝へ移動し、帯広で宿泊する日。中標津から苫小牧まで一気に走らず、弟子屈・足寄で休憩を挟みながら移動負荷を下げます。夜は帯広で豚丼など十勝グルメを楽しみます。",
       "mealRecommendations": [
         {
           "label": "おすすめランチ",
@@ -3309,7 +3012,7 @@ export const itinerary = {
         }
       ],
       "todaysTips": [
-        "8/11は帯広泊に変更し、苫小牧まで一気に走らない。",
+        "8/10は帯広泊。苫小牧まで一気に走らず、十勝でいったん休む。",
         "宿泊先は帯広駅周辺または駐車しやすいホテルを優先。",
         "長距離区間は早めの給油と休憩を入れると安心。"
       ],
@@ -3335,9 +3038,9 @@ export const itinerary = {
       ]
     },
     {
-      "date": "2026-08-12",
-      "day": "13",
-      "title": "帯広から苫小牧へ、フェリーで仙台へ",
+      "date": "2026-08-11",
+      "day": "12",
+      "title": "帯広から苫小牧へ、夜のフェリーで仙台へ",
       "area": "帯広 / 十勝 / 苫小牧 / 太平洋フェリー",
       "hero": "苫小牧港",
       "summary": "帯広で朝を迎え、十勝で軽く観光・買い物をしてから苫小牧へ移動します。夕方に苫小牧港へ入り、夜のフェリーで仙台へ向かいます。仙台到着は翌朝想定です。",
@@ -3447,7 +3150,7 @@ export const itinerary = {
         }
       ],
       "notes": [
-        "8/12はフェリー出港日。仙台到着は翌朝想定。",
+        "8/11はフェリー出港日。仙台到着は8/12朝想定。",
         "帯広観光は1か所だけに絞り、苫小牧到着を優先する。"
       ],
       "route": [
@@ -3530,7 +3233,7 @@ export const itinerary = {
         }
       ],
       "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E5%B8%AF%E5%BA%83%E5%B8%82%E5%86%85&destination=%E8%8B%AB%E5%B0%8F%E7%89%A7%E6%B8%AF+%2F+%E8%88%B9%E5%86%85&travelmode=driving&waypoints=%E5%B8%AF%E5%BA%83|%E8%8B%AB%E5%B0%8F%E7%89%A7|%E8%8B%AB%E5%B0%8F%E7%89%A7%E6%B8%AF",
-      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-12.png",
+      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-11.png",
       "todayTheme": "帯広で朝を迎え、十勝で軽く観光・買い物をしてから苫小牧へ移動します。夕方に苫小牧港へ入り、夜のフェリーで仙台へ向かいます。仙台到着は翌朝想定です。",
       "mealRecommendations": [
         {
@@ -3553,7 +3256,7 @@ export const itinerary = {
         }
       ],
       "todaysTips": [
-        "8/12はフェリー出港日。仙台到着は翌朝想定。",
+        "8/11はフェリー出港日。仙台到着は8/12朝想定。",
         "帯広観光は1か所だけに絞り、苫小牧到着を優先する。",
         "長距離区間は早めの給油と休憩を入れると安心。"
       ],
@@ -3575,6 +3278,264 @@ export const itinerary = {
           "parking": "周辺駐車場を現地確認",
           "stay": "一晩",
           "map_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC+%E5%B8%AF%E5%BA%83+%2F+%E5%8D%81%E5%8B%9D+%2F+%E8%8B%AB%E5%B0%8F%E7%89%A7+%2F+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC"
+        }
+      ]
+    },
+    {
+      "date": "2026-08-12",
+      "day": "13",
+      "title": "仙台港到着、そのまま印西へ帰宅",
+      "area": "太平洋フェリー / 仙台港 / 千葉県印西市",
+      "hero": "太平洋フェリー",
+      "summary": "朝に仙台港へ到着し、下船後は千葉県印西市の自宅へ戻ります。最後は観光を詰め込まず、休憩・給油・昼食を入れながら帰宅する移動日です。長旅の締めくくりは無理をしない計画にします。",
+      "timeline": [
+        {
+          "time": "07:30",
+          "type": "朝食",
+          "place": "フェリー船内",
+          "detail": "下船前に朝食、荷物整理",
+          "duration": "45分"
+        },
+        {
+          "time": "09:30",
+          "type": "準備",
+          "place": "フェリー船内",
+          "detail": "車両甲板へ向かう準備、忘れ物確認",
+          "duration": "30分"
+        },
+        {
+          "time": "10:00",
+          "type": "手続き",
+          "place": "仙台港フェリーターミナル",
+          "detail": "仙台港到着、下船",
+          "duration": "30分"
+        },
+        {
+          "time": "10:45",
+          "type": "休憩",
+          "place": "仙台港周辺",
+          "detail": "トイレ、飲み物補充、運転前の休憩",
+          "duration": "30分"
+        },
+        {
+          "time": "11:15",
+          "type": "移動",
+          "place": "仙台港 → 中郷SA / PA候補",
+          "detail": "常磐道方面で南下。眠気が出る前に昼休憩を入れる",
+          "duration": "約2時間"
+        },
+        {
+          "time": "13:00",
+          "type": "昼食",
+          "place": "中郷SA / PA候補",
+          "detail": "軽めの昼食、給油、眠気対策",
+          "duration": "45分"
+        },
+        {
+          "time": "13:45",
+          "type": "移動",
+          "place": "中郷SA / PA候補 → 守谷SA / PA候補",
+          "detail": "休憩を挟みながら印西方面へ",
+          "duration": "約1時間45分"
+        },
+        {
+          "time": "15:30",
+          "type": "休憩",
+          "place": "守谷SA / PA候補",
+          "detail": "最後の休憩。無理なら長めに休む",
+          "duration": "20分"
+        },
+        {
+          "time": "15:50",
+          "type": "移動",
+          "place": "守谷SA / PA候補 → 千葉県印西市",
+          "detail": "自宅へラスト移動",
+          "duration": "約40分"
+        },
+        {
+          "time": "16:30",
+          "type": "手続き",
+          "place": "千葉県印西市",
+          "detail": "自宅到着目安。荷下ろしと片付け",
+          "duration": "60分"
+        },
+        {
+          "time": "18:00",
+          "type": "夕食",
+          "place": "千葉県印西市 / テイクアウト",
+          "detail": "帰宅後は無理せず簡単に済ませる",
+          "duration": "60分"
+        }
+      ],
+      "photos": [
+        {
+          "place": "太平洋フェリー",
+          "image": "太平洋フェリー.jpg",
+          "caption": "仙台港へ向かう船旅の朝。下船後は長距離運転に備える",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        },
+        {
+          "place": "仙台港フェリーターミナル",
+          "image": "太平洋フェリー.jpg",
+          "caption": "仙台港到着後は、休憩を挟んで印西へ帰宅する",
+          "credit": "Wikimedia Commons / CC BY-SA"
+        }
+      ],
+      "restaurants": [
+        {
+          "meal": "朝食",
+          "name": "太平洋フェリー船内レストラン",
+          "area": "船内",
+          "memo": "下船前に食べておくと帰路が楽"
+        },
+        {
+          "meal": "昼食",
+          "name": "中郷SA / PA候補",
+          "area": "帰宅ルート上",
+          "memo": "混雑と眠気に合わせて柔軟に"
+        },
+        {
+          "meal": "夕食",
+          "name": "自宅周辺のテイクアウト",
+          "area": "印西",
+          "memo": "帰宅後は片付け優先"
+        },
+        {
+          "meal": "予備",
+          "name": "コンビニ・軽食",
+          "area": "高速道路沿い",
+          "memo": "渋滞時のバックアップ"
+        }
+      ],
+      "notes": [
+        "8/12は仙台港到着後、そのまま印西へ帰宅する。",
+        "長距離運転になるので、SA / PA休憩は眠気優先で増やす。"
+      ],
+      "route": [
+        {
+          "place": "仙台港フェリーターミナル",
+          "note": "",
+          "kind": "手続き",
+          "leg": ""
+        },
+        {
+          "place": "仙台港",
+          "note": "",
+          "kind": "移動",
+          "leg": "約2時間"
+        },
+        {
+          "place": "中郷SA / PA候補",
+          "note": "昼食",
+          "kind": "移動",
+          "leg": "約1時間45分"
+        },
+        {
+          "place": "守谷SA / PA候補",
+          "note": "",
+          "kind": "移動",
+          "leg": "約40分"
+        },
+        {
+          "place": "千葉県印西市",
+          "note": "",
+          "kind": "手続き",
+          "leg": ""
+        }
+      ],
+      "routeMapPoints": [
+        {
+          "place": "仙台港フェリーターミナル",
+          "note": "",
+          "kind": "手続き",
+          "leg": "",
+          "x": 87.0,
+          "y": 13.0,
+          "known": true
+        },
+        {
+          "place": "仙台港",
+          "note": "",
+          "kind": "移動",
+          "leg": "約2時間",
+          "x": 72.0,
+          "y": 12.1,
+          "known": true
+        },
+        {
+          "place": "中郷SA / PA候補",
+          "note": "昼食",
+          "kind": "移動",
+          "leg": "約1時間45分",
+          "x": 66.2,
+          "y": 57.2,
+          "known": true
+        },
+        {
+          "place": "守谷SA / PA候補",
+          "note": "",
+          "kind": "移動",
+          "leg": "約40分",
+          "x": 13.0,
+          "y": 83.0,
+          "known": true
+        },
+        {
+          "place": "千葉県印西市",
+          "note": "",
+          "kind": "手続き",
+          "leg": "",
+          "x": 27.5,
+          "y": 90.2,
+          "known": true
+        }
+      ],
+      "routeMapUrl": "https://www.google.com/maps/dir/?api=1&origin=%E4%BB%99%E5%8F%B0%E6%B8%AF%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB&destination=%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82&travelmode=driving&waypoints=%E4%BB%99%E5%8F%B0%E6%B8%AF|%E4%B8%AD%E9%83%B7SA+%2F+PA%E5%80%99%E8%A3%9C|%E5%AE%88%E8%B0%B7SA+%2F+PA%E5%80%99%E8%A3%9C",
+      "routeMapImage": "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/route-2026-08-12.png",
+      "todayTheme": "朝に仙台港へ到着し、下船後は千葉県印西市の自宅へ戻ります。最後は観光を詰め込まず、休憩・給油・昼食を入れながら帰宅する移動日です。長旅の締めくくりは無理をしない計画にします。",
+      "mealRecommendations": [
+        {
+          "label": "おすすめランチ",
+          "name": "中郷SA / PA候補",
+          "area": "帰宅ルート上",
+          "memo": "混雑と眠気に合わせて柔軟に",
+          "stars": "★★★★★",
+          "budget": "目安 1,000〜2,500円",
+          "popular": "現地の定番メニュー"
+        },
+        {
+          "label": "おすすめ夕食",
+          "name": "自宅周辺のテイクアウト",
+          "area": "印西",
+          "memo": "帰宅後は片付け優先",
+          "stars": "★★★★★",
+          "budget": "目安 1,000〜2,500円",
+          "popular": "現地の定番メニュー"
+        }
+      ],
+      "todaysTips": [
+        "8/12は仙台港到着後、そのまま印西へ帰宅する。",
+        "長距離運転になるので、SA / PA休憩は眠気優先で増やす。",
+        "長距離区間は早めの給油と休憩を入れると安心。"
+      ],
+      "guideSpots": [
+        {
+          "place": "太平洋フェリー",
+          "image": "太平洋フェリー.jpg",
+          "caption": "仙台港へ向かう船旅の朝。下船後は長距離運転に備える",
+          "credit": "Wikimedia Commons / CC BY-SA",
+          "parking": "周辺駐車場を現地確認",
+          "stay": "30〜60分",
+          "map_url": "https://www.google.com/maps/search/?api=1&query=%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC+%2F+%E4%BB%99%E5%8F%B0%E6%B8%AF+%2F+%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82"
+        },
+        {
+          "place": "仙台港フェリーターミナル",
+          "image": "太平洋フェリー.jpg",
+          "caption": "仙台港到着後は、休憩を挟んで印西へ帰宅する",
+          "credit": "Wikimedia Commons / CC BY-SA",
+          "parking": "周辺駐車場を現地確認",
+          "stay": "30分",
+          "map_url": "https://www.google.com/maps/search/?api=1&query=%E4%BB%99%E5%8F%B0%E6%B8%AF%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB+%E5%A4%AA%E5%B9%B3%E6%B4%8B%E3%83%95%E3%82%A7%E3%83%AA%E3%83%BC+%2F+%E4%BB%99%E5%8F%B0%E6%B8%AF+%2F+%E5%8D%83%E8%91%89%E7%9C%8C%E5%8D%B0%E8%A5%BF%E5%B8%82"
         }
       ]
     }

@@ -440,11 +440,17 @@ def add_spot_strip(slide, day: DayPlan, x, y, w, h, max_items=2):
     y += Inches(0.32)
     gap = Inches(0.16)
     item_w = (w - gap * (len(spots) - 1)) / len(spots)
+    tile_h = h - Inches(0.36)
+    band_h = Inches(0.38)
     for index, spot in enumerate(spots):
         sx = x + (item_w + gap) * index
-        add_picture_cover(slide, spot_image(day, spot), sx, y, item_w, h - Inches(0.58))
-        add_textbox(slide, sx, y + h - Inches(0.50), item_w, Inches(0.18), short_text(spot["place"], 15), 6.7, NAVY, True, PP_ALIGN.CENTER)
-        add_textbox(slide, sx, y + h - Inches(0.30), item_w, Inches(0.20), f"滞在 {spot['stay']} / Mapあり", 5.7, MUTED, False, PP_ALIGN.CENTER)
+        add_picture_cover(slide, spot_image(day, spot), sx, y, item_w, tile_h)
+        band = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, sx, y + tile_h - band_h, item_w, band_h)
+        band.fill.solid()
+        band.fill.fore_color.rgb = RGBColor(255, 255, 255)
+        band.line.color.rgb = RGBColor(255, 255, 255)
+        add_textbox(slide, sx + Inches(0.04), y + tile_h - Inches(0.35), item_w - Inches(0.08), Inches(0.15), short_text(spot["place"], 16), 6.4, NAVY, True, PP_ALIGN.CENTER)
+        add_textbox(slide, sx + Inches(0.04), y + tile_h - Inches(0.19), item_w - Inches(0.08), Inches(0.14), f"滞在 {spot['stay']} / Mapあり", 5.1, MUTED, False, PP_ALIGN.CENTER)
 
 
 def chunks(items: list[TimelineItem], size: int) -> list[list[TimelineItem]]:

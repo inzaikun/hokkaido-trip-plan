@@ -381,20 +381,20 @@ h1 {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fff;
-}
-
-.photoSpots img,
-.photoSpots__placeholder {
-  width: 100%;
-  aspect-ratio: 16 / 9;
-  display: block;
+  display: grid;
+  grid-template-rows: auto 1fr;
 }
 
 .photoSpots img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  display: block;
   object-fit: cover;
 }
 
 .photoSpots__placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
   display: grid;
   place-items: center;
   padding: 18px;
@@ -410,6 +410,8 @@ h1 {
   display: grid;
   gap: 4px;
   padding: 12px;
+  min-height: 148px;
+  align-content: start;
 }
 
 .photoSpots figcaption strong {
@@ -417,6 +419,10 @@ h1 {
 }
 
 .photoSpots figcaption span {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   color: #3a4a58;
   font-size: 14px;
   line-height: 1.55;
