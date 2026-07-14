@@ -372,7 +372,7 @@ def render_day(day: Day) -> str:
         </div>
         <div class="day-layout">
           <section class="timeline-wrap">
-            <h3>時刻表</h3>
+            <h3>時刻ベース詳細スケジュール</h3>
             <ol class="timeline">
               {render_timeline(day)}
             </ol>
