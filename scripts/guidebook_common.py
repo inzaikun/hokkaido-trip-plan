@@ -125,6 +125,50 @@ def short_text(text: str, limit: int = 84) -> str:
     return clipped.rstrip("、。・ ") + "…"
 
 
+def same_place(left: str, right: str) -> bool:
+    left_clean = clean_place(left)
+    right_clean = clean_place(right)
+    if not left_clean or not right_clean:
+        return False
+    return left_clean == right_clean or left_clean in right_clean or right_clean in left_clean
+
+
+def hero_photo(day):
+    photos = list(value(day, "photos", []) or [])
+    hero = value(day, "hero", "")
+    for photo in photos:
+        if value(photo, "image", "") and same_place(value(photo, "place", ""), hero):
+            return photo
+    for photo in photos:
+        if value(photo, "image", ""):
+            return photo
+    return None
+
+
+def hero_photo_image(day) -> str:
+    photo = hero_photo(day)
+    return value(photo, "image", "") if photo else ""
+
+
+def unsuitable_guide_spot(place: str) -> bool:
+    clean = clean_place(place)
+    if not clean:
+        return True
+    generic_words = (
+        "ホテル",
+        "コテージ",
+        "客室",
+        "宿泊先",
+        "自宅",
+        "バンガロー",
+        "キャンプ場",
+        "Green stay Toya",
+        "Sounkyo Auto Camp",
+        "Shinrin Koen Camp",
+    )
+    return any(word in clean for word in generic_words)
+
+
 def route_points(day, max_points: int = 7) -> list[dict[str, str]]:
     points: list[dict[str, str]] = []
 
@@ -487,37 +531,59 @@ def stay_time_for(day, place: str) -> str:
 
 def guide_spots(day, max_items: int = 2) -> list[dict[str, str]]:
     spots: list[dict[str, str]] = []
-    for photo in value(day, "photos", []):
-        place = value(photo, "place", "")
+    used_images = {hero_photo_image(day)}
+    hero_place = value(hero_photo(day), "place", value(day, "hero", ""))
+    excluded_places = {clean_place(value(day, "hero", "")), clean_place(hero_place)}
+
+    def add_spot(place: str, image: str, caption: str, credit: str, parking: str, stay: str) -> None:
+        clean = clean_place(place)
+        if unsuitable_guide_spot(place) or clean in excluded_places:
+            return
+        if any(same_place(clean, value(spot, "place", "")) for spot in spots):
+            return
+        if image and image in used_images:
+            return
+        if image:
+            used_images.add(image)
         spots.append(
             {
                 "place": place,
-                "image": value(photo, "image", ""),
-                "caption": value(photo, "caption", ""),
-                "credit": value(photo, "credit", ""),
-                "parking": "周辺駐車場を現地確認",
-                "stay": stay_time_for(day, place),
+                "image": image,
+                "caption": caption,
+                "credit": credit,
+                "parking": parking,
+                "stay": stay,
                 "map_url": map_url(place, value(day, "area", "")),
             }
         )
 
-    if not spots:
+    for photo in value(day, "photos", []):
+        place = value(photo, "place", "")
+        add_spot(
+            place,
+            value(photo, "image", ""),
+            value(photo, "caption", ""),
+            value(photo, "credit", ""),
+            "周辺駐車場を現地確認",
+            stay_time_for(day, place),
+        )
+        if len(spots) >= max_items:
+            return spots[:max_items]
+
+    for preferred_kind in ("観光", "休憩", "昼食", "夕食", "手続き"):
         for item in value(day, "timeline", []):
             kind = value(item, "kind", value(item, "type", ""))
-            if kind != "観光":
+            if kind != preferred_kind:
                 continue
             place = value(item, "place", "")
-            spots.append(
-                {
-                    "place": place,
-                    "image": "",
-                    "caption": value(item, "detail", ""),
-                    "credit": "写真準備中",
-                    "parking": "駐車場・停車場所を現地確認",
-                    "stay": value(item, "duration", "") or "30〜60分",
-                    "map_url": map_url(place, value(day, "area", "")),
-                }
+            add_spot(
+                place,
+                "",
+                value(item, "detail", ""),
+                "写真準備中",
+                "駐車場・停車場所を現地確認",
+                value(item, "duration", "") or "30〜60分",
             )
             if len(spots) >= max_items:
-                break
+                return spots[:max_items]
     return spots[:max_items]

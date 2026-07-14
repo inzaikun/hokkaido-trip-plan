@@ -9,6 +9,7 @@ from urllib.parse import quote
 
 from guidebook_common import (
     guide_spots,
+    hero_photo,
     meal_recommendations,
     route_map_filename,
     route_map_points,
@@ -188,7 +189,7 @@ def render_text(value: str) -> str:
 
 
 def render_photo(day: Day) -> str:
-    photo = next((item for item in day.photos if item.image), None)
+    photo = hero_photo(day)
     if photo:
         return (
             f'<figure class="hero-photo">'
