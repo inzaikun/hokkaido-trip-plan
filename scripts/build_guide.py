@@ -9,7 +9,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 from pptx import Presentation
 from pptx.dml.color import RGBColor
-from pptx.enum.shapes import MSO_CONNECTOR, MSO_SHAPE
+from pptx.enum.shapes import MSO_SHAPE
 from pptx.enum.text import PP_ALIGN, MSO_ANCHOR, MSO_AUTO_SIZE
 from pptx.util import Inches, Pt
 from reportlab.lib import colors
@@ -44,6 +44,7 @@ PPTX_PATH = OUTPUT_DIR / "hokkaido-family-travel-guide.pptx"
 PDF_PATH = OUTPUT_DIR / "hokkaido-family-travel-guide.pdf"
 PLACEHOLDER_DIR = OUTPUT_DIR / "_placeholders"
 COVER_IMAGE_PATH = IMAGES_DIR / "cover.png"
+BACK_COVER_IMAGE_PATH = IMAGES_DIR / "inside-cover.jpg"
 
 JP_FONT = "Yu Gothic"
 EN_FONT = "Aptos"
@@ -276,6 +277,12 @@ def cover_image(days: list[DayPlan]) -> Path:
     return hero_image(days[0])
 
 
+def back_cover_image(days: list[DayPlan]) -> Path:
+    if BACK_COVER_IMAGE_PATH.exists():
+        return BACK_COVER_IMAGE_PATH
+    return cover_image(days)
+
+
 def photo_image(day: DayPlan, photo: PhotoSpot) -> Path:
     if photo.image:
         explicit = IMAGES_DIR / photo.image
@@ -404,6 +411,21 @@ def add_tips_card(slide, day: DayPlan, x, y, w, h):
         ty += Inches(0.34)
 
 
+def add_side_trip_card(slide, day: DayPlan, x, y, w, h):
+    spots = guide_spots(day, max_items=1)
+    if not spots:
+        return
+    spot = spots[0]
+    add_card(slide, x, y, w, h, RGBColor(248, 242, 232), RGBColor(232, 217, 196))
+    add_guide_heading(slide, x + Inches(0.16), y + Inches(0.12), "より道スポット", 11)
+    image_h = h * 0.42
+    add_picture_cover(slide, spot_image(day, spot), x + Inches(0.16), y + Inches(0.46), w - Inches(0.32), image_h)
+    add_textbox(slide, x + Inches(0.18), y + Inches(0.52) + image_h, w - Inches(0.36), Inches(0.22), short_text(spot["place"], 18), 8.3, NAVY, True)
+    add_textbox(slide, x + Inches(0.18), y + Inches(0.75) + image_h, w - Inches(0.36), Inches(0.28), short_text(spot["caption"], 42), 6.3, INK)
+    link = add_textbox(slide, x + Inches(0.18), y + h - Inches(0.30), w - Inches(0.36), Inches(0.16), f"滞在 {spot['stay']} / Google Map", 5.8, MUTED)
+    link.text_frame.paragraphs[0].runs[0].hyperlink.address = spot["map_url"]
+
+
 def add_restaurants(slide, restaurants: list[Restaurant], x=Inches(7.82), y=Inches(4.65), max_items=4):
     add_textbox(slide, x, y, Inches(4.75), Inches(0.32), "レストラン候補", 15, NAVY, True)
     y += Inches(0.42)
@@ -432,27 +454,6 @@ def add_photo_spots(slide, day: DayPlan, x=Inches(7.82), y=Inches(0.35), max_ite
         add_textbox(slide, px, y + Inches(1.28), photo_w, Inches(0.34), photo.caption, 6.2, MUTED, False, PP_ALIGN.CENTER)
 
 
-def add_spot_strip(slide, day: DayPlan, x, y, w, h, max_items=2):
-    spots = guide_spots(day, max_items=max_items)
-    if not spots:
-        return
-    add_guide_heading(slide, x, y, "より道スポット", 12)
-    y += Inches(0.32)
-    gap = Inches(0.16)
-    item_w = (w - gap * (len(spots) - 1)) / len(spots)
-    tile_h = h - Inches(0.36)
-    band_h = Inches(0.38)
-    for index, spot in enumerate(spots):
-        sx = x + (item_w + gap) * index
-        add_picture_cover(slide, spot_image(day, spot), sx, y, item_w, tile_h)
-        band = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, sx, y + tile_h - band_h, item_w, band_h)
-        band.fill.solid()
-        band.fill.fore_color.rgb = RGBColor(255, 255, 255)
-        band.line.color.rgb = RGBColor(255, 255, 255)
-        add_textbox(slide, sx + Inches(0.04), y + tile_h - Inches(0.35), item_w - Inches(0.08), Inches(0.15), short_text(spot["place"], 16), 6.4, NAVY, True, PP_ALIGN.CENTER)
-        add_textbox(slide, sx + Inches(0.04), y + tile_h - Inches(0.19), item_w - Inches(0.08), Inches(0.14), f"滞在 {spot['stay']} / Mapあり", 5.1, MUTED, False, PP_ALIGN.CENTER)
-
-
 def chunks(items: list[TimelineItem], size: int) -> list[list[TimelineItem]]:
     return [items[index:index + size] for index in range(0, len(items), size)]
 
@@ -474,6 +475,10 @@ def build_pptx(days: list[DayPlan]):
     add_textbox(cover, Inches(0.78), Inches(3.72), Inches(5.6), Inches(0.75), "仙台からフェリーで北海道へ。洞爺湖、札幌、層雲峡、道東方面をめぐる家族旅行。", 15, INK)
     add_label(cover, Inches(0.78), Inches(4.78), "2026夏版")
 
+    inside_cover = prs.slides.add_slide(blank)
+    style_background(inside_cover, SAND)
+    add_picture_cover(inside_cover, back_cover_image(days), 0, 0, prs.slide_width, prs.slide_height)
+
     for day in days:
         slide = prs.slides.add_slide(blank)
         style_background(slide, RGBColor(255, 252, 246))
@@ -484,8 +489,8 @@ def build_pptx(days: list[DayPlan]):
         add_theme_card(slide, day, Inches(0.55), Inches(1.78), Inches(6.1), Inches(1.02))
         add_route_map(slide, day, Inches(0.55), Inches(3.02), Inches(6.15), Inches(4.02))
         add_meal_recommendations(slide, day, Inches(7.05), Inches(3.72), Inches(2.75), Inches(1.48))
+        add_side_trip_card(slide, day, Inches(7.05), Inches(5.38), Inches(2.75), Inches(1.56))
         add_tips_card(slide, day, Inches(10.05), Inches(3.72), Inches(2.75), Inches(1.48))
-        add_spot_strip(slide, day, Inches(7.05), Inches(5.58), Inches(5.75), Inches(1.35), max_items=2)
 
         for page_index, timeline_items in enumerate(chunks(day.timeline, 10), start=1):
             slide2 = prs.slides.add_slide(blank)
@@ -607,6 +612,8 @@ def build_pdf(days: list[DayPlan]):
         Spacer(1, 6),
         p("仙台からフェリーで北海道へ。洞爺湖、札幌、層雲峡、道東方面をめぐる家族旅行。", center),
         PageBreak(),
+        PdfImage(str(back_cover_image(days)), width=260 * mm, height=143 * mm),
+        PageBreak(),
     ]
 
     for day in days:
@@ -617,7 +624,7 @@ def build_pdf(days: list[DayPlan]):
         tip_rows = [[tip] for tip in todays_tips(day)]
         spot_rows = [
             [spot["place"], spot["stay"], spot["parking"], f'<link href="{spot["map_url"]}">Google Map</link>']
-            for spot in guide_spots(day, max_items=2)
+            for spot in guide_spots(day, max_items=1)
         ]
         header = Table(
             [
@@ -671,20 +678,20 @@ def build_pdf(days: list[DayPlan]):
                     size=7.8,
                 ),
             ]
-        if tip_rows:
-            story += [
-                Paragraph("Today's Tips", h2),
-                pdf_table([["Tips"]] + tip_rows, [238 * mm], header=colors.HexColor("#EEF6E8"), size=8.0),
-            ]
         if spot_rows:
             story += [
-                Paragraph("より道スポット・駐車場・Google Map", h2),
+                Paragraph("より道スポット", h2),
                 pdf_table(
                     [["Spot", "Stay", "Parking", "GoogleMap"]] + spot_rows,
                     [54 * mm, 28 * mm, 56 * mm, 108 * mm],
                     header=colors.HexColor("#E2F1F8"),
                     size=6.8,
                 ),
+            ]
+        if tip_rows:
+            story += [
+                Paragraph("Today's Tips", h2),
+                pdf_table([["Tips"]] + tip_rows, [238 * mm], header=colors.HexColor("#EEF6E8"), size=8.0),
             ]
         story.append(PageBreak())
 

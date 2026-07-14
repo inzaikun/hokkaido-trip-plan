@@ -121,7 +121,7 @@ def parse_day(path: Path) -> dict:
     day["todayTheme"] = today_theme(day)
     day["mealRecommendations"] = meal_recommendations(day)
     day["todaysTips"] = todays_tips(day)
-    day["guideSpots"] = guide_spots(day)
+    day["guideSpots"] = guide_spots(day, max_items=1)
     hero = hero_photo(day)
     day["heroPhoto"] = {
         "place": hero.get("place", "") if hero else "",
