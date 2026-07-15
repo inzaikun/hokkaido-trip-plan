@@ -7,30 +7,30 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import quote
 
-from guidebook_common import (
-    guide_spots,
-    hero_photo,
-    map_url,
-    route_map_filename,
-    route_map_url,
-    route_points,
-    short_text,
-    today_theme,
-    todays_tips,
-)
-from route_map_renderer import render_route_map
+from guidebook_common import hero_photo, route_points, short_text, todays_tips
 
 
 ROOT = Path(__file__).resolve().parents[1]
 ITINERARY_DIR = ROOT / "itinerary" / "days"
 OUT = ROOT / "docs" / "index.html"
 RAW_IMAGE_BASE = "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/"
-RAW_MAP_BASE = "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/"
-GITHUB_URL = "https://github.com/inzaikun/hokkaido-trip-plan"
-PDF_URL = GITHUB_URL + "/raw/main/output/hokkaido-family-travel-guide.pdf"
-PPTX_URL = GITHUB_URL + "/raw/main/output/hokkaido-family-travel-guide.pptx"
 COVER_IMAGE_NAME = "cover.png"
 WEEKDAYS = ["月", "火", "水", "木", "金", "土", "日"]
+FERRY_DATES = {"2026-07-31", "2026-08-11", "2026-08-12"}
+ROUTE_SKIP_WORDS = (
+    "SA",
+    "PA",
+    "候補",
+    "船内",
+    "客室",
+    "朝食",
+    "昼食",
+    "夕食",
+    "休憩",
+    "知床自然センター",
+    "フレペの滝",
+    "オシンコシンの滝",
+)
 
 
 @dataclass(frozen=True)
@@ -186,91 +186,78 @@ def kind_class(kind: str) -> str:
     return mapping.get(kind, "other")
 
 
-def render_text(value: str) -> str:
-    return "<br>".join(esc(part) for part in value.splitlines())
+def clean_place(value: str) -> str:
+    value = re.sub(r"\s+", " ", value).strip()
+    value = value.replace("へ帰着", "")
+    value = value.split("/", 1)[0].strip()
+    value = value.replace("方面", "").strip()
+    return value
 
 
-def render_photo(day: Day) -> str:
-    photo = hero_photo(day)
-    if photo:
-        return (
-            f'<figure class="hero-photo">'
-            f'<img src="{image_src(photo.image)}" alt="{esc(photo.place)}" loading="lazy">'
-            f'<figcaption>{esc(photo.place)}</figcaption>'
-            f"</figure>"
-        )
-    return (
-        f'<div class="hero-photo quiet-placeholder" aria-label="{esc(day.hero)}">'
-        f"<span>{esc(day.hero)}</span>"
-        f"</div>"
-    )
-
-
-def first_time(day: Day) -> str:
-    return day.timeline[0].time if day.timeline else "-"
-
-
-def last_time(day: Day) -> str:
-    return day.timeline[-1].time if day.timeline else "-"
-
-
-def parse_duration_minutes(text: str) -> int:
-    text = text.strip()
-    total = 0
-    hour_match = re.search(r"(\d+)時間", text)
-    minute_match = re.search(r"(\d+)分", text)
-    if hour_match:
-        total += int(hour_match.group(1)) * 60
-    if minute_match:
-        total += int(minute_match.group(1))
-    elif "一晩" in text:
-        total += 0
-    return total
-
-
-def travel_minutes(day: Day) -> int:
-    return sum(
-        parse_duration_minutes(item.duration)
-        for item in day.timeline
-        if item.kind == "移動"
-    )
-
-
-def travel_time_label(minutes: int) -> str:
-    if minutes <= 0:
-        return "移動時間は当日調整"
-    hours, mins = divmod(minutes, 60)
-    if hours and mins:
-        return f"走行 約{hours}時間{mins}分"
-    if hours:
-        return f"走行 約{hours}時間"
-    return f"走行 約{mins}分"
-
-
-def travel_load(day: Day) -> str:
-    minutes = travel_minutes(day)
-    if minutes >= 300:
-        return "高"
-    if minutes >= 180:
-        return "中"
-    return "低"
-
-
-def meal_area(day: Day, meal: str) -> str:
-    for restaurant in day.restaurants:
-        if meal in restaurant.meal:
-            return restaurant.area or restaurant.name
+def route_return_place(day: Day) -> str:
     for item in day.timeline:
-        if meal in item.kind:
-            return item.place
-    return "当日選択"
+        text = f"{item.place} {item.detail}"
+        if any(word in text for word in ("帰着", "帰宅", "自宅到着")):
+            return clean_place(item.place)
+    return ""
 
 
-def highlights(day: Day, limit: int = 3) -> list[str]:
+def area_short(day: Day) -> str:
+    parts = [part.strip() for part in re.split(r"[/／]", day.area) if part.strip()]
+    if len(parts) <= 2:
+        return " / ".join(parts)
+    return f"{parts[0]} / {parts[-1]}"
+
+
+def departure_item(day: Day) -> TimelineItem | None:
+    for item in day.timeline:
+        if item.kind == "移動":
+            return item
+    return day.timeline[0] if day.timeline else None
+
+
+def arrival_item(day: Day) -> TimelineItem | None:
+    for item in reversed(day.timeline):
+        text = f"{item.place} {item.detail}"
+        if any(word in text for word in ("帰着", "到着", "帰宅", "自宅到着")):
+            return item
+    for item in day.timeline:
+        if item.kind == "移動" and "出港" in item.detail:
+            return item
+    for item in reversed(day.timeline):
+        if item.kind in {"移動", "手続き"}:
+            return item
+    return day.timeline[-1] if day.timeline else None
+
+
+def arrival_label(item: TimelineItem | None) -> str:
+    if not item:
+        return "到着"
+    text = f"{item.place} {item.detail}"
+    if "帰着" in text:
+        return "帰着"
+    if "帰宅" in text or "自宅到着" in text:
+        return "帰宅"
+    if "出港" in text:
+        return "出港"
+    return "到着"
+
+
+def time_pair(day: Day) -> tuple[str, str, str]:
+    start = departure_item(day)
+    end = arrival_item(day)
+    return (
+        start.time if start else "-",
+        end.time if end else "-",
+        arrival_label(end),
+    )
+
+
+def highlights(day: Day, limit: int = 2) -> list[str]:
     results: list[str] = []
 
     def add(place: str) -> None:
-        place = place.strip()
+        place = clean_place(place)
         if place and place not in results:
             results.append(place)
 
@@ -283,76 +270,105 @@ def highlights(day: Day, limit: int = 3) -> list[str]:
             add(item.place)
             if len(results) >= limit:
                 return results[:limit]
-    for point in route_points(day, max_points=7):
-        add(point["place"])
-        if len(results) >= limit:
-            return results[:limit]
     return results[:limit]
 
 
-def compact_route(day: Day) -> list[dict[str, str]]:
-    return route_points(day, max_points=7)
+def route_names(day: Day) -> list[str]:
+    names: list[str] = []
+    for point in route_points(day, max_points=8):
+        place = clean_place(point["place"])
+        if any(word in place for word in ROUTE_SKIP_WORDS):
+            continue
+        if place and place not in names:
+            names.append(place)
+    return_place = route_return_place(day)
+    if return_place:
+        if names and names[0] == return_place:
+            if names[-1] != return_place:
+                names.append(return_place)
+        else:
+            names = [name for name in names if name != return_place]
+            names.append(return_place)
+    if len(names) <= 5:
+        return names
+    first, last = names[0], names[-1]
+    middle = names[1:-1]
+    group_one = "・".join(middle[:2])
+    group_two = "・".join(middle[2:4])
+    route = [first, group_one, group_two, last]
+    return [part for part in route if part]
 
 
-def render_route_line(day: Day) -> str:
-    points = compact_route(day)
-    if not points:
+def render_route(day: Day) -> str:
+    names = route_names(day)
+    if not names:
         return ""
-    items = []
-    for index, point in enumerate(points):
-        leg = point.get("leg") or ""
-        connector = ""
-        if index < len(points) - 1:
-            connector = (
-                '<span class="route-arrow" aria-hidden="true">'
-                '<span class="desktop-arrow">→</span><span class="mobile-arrow">↓</span>'
-                "</span>"
-            )
-            if leg:
-                connector += f'<small class="route-time">{esc(leg)}</small>'
-        note = f'<em>{esc(point["note"])}</em>' if point.get("note") else ""
-        items.append(
-            '<li>'
-            f'<strong>{esc(point["place"])}</strong>{note}'
-            f"{connector}"
-            "</li>"
-        )
+    parts = []
+    for index, name in enumerate(names):
+        parts.append(f"<span>{esc(name)}</span>")
+        if index < len(names) - 1:
+            parts.append('<i aria-hidden="true">→</i>')
+    return '<div class="route-flow" aria-label="今日のルート">' + "".join(parts) + "</div>"
+
+
+def render_main_photo(day: Day) -> str:
+    photo = hero_photo(day)
+    if not photo:
+        return ""
     return (
-        '<div class="summary-route">'
-        "<p>Today&apos;s Route</p>"
-        f'<ol>{"".join(items)}</ol>'
-        "</div>"
+        '<figure class="main-photo">'
+        f'<img src="{image_src(photo.image)}" alt="{esc(photo.place)}" loading="lazy">'
+        f"<figcaption>{esc(photo.place)}</figcaption>"
+        "</figure>"
     )
 
 
-def render_summary_chips(day: Day) -> str:
-    minutes = travel_minutes(day)
-    chips = [
-        ("出発", first_time(day)),
-        ("終了予定", last_time(day)),
-        ("移動負荷", travel_load(day)),
-        ("走行", travel_time_label(minutes).replace("走行 ", "")),
-        ("昼", meal_area(day, "昼食")),
-        ("夜", meal_area(day, "夕食")),
-    ]
+def meal_summary(day: Day, meal: str) -> str:
+    timeline_item = next((item for item in day.timeline if meal in item.kind), None)
+    restaurant = next((item for item in day.restaurants if meal in item.meal), None)
+    if timeline_item:
+        place = clean_place(timeline_item.place)
+        detail = timeline_item.detail
+        if "海鮮" in detail:
+            return f"{place}で海鮮"
+        if "豚丼" in detail:
+            return f"{place}で豚丼"
+        if "牛たん" in detail:
+            return f"{place}で牛たん"
+        return place or short_text(detail, 24)
+    if restaurant:
+        return restaurant.area or restaurant.name
+    return "当日決定"
+
+
+def restaurant_groups(day: Day) -> list[Restaurant]:
+    results: list[Restaurant] = []
+    for meal in ("昼食", "夕食"):
+        count = 0
+        for restaurant in day.restaurants:
+            if meal in restaurant.meal:
+                results.append(restaurant)
+                count += 1
+            if count >= 2:
+                break
+    return results
+
+
+def render_restaurants(day: Day) -> str:
+    restaurants = restaurant_groups(day)
+    if not restaurants:
+        return '<p class="empty">食事候補は当日選びます。</p>'
     return (
-        '<dl class="summary-chips">'
+        '<div class="restaurant-list">'
         + "".join(
-            f"<div><dt>{esc(label)}</dt><dd>{esc(value)}</dd></div>"
-            for label, value in chips
+            '<article class="restaurant-item">'
+            f"<p>{esc(item.meal)} / {esc(item.area)}</p>"
+            f"<strong>{esc(item.name)}</strong>"
+            f"<span>{esc(short_text(item.memo, 42))}</span>"
+            "</article>"
+            for item in restaurants
         )
-        + "</dl>"
-    )
-
-
-def render_highlights(day: Day) -> str:
-    items = highlights(day)
-    if not items:
-        return ""
-    return (
-        '<div class="highlights"><p>HIGHLIGHT</p><ul>'
-        + "".join(f"<li>{esc(item)}</li>" for item in items)
-        + "</ul></div>"
+        + "</div>"
     )
 
 
@@ -361,212 +377,169 @@ def render_timeline(day: Day) -> str:
     for item in day.timeline:
         items.append(
             "<li>"
-            f'<time>{esc(item.time)}</time>'
+            f"<time>{esc(item.time)}</time>"
             f'<span class="tag {kind_class(item.kind)}">{esc(item.kind)}</span>'
             "<div>"
             f"<strong>{esc(item.place)}</strong>"
-            f"<p>{render_text(item.detail)}</p>"
+            f"<p>{esc(short_text(item.detail, 42))}</p>"
             f"<small>{esc(item.duration)}</small>"
             "</div>"
             "</li>"
         )
-    return "\n".join(items)
+    return '<ol class="timeline">' + "".join(items) + "</ol>"
 
 
-def render_restaurant_cards(day: Day) -> str:
-    if not day.restaurants:
-        return '<p class="empty">候補はこれから追記します。</p>'
-    rows = []
-    for item in day.restaurants:
-        rows.append(
-            '<article class="restaurant-card">'
-            f'<p>{esc(item.meal)} / {esc(item.area)}</p>'
-            f"<h5>{esc(item.name)}</h5>"
-            f"<span>{esc(item.memo)}</span>"
-            f'<a href="{esc(map_url(item.name, item.area))}" target="_blank" rel="noreferrer">Google Mapsで見る</a>'
-            "</article>"
-        )
-    return "\n".join(rows)
+def notes_for(day: Day) -> list[str]:
+    tips = []
+    for note in day.notes:
+        if note not in tips:
+            tips.append(note)
+    for tip in todays_tips(day):
+        if tip not in tips:
+            tips.append(tip)
+    return tips[:3]
 
 
-def render_side_trip(day: Day) -> str:
-    spots = guide_spots(day, max_items=1)
-    if not spots:
+def render_notes(day: Day) -> str:
+    notes = notes_for(day)
+    if not notes:
+        return '<p class="empty">天候と体調に合わせて無理せず調整します。</p>'
+    return "<ul>" + "".join(f"<li>{esc(short_text(note, 62))}</li>" for note in notes) + "</ul>"
+
+
+def is_ferry_day(day: Day) -> bool:
+    return day.date in FERRY_DATES
+
+
+def render_ferry_teaser(day: Day) -> str:
+    if not is_ferry_day(day):
         return ""
-    spot = spots[0]
-    if spot["image"]:
-        visual = f'<img src="{image_src(spot["image"])}" alt="{esc(spot["place"])}" loading="lazy">'
-    else:
-        visual = f'<div class="spot-placeholder" aria-label="{esc(spot["place"])}"></div>'
+    return """
+      <section class="ferry-guide" aria-label="太平洋フェリー きたかみ">
+        <p class="section-mini">船旅ガイド</p>
+        <h4>太平洋フェリー きたかみ</h4>
+        <p>2019年就航。白を基調にした船内で、夜は光の演出も楽しめます。</p>
+        <div class="ferry-columns">
+          <div>
+            <strong>船内で楽しめること</strong>
+            <ul><li>展望大浴場</li><li>キッズエリア</li><li>プロジェクションマッピング</li></ul>
+          </div>
+          <div>
+            <strong>あると便利</strong>
+            <ul><li>コインランドリー</li><li>エレベーター</li><li>授乳室</li></ul>
+          </div>
+        </div>
+        <small>出典: 太平洋フェリー公式・きたかみ</small>
+      </section>
+    """
+
+
+def render_ferry_detail(day: Day) -> str:
+    if not is_ferry_day(day):
+        return render_notes(day)
     return (
-        '<section class="side-trip-card" aria-label="より道スポット">'
-        "<h4>より道スポット</h4>"
-        "<figure>"
-        f"{visual}"
-        "<figcaption>"
-        f"<strong>{esc(spot['place'])}</strong>"
-        f"<span>{esc(short_text(spot['caption'], 64))}</span>"
-        '<dl class="spot-meta">'
-        f"<div><dt>駐車場</dt><dd>{esc(spot['parking'])}</dd></div>"
-        f"<div><dt>滞在</dt><dd>{esc(spot['stay'])}</dd></div>"
-        f'<div><dt>地図</dt><dd><a href="{esc(spot["map_url"])}" target="_blank" rel="noreferrer">Google Map</a></dd></div>'
-        "</dl>"
-        "</figcaption>"
-        "</figure>"
-        "</section>"
-    )
-
-
-def map_src(image_name: str) -> str:
-    return RAW_MAP_BASE + quote(image_name)
-
-
-def render_route_sketch(day: Day) -> str:
-    render_route_map(day, ROOT)
-    image_name = route_map_filename(day)
-    return (
-        '<div class="sketch-map" aria-label="簡易ルートマップ">'
-        f'<img src="{map_src(image_name)}" alt="{esc(day.area)}のルート地図" loading="lazy">'
+        '<div class="ferry-detail">'
+        "<h4>船内設備を見る</h4>"
+        "<p>バイキングレストラン「グリーンプラネット」、展望通路、展望大浴場、キッズエリア、コインランドリー、授乳室、エレベーター2基を覚えておけば十分です。</p>"
+        "<h4>注意点</h4>"
+        + render_notes(day)
+        + "<small>出典: 太平洋フェリー公式・きたかみ</small>"
         "</div>"
     )
 
 
-def render_route_detail(day: Day) -> str:
-    points = compact_route(day)
-    if not points:
-        return ""
-    rows = []
-    for index, point in enumerate(points):
-        note = f'<span>{esc(point["note"])}</span>' if point.get("note") else ""
-        leg = point.get("leg") or ""
-        connector = ""
-        if index < len(points) - 1:
-            connector = f'<div class="route-leg"><i></i><span>{esc(leg)}</span></div>'
-        rows.append(
-            '<li class="route-point">'
-            f'<strong>{esc(point["place"])}</strong>{note}'
-            f"{connector}"
-            "</li>"
-        )
-    return (
-        '<section class="detail-section route-card">'
-        '<div class="card-title-row"><h4>Today\'s Route</h4>'
-        f'<a href="{esc(route_map_url(day))}" target="_blank" rel="noreferrer">Google Map</a></div>'
-        '<div class="route-card-body">'
-        f"{render_route_sketch(day)}"
-        f'<ol class="route-map">{"".join(rows)}</ol>'
-        "</div>"
-        "</section>"
-    )
-
-
-def render_tip_list(day: Day) -> str:
-    tips = todays_tips(day)
-    if not tips:
-        return '<p class="empty">当日の天候と体調に合わせて調整します。</p>'
-    return (
-        "<ul>"
-        + "\n".join(f"<li>{esc(tip)}</li>" for tip in tips)
-        + "</ul>"
-    )
-
-
-def render_photo_grid(day: Day) -> str:
-    photos = [photo for photo in day.photos if photo.image][:4]
-    if not photos:
-        return '<p class="empty">写真は追加予定です。</p>'
-    return (
-        '<div class="photo-grid">'
-        + "".join(
-            "<figure>"
-            f'<img src="{image_src(photo.image)}" alt="{esc(photo.place)}" loading="lazy">'
-            "<figcaption>"
-            f"<strong>{esc(photo.place)}</strong>"
-            f"<span>{esc(short_text(photo.caption, 70))}</span>"
-            f"<small>{esc(photo.credit)}</small>"
-            "</figcaption>"
-            "</figure>"
-            for photo in photos
-        )
-        + "</div>"
-    )
-
-
-def render_nested_details(title: str, body: str, css_class: str = "", open_attr: bool = False) -> str:
+def render_foldout(title: str, body: str, open_attr: bool = False) -> str:
     opened = " open" if open_attr else ""
-    class_name = f' class="inner-detail {css_class}"' if css_class else ' class="inner-detail"'
-    return f"<details{class_name}{opened}><summary>{esc(title)}</summary>{body}</details>"
+    return f'<details class="foldout"{opened}><summary>{esc(title)}</summary>{body}</details>'
 
 
-def render_day(day: Day) -> str:
+def short_day_title(day: Day) -> str:
+    title = day.title
+    replacements = {
+        "知床五湖と知床峠を巡る世界自然遺産デー": "知床の大自然を巡る日",
+        "印西から仙台観光、フェリーで北海道へ": "仙台観光とフェリーの日",
+        "仙台港到着、そのまま印西へ帰宅": "仙台港から印西へ帰る日",
+    }
+    return replacements.get(title, short_text(title, 24))
+
+
+def render_day_card(day: Day) -> str:
+    start, end, end_label = time_pair(day)
+    day_highlights = highlights(day)
     return f"""
       <article class="day-card" id="day-{esc(day.date)}" data-date="{esc(day.date)}">
-        <header class="day-summary">
-          {render_photo(day)}
-          <div class="summary-copy">
-            <p class="day-label">DAY {esc(day.day)} / {formatted_date(day.date)}</p>
-            <h3>{esc(day.title)}</h3>
-            {render_route_line(day)}
-            {render_summary_chips(day)}
-            {render_highlights(day)}
-          </div>
-        </header>
-        <details class="day-detail">
-          <summary>詳細を見る</summary>
-          <div class="day-detail-body">
-            <section class="theme-card">
-              <h4>今日のテーマ</h4>
-              <p>{esc(today_theme(day))}</p>
-            </section>
-            {render_route_detail(day)}
-            {render_nested_details(
-                "時刻表",
-                '<ol class="timeline">' + render_timeline(day) + "</ol>",
-                "timeline-detail",
-                True,
-            )}
-            {render_nested_details(
-                "食事候補",
-                '<div class="restaurant-grid">' + render_restaurant_cards(day) + "</div>" + render_side_trip(day),
-                "meal-detail",
-            )}
-            {render_nested_details(
-                "写真で見るスポット",
-                render_photo_grid(day),
-                "photo-detail",
-            )}
-            {render_nested_details(
-                "注意点・雨天プラン",
-                render_tip_list(day),
-                "note-detail",
-            )}
-          </div>
-        </details>
+        <div class="day-card-top">
+          <p>DAY {esc(day.day)}</p>
+          <span>{formatted_date(day.date)}</span>
+        </div>
+        <h3>{esc(short_day_title(day))}</h3>
+        <p class="area-line">{esc(area_short(day))}</p>
+        <dl class="time-mini">
+          <div><dt>出発</dt><dd>{esc(start)}</dd></div>
+          <div><dt>{esc(end_label)}</dt><dd>{esc(end)}</dd></div>
+        </dl>
+        <ul class="highlight-mini">
+          {"".join(f"<li>{esc(item)}</li>" for item in day_highlights)}
+        </ul>
+        <a class="select-day" href="#detail-{esc(day.date)}" data-select-day="{esc(day.date)}">この日を見る</a>
       </article>
-"""
+    """
+
+
+def render_day_detail(day: Day, is_default: bool = False) -> str:
+    start, end, end_label = time_pair(day)
+    hidden = "" if is_default else " hidden"
+    return f"""
+      <article class="day-panel" id="detail-{esc(day.date)}" data-day-panel="{esc(day.date)}"{hidden}>
+        <div class="panel-heading">
+          <p>DAY {esc(day.day)} / {formatted_date(day.date)}</p>
+          <h2>{esc(day.title)}</h2>
+        </div>
+        {render_main_photo(day)}
+        <div class="priority-grid">
+          <div><span>出発</span><strong>{esc(start)}</strong></div>
+          <div><span>{esc(end_label)}</span><strong>{esc(end)}</strong></div>
+        </div>
+        <section class="simple-section">
+          <h3>今日のルート</h3>
+          {render_route(day)}
+        </section>
+        <section class="simple-section">
+          <h3>今日の予定</h3>
+          <p>{esc(short_text(day.summary, 80))}</p>
+        </section>
+        <div class="meal-summary">
+          <section><h3>昼食</h3><p>{esc(meal_summary(day, "昼食"))}</p></section>
+          <section><h3>夕食</h3><p>{esc(meal_summary(day, "夕食"))}</p></section>
+        </div>
+        {render_ferry_teaser(day)}
+        <div class="foldouts">
+          {render_foldout("詳しい時刻表", render_timeline(day))}
+          {render_foldout("食事候補", render_restaurants(day))}
+          {render_foldout("船内設備を見る" if is_ferry_day(day) else "注意点・雨天時", render_ferry_detail(day))}
+        </div>
+      </article>
+    """
 
 
 def render_page(days: list[Day]) -> str:
-    nav_items = "\n".join(
-        f'<a href="#day-{esc(day.date)}"><strong>Day {esc(day.day)}</strong><span>{formatted_date(day.date)}</span></a>'
+    day_cards = "\n".join(render_day_card(day) for day in days)
+    day_panels = "\n".join(render_day_detail(day) for day in days)
+    date_nav = "\n".join(
+        f'<a href="#detail-{esc(day.date)}" data-select-day="{esc(day.date)}">{formatted_date(day.date).split("（", 1)[0]}</a>'
         for day in days
     )
-    day_sections = "\n".join(render_day(day) for day in days)
     style = """
     :root {
       color-scheme: light;
-      --ink: #172026;
-      --muted: #5f6f78;
-      --line: #d7e2e4;
-      --paper: #faf7ef;
+      --ink: #14212a;
+      --muted: #65737c;
+      --line: #dce4e7;
+      --paper: #f6f8f7;
       --surface: #ffffff;
-      --mist: #eaf3f2;
-      --navy: #123846;
-      --lake: #176f82;
-      --forest: #3f7451;
-      --sun: #b9772a;
-      --berry: #9a4753;
-      --shadow: 0 14px 34px rgba(18, 56, 70, 0.08);
+      --blue: #123f57;
+      --green: #39745b;
+      --orange: #b8752a;
     }
 
     * { box-sizing: border-box; }
@@ -575,915 +548,615 @@ def render_page(days: list[Day]) -> str:
 
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
       color: var(--ink);
       background: var(--paper);
-      line-height: 1.68;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
       overflow-x: hidden;
     }
 
-    a {
-      color: var(--lake);
-      text-decoration-thickness: 1px;
-      text-underline-offset: 3px;
+    a { color: inherit; }
+
+    img {
+      display: block;
+      max-width: 100%;
     }
 
-    img { max-width: 100%; }
-
-    .skip-link {
-      position: absolute;
-      left: 12px;
-      top: -44px;
-      z-index: 20;
-      padding: 8px 12px;
-      background: var(--navy);
-      color: #fff;
-    }
-
-    .skip-link:focus { top: 12px; }
-
-    .top-nav {
+    .app-nav {
       position: sticky;
       top: 0;
-      z-index: 10;
+      z-index: 20;
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
-      padding: 10px clamp(14px, 4vw, 48px);
-      border-bottom: 1px solid rgba(215, 226, 228, 0.9);
-      background: rgba(250, 247, 239, 0.92);
-      backdrop-filter: blur(12px);
+      min-height: 54px;
+      padding: 8px clamp(14px, 4vw, 40px);
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.94);
+      backdrop-filter: blur(10px);
     }
 
-    .brand {
-      flex: 0 0 auto;
-      color: var(--navy);
-      font-weight: 900;
-      text-decoration: none;
+    .app-nav strong {
+      color: var(--blue);
+      font-size: 0.98rem;
     }
 
-    .top-nav .nav-links {
+    .app-nav div {
       display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-left: auto;
+      gap: 8px;
       overflow-x: auto;
       scrollbar-width: none;
     }
 
-    .top-nav .nav-links::-webkit-scrollbar { display: none; }
+    .app-nav div::-webkit-scrollbar { display: none; }
 
-    .top-nav a:not(.brand),
-    .hero-links a,
-    .detail-link {
-      flex: 0 0 auto;
-      padding: 7px 10px;
-      border: 1px solid rgba(23, 111, 130, 0.28);
+    .nav-pill,
+    .hero-actions a,
+    .select-day {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 9px 13px;
       border-radius: 6px;
-      background: rgba(255, 255, 255, 0.76);
-      color: var(--navy);
-      font-size: 0.88rem;
+      border: 1px solid var(--line);
+      background: var(--surface);
+      color: var(--blue);
       font-weight: 800;
       text-decoration: none;
+      white-space: nowrap;
     }
 
     .hero {
+      min-height: min(620px, 100svh);
       display: grid;
       align-items: end;
-      min-height: min(560px, 72vh);
-      padding: clamp(42px, 9vw, 92px) clamp(18px, 5vw, 72px) 30px;
+      padding: 72px clamp(18px, 5vw, 72px) 28px;
       background:
-        linear-gradient(180deg, rgba(9, 33, 42, 0.12), rgba(9, 33, 42, 0.82)),
+        linear-gradient(180deg, rgba(5, 25, 35, 0.04), rgba(5, 25, 35, 0.66)),
         url(\"""" + image_src(COVER_IMAGE_NAME) + """\") center/cover;
       color: #fff;
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: minmax(0, 1.12fr) minmax(280px, 0.88fr);
-      gap: clamp(20px, 4vw, 44px);
-      align-items: end;
-      width: min(1180px, 100%);
+    .hero-inner {
+      width: min(760px, 100%);
     }
 
-    .eyebrow {
-      margin: 0 0 10px;
-      font-size: 0.78rem;
-      font-weight: 900;
-      letter-spacing: 0;
-    }
-
-    h1 {
-      max-width: 820px;
+    .hero h1 {
       margin: 0;
-      font-size: clamp(2.2rem, 6vw, 4.75rem);
-      line-height: 1.04;
+      font-size: clamp(2rem, 8.6vw, 4.5rem);
+      line-height: 1.02;
       letter-spacing: 0;
+      overflow-wrap: anywhere;
     }
 
-    .hero-lead {
-      max-width: 760px;
-      margin: 14px 0 0;
-      font-size: clamp(1rem, 2vw, 1.18rem);
-    }
-
-    .overview-panel {
-      display: grid;
-      gap: 10px;
-      padding: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.34);
-      border-radius: 8px;
-      background: rgba(7, 30, 37, 0.42);
-      color: #fff;
-    }
-
-    .overview-panel dl {
-      display: grid;
-      gap: 8px;
-      margin: 0;
-    }
-
-    .overview-panel dl > div {
-      display: grid;
-      grid-template-columns: 88px minmax(0, 1fr);
-      gap: 10px;
-      align-items: baseline;
-    }
-
-    .overview-panel dt {
-      color: rgba(255, 255, 255, 0.72);
-      font-size: 0.86rem;
+    .hero-date {
+      margin: 12px 0 0;
+      font-size: clamp(1.1rem, 4vw, 1.55rem);
       font-weight: 900;
     }
 
-    .overview-panel dd {
-      margin: 0;
+    .hero-route {
+      margin: 6px 0 0;
       font-weight: 800;
     }
 
-    .hero-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 4px;
+    .hero-note {
+      max-width: 38em;
+      margin: 12px 0 0;
     }
 
-    .hero-links a {
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .hero-actions a {
       color: #fff;
-      border-color: rgba(255, 255, 255, 0.44);
+      border-color: rgba(255, 255, 255, 0.42);
       background: rgba(255, 255, 255, 0.14);
     }
 
     main {
-      width: min(1180px, calc(100% - 32px));
+      width: min(1120px, calc(100% - 28px));
       margin: 0 auto;
-      padding: 34px 0 72px;
+      padding: 28px 0 64px;
     }
 
-    .section-kicker {
-      margin: 0 0 5px;
-      color: var(--lake);
-      font-size: 0.84rem;
+    .section-label {
+      margin: 0 0 4px;
+      color: var(--green);
+      font-size: 0.82rem;
       font-weight: 900;
-      letter-spacing: 0;
     }
 
     .section-title {
       margin: 0;
-      color: var(--navy);
-      font-size: clamp(1.45rem, 3vw, 2.25rem);
+      color: var(--blue);
+      font-size: clamp(1.45rem, 5vw, 2.2rem);
       line-height: 1.2;
-      letter-spacing: 0;
     }
 
     .lead {
-      max-width: 860px;
-      margin: 10px 0 0;
+      max-width: 42em;
+      margin: 8px 0 0;
       color: var(--muted);
     }
 
-    .day-nav-wrap {
+    .date-rail {
       position: sticky;
-      top: 53px;
-      z-index: 8;
-      margin: 24px 0 28px;
-      padding: 10px 0;
-      background: linear-gradient(180deg, var(--paper) 0%, rgba(250, 247, 239, 0.9) 78%, rgba(250, 247, 239, 0) 100%);
-    }
-
-    .day-nav {
+      top: 54px;
+      z-index: 15;
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      padding-bottom: 5px;
-      scrollbar-width: thin;
+      margin: 20px 0 22px;
+      padding: 8px 0;
+      background: linear-gradient(180deg, var(--paper), rgba(246, 248, 247, 0.86));
+      scrollbar-width: none;
     }
 
-    .day-nav a {
-      flex: 0 0 auto;
-      min-width: 90px;
-      padding: 8px 10px;
+    .date-rail::-webkit-scrollbar { display: none; }
+
+    .date-rail a {
+      min-width: 64px;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       border: 1px solid var(--line);
       border-radius: 6px;
       background: var(--surface);
-      color: var(--navy);
+      color: var(--blue);
+      font-weight: 900;
       text-decoration: none;
     }
 
-    .day-nav strong,
-    .day-nav span {
-      display: block;
-      white-space: nowrap;
+    .date-rail a.active,
+    .day-card.active {
+      border-color: rgba(57, 116, 91, 0.75);
+      background: #f4faf6;
     }
 
-    .day-nav strong {
-      color: var(--lake);
-      font-size: 0.78rem;
-    }
-
-    .day-nav span {
-      font-size: 0.9rem;
-      font-weight: 900;
-    }
-
-    .days {
+    .day-list {
       display: grid;
-      gap: 18px;
-      margin-top: 18px;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 10px;
+      margin-top: 14px;
     }
 
     .day-card {
-      scroll-margin-top: 120px;
-      overflow: clip;
+      display: grid;
+      gap: 8px;
+      padding: 14px;
       border: 1px solid var(--line);
       border-radius: 8px;
       background: var(--surface);
-      box-shadow: var(--shadow);
     }
 
-    .day-card.is-current {
-      border-color: rgba(23, 111, 130, 0.75);
-      box-shadow: 0 0 0 3px rgba(23, 111, 130, 0.16), var(--shadow);
+    .day-card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--green);
+      font-size: 0.88rem;
+      font-weight: 900;
     }
 
-    .day-summary {
-      display: grid;
-      grid-template-columns: minmax(230px, 34%) minmax(0, 1fr);
-      gap: clamp(16px, 3vw, 26px);
-      padding: clamp(16px, 3vw, 26px);
-    }
-
-    .hero-photo {
-      min-height: 245px;
+    .day-card-top p,
+    .day-card h3,
+    .area-line,
+    .time-mini,
+    .highlight-mini {
       margin: 0;
+    }
+
+    .day-card h3 {
+      color: var(--blue);
+      font-size: 1.08rem;
+      line-height: 1.3;
+    }
+
+    .area-line {
+      color: var(--muted);
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
+    .time-mini {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+
+    .time-mini div {
+      padding: 8px;
+      border-radius: 6px;
+      background: #f6f8f7;
+    }
+
+    .time-mini dt {
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .time-mini dd {
+      margin: 0;
+      color: var(--ink);
+      font-size: 1.05rem;
+      font-weight: 900;
+    }
+
+    .highlight-mini {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-height: 28px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .highlight-mini li {
+      padding: 2px 7px;
+      border-radius: 5px;
+      background: #eef5f0;
+      color: var(--green);
+      font-size: 0.82rem;
+      font-weight: 900;
+    }
+
+    .select-day {
+      align-self: end;
+      margin-top: 2px;
+    }
+
+    .selected-day {
+      margin-top: 34px;
+    }
+
+    .day-panel {
+      padding: clamp(16px, 4vw, 28px);
+      border: 1px solid var(--line);
       border-radius: 8px;
-      overflow: hidden;
-      background: var(--mist);
+      background: var(--surface);
+    }
+
+    .panel-heading p {
+      margin: 0 0 4px;
+      color: var(--green);
+      font-weight: 900;
+    }
+
+    .panel-heading h2 {
+      margin: 0;
+      color: var(--blue);
+      font-size: clamp(1.6rem, 6vw, 2.45rem);
+      line-height: 1.2;
+    }
+
+    .main-photo {
       position: relative;
+      overflow: hidden;
+      margin: 16px 0 0;
+      border-radius: 8px;
+      background: #eef2f3;
     }
 
-    .hero-photo img {
+    .main-photo img {
       width: 100%;
-      height: 100%;
-      min-height: 245px;
+      max-height: 360px;
       object-fit: cover;
-      display: block;
     }
 
-    .hero-photo figcaption {
+    .main-photo figcaption {
       position: absolute;
       left: 10px;
       bottom: 10px;
       max-width: calc(100% - 20px);
       padding: 4px 8px;
       border-radius: 4px;
-      background: rgba(18, 56, 70, 0.74);
+      background: rgba(18, 63, 87, 0.75);
       color: #fff;
       font-size: 0.84rem;
       font-weight: 800;
     }
 
-    .quiet-placeholder {
-      min-height: 190px;
+    .priority-grid {
       display: grid;
-      place-items: center;
-      padding: 18px;
-      color: var(--lake);
-      text-align: center;
-      font-weight: 900;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
     }
 
-    .day-label {
-      margin: 0 0 7px;
-      color: var(--lake);
-      font-size: 0.86rem;
-      font-weight: 900;
-    }
-
-    .summary-copy h3 {
-      margin: 0;
-      color: var(--navy);
-      font-size: clamp(1.35rem, 3vw, 2.15rem);
-      line-height: 1.22;
-      letter-spacing: 0;
-    }
-
-    .route-copy {
-      margin: 9px 0 0;
-      color: var(--muted);
-      font-weight: 800;
-    }
-
-    .summary-route {
-      margin-top: 14px;
+    .priority-grid div {
       padding: 12px;
-      border: 1px solid rgba(23, 111, 130, 0.18);
       border-radius: 8px;
-      background: #f5fbfa;
+      background: #f3f7f5;
     }
 
-    .summary-route p,
-    .highlights p {
-      margin: 0 0 7px;
-      color: var(--lake);
-      font-size: 0.78rem;
+    .priority-grid span {
+      display: block;
+      color: var(--muted);
+      font-size: 0.82rem;
       font-weight: 900;
-      letter-spacing: 0;
     }
 
-    .summary-route ol {
+    .priority-grid strong {
+      display: block;
+      color: var(--blue);
+      font-size: 1.8rem;
+      line-height: 1.1;
+    }
+
+    .simple-section,
+    .meal-summary,
+    .ferry-guide,
+    .foldouts {
+      margin-top: 18px;
+    }
+
+    .simple-section h3,
+    .meal-summary h3,
+    .ferry-guide h4 {
+      margin: 0 0 6px;
+      color: var(--blue);
+      font-size: 1rem;
+    }
+
+    .simple-section p,
+    .meal-summary p,
+    .ferry-guide p {
+      margin: 0;
+      color: var(--ink);
+    }
+
+    .route-flow {
       display: flex;
       flex-wrap: wrap;
-      gap: 6px;
+      gap: 6px 8px;
       align-items: center;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .summary-route li {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      min-width: 0;
-      color: var(--navy);
+      color: var(--blue);
       font-weight: 900;
     }
 
-    .summary-route li strong {
+    .route-flow span {
+      max-width: 100%;
       overflow-wrap: anywhere;
     }
 
-    .summary-route em {
-      padding: 1px 6px;
-      border-radius: 4px;
-      background: #f1e5cf;
-      color: #7c531e;
-      font-size: 0.72rem;
+    .route-flow i {
+      color: var(--green);
       font-style: normal;
     }
 
-    .route-arrow {
-      color: var(--forest);
+    .meal-summary {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .meal-summary section {
+      padding: 12px;
+      border-radius: 8px;
+      background: #f8f4ee;
+    }
+
+    .ferry-guide {
+      padding: 14px;
+      border: 1px solid #dce4e7;
+      border-radius: 8px;
+      background: #f7fbfc;
+    }
+
+    .section-mini {
+      margin: 0 0 4px;
+      color: var(--green);
+      font-size: 0.8rem;
       font-weight: 900;
     }
 
-    .mobile-arrow { display: none; }
-
-    .route-time {
-      color: var(--muted);
-      font-size: 0.72rem;
-      font-weight: 800;
-    }
-
-    .summary-chips {
+    .ferry-columns {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 8px;
-      margin: 14px 0 0;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 10px;
     }
 
-    .summary-chips div {
-      min-width: 0;
-      padding: 8px 9px;
-      border: 1px solid rgba(215, 226, 228, 0.9);
-      border-radius: 6px;
+    .ferry-columns strong,
+    .ferry-detail h4 {
+      display: block;
+      margin: 0 0 4px;
+      color: var(--blue);
+    }
+
+    .ferry-columns ul,
+    .ferry-detail ul {
+      margin: 0;
+      padding-left: 1.2em;
+    }
+
+    .ferry-guide small,
+    .ferry-detail small {
+      display: block;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    .foldouts {
+      display: grid;
+      gap: 10px;
+    }
+
+    .foldout {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 8px;
       background: #fff;
     }
 
-    .summary-chips dt {
-      color: var(--muted);
-      font-size: 0.75rem;
-      font-weight: 900;
-    }
-
-    .summary-chips dd {
-      margin: 1px 0 0;
-      color: var(--ink);
-      font-size: 0.94rem;
-      font-weight: 900;
-      overflow-wrap: anywhere;
-    }
-
-    .highlights {
-      margin-top: 14px;
-    }
-
-    .highlights ul {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .highlights li {
-      padding: 4px 8px;
-      border-radius: 6px;
-      background: #eef6ee;
-      color: var(--forest);
-      font-weight: 900;
-      font-size: 0.9rem;
-    }
-
-    .day-detail {
-      border-top: 1px solid var(--line);
-    }
-
-    .day-detail > summary {
-      cursor: pointer;
-      padding: 13px clamp(16px, 3vw, 26px);
-      color: var(--navy);
-      font-weight: 900;
-      list-style-position: inside;
-    }
-
-    .day-detail[open] > summary {
-      border-bottom: 1px solid var(--line);
-      background: #fbf9f3;
-    }
-
-    .day-detail-body {
-      display: grid;
-      gap: 14px;
-      padding: clamp(16px, 3vw, 26px);
-    }
-
-    .theme-card,
-    .route-card,
-    .inner-detail {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #fffdf8;
-    }
-
-    .theme-card {
-      padding: 16px;
-    }
-
-    .theme-card h4,
-    .card-title-row h4 {
-      margin: 0 0 8px;
-      color: var(--lake);
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.16rem;
-    }
-
-    .theme-card p {
-      margin: 0;
-      color: var(--ink);
-    }
-
-    .route-card {
-      padding: 16px;
-    }
-
-    .card-title-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      margin-bottom: 12px;
-    }
-
-    .card-title-row h4 { margin: 0; }
-
-    .card-title-row a,
-    .restaurant-card a,
-    .side-trip-card a {
-      flex: 0 0 auto;
-      border-radius: 6px;
-      padding: 4px 9px;
-      background: var(--lake);
-      color: #fff;
-      font-size: 0.78rem;
-      font-weight: 900;
-      text-decoration: none;
-    }
-
-    .route-card-body {
-      display: grid;
-      grid-template-columns: minmax(280px, 1.1fr) minmax(210px, 0.9fr);
-      gap: 16px;
-      align-items: stretch;
-    }
-
-    .sketch-map {
-      min-height: 240px;
-      overflow: hidden;
-      border-radius: 8px;
-      border: 1px solid rgba(23, 111, 130, 0.18);
-      background: #d9ebef;
-    }
-
-    .sketch-map img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      min-height: 240px;
-      object-fit: cover;
-    }
-
-    .route-map {
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }
-
-    .route-point {
-      position: relative;
-      display: grid;
-      gap: 4px;
-      padding-left: 26px;
-    }
-
-    .route-point::before {
-      content: "";
-      position: absolute;
-      left: 4px;
-      top: 0.48em;
-      width: 12px;
-      height: 12px;
-      border: 3px solid var(--lake);
-      border-radius: 50%;
-      background: var(--surface);
-      box-shadow: 0 0 0 4px #e8f3f4;
-    }
-
-    .route-point > span {
-      width: fit-content;
-      padding: 1px 8px;
-      border-radius: 4px;
-      color: #fff;
-      background: var(--sun);
-      font-size: 0.75rem;
-      font-weight: 900;
-    }
-
-    .route-leg {
-      min-height: 20px;
-      display: grid;
-      grid-template-columns: 2px minmax(0, 1fr);
-      gap: 12px;
-      margin: 3px 0 4px 9px;
-      color: var(--muted);
-      font-size: 0.78rem;
-      font-weight: 800;
-    }
-
-    .route-leg i {
-      display: block;
-      width: 2px;
-      min-height: 100%;
-      background: repeating-linear-gradient(to bottom, var(--lake), var(--lake) 5px, transparent 5px, transparent 10px);
-    }
-
-    .inner-detail {
-      overflow: hidden;
-    }
-
-    .inner-detail > summary {
+    .foldout summary {
+      min-height: 48px;
       cursor: pointer;
       padding: 12px 14px;
-      color: var(--navy);
+      color: var(--blue);
       font-weight: 900;
-      list-style-position: inside;
-    }
-
-    .inner-detail[open] > summary {
-      border-bottom: 1px solid var(--line);
-      background: #f8fbf8;
     }
 
     .timeline {
       display: grid;
       gap: 0;
       margin: 0;
-      padding: 12px 14px;
+      padding: 0 14px 12px;
       list-style: none;
     }
 
     .timeline li {
       display: grid;
-      grid-template-columns: 78px 62px minmax(0, 1fr);
-      gap: 12px;
+      grid-template-columns: 68px 54px minmax(0, 1fr);
+      gap: 9px;
       padding: 11px 0;
       border-top: 1px solid var(--line);
-    }
-
-    .timeline li:first-child {
-      border-top: 0;
-      padding-top: 0;
     }
 
     .timeline time {
       color: var(--ink);
       font-weight: 900;
-      overflow-wrap: anywhere;
     }
 
     .tag {
       align-self: start;
-      min-width: 52px;
-      padding: 2px 7px;
-      border-radius: 6px;
-      text-align: center;
+      padding: 2px 6px;
+      border-radius: 5px;
       color: #fff;
-      font-size: 0.78rem;
-      font-weight: 800;
+      font-size: 0.76rem;
+      font-weight: 900;
+      text-align: center;
     }
 
-    .move { background: #3e7fa8; }
-    .see { background: var(--forest); }
-    .food { background: var(--sun); }
-    .rest { background: var(--lake); }
-    .prep { background: var(--berry); }
+    .move { background: #467d9d; }
+    .see { background: var(--green); }
+    .food { background: var(--orange); }
+    .rest { background: var(--blue); }
+    .prep { background: #8c5b62; }
     .other { background: var(--muted); }
 
     .timeline strong {
       display: block;
-      color: var(--navy);
+      color: var(--blue);
     }
 
-    .timeline p {
-      margin: 3px 0;
-      color: var(--muted);
-    }
-
+    .timeline p,
     .timeline small {
-      color: var(--lake);
-      font-weight: 900;
-    }
-
-    .restaurant-grid,
-    .photo-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      padding: 12px 14px;
-    }
-
-    .restaurant-card {
-      display: grid;
-      gap: 5px;
-      padding: 12px;
-      border: 1px solid rgba(215, 226, 228, 0.9);
-      border-radius: 8px;
-      background: #fff;
-    }
-
-    .restaurant-card p,
-    .restaurant-card h5,
-    .restaurant-card span {
-      margin: 0;
-    }
-
-    .restaurant-card p {
-      color: var(--berry);
-      font-size: 0.8rem;
-      font-weight: 900;
-    }
-
-    .restaurant-card h5 {
-      color: var(--navy);
-      font-size: 1rem;
-      line-height: 1.35;
-    }
-
-    .restaurant-card span {
+      margin: 2px 0 0;
       color: var(--muted);
-      font-size: 0.92rem;
     }
 
-    .restaurant-card a {
-      justify-self: start;
-      margin-top: 3px;
-    }
-
-    .side-trip-card {
-      margin: 0 14px 14px;
-      padding: 12px;
-      border: 1px solid rgba(23, 111, 130, 0.16);
-      border-radius: 8px;
-      background: #f7f1e7;
-    }
-
-    .side-trip-card h4 {
-      margin: 0 0 8px;
-      color: var(--lake);
-    }
-
-    .side-trip-card figure,
-    .photo-grid figure {
-      margin: 0;
-      overflow: hidden;
-      border-radius: 8px;
-      background: #fff;
-    }
-
-    .side-trip-card img,
-    .photo-grid img {
-      display: block;
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
-    }
-
-    .side-trip-card figcaption,
-    .photo-grid figcaption {
+    .restaurant-list {
       display: grid;
-      gap: 4px;
-      padding: 10px;
-    }
-
-    .side-trip-card figcaption span,
-    .photo-grid figcaption span,
-    .photo-grid small {
-      color: var(--muted);
-      font-size: 0.88rem;
-      line-height: 1.5;
-    }
-
-    .spot-meta {
-      display: grid;
-      gap: 3px;
-      margin: 0 0 5px;
-    }
-
-    .spot-meta div {
-      display: grid;
-      grid-template-columns: 72px minmax(0, 1fr);
       gap: 8px;
+      padding: 0 14px 14px;
     }
 
-    .spot-meta dt {
-      color: var(--lake);
-      font-weight: 900;
+    .restaurant-item {
+      padding: 10px 0;
+      border-top: 1px solid var(--line);
     }
 
-    .spot-meta dd {
+    .restaurant-item p,
+    .restaurant-item span {
       margin: 0;
+      color: var(--muted);
+      font-size: 0.9rem;
     }
 
-    .spot-placeholder {
-      width: 100%;
-      aspect-ratio: 16 / 9;
-      background: linear-gradient(135deg, #e7f2f2, #f7f1e7);
-    }
-
-    .note-detail ul {
-      margin: 0;
-      padding: 12px 14px 12px 2em;
+    .restaurant-item strong {
+      display: block;
       color: var(--ink);
+      font-size: 1rem;
     }
 
-    .note-detail li + li { margin-top: 6px; }
+    .foldout > ul,
+    .ferry-detail {
+      margin: 0;
+      padding: 0 14px 14px;
+    }
+
+    .foldout > ul {
+      padding-left: 2em;
+    }
+
+    .foldout li + li {
+      margin-top: 6px;
+    }
 
     .empty {
       margin: 0;
-      padding: 12px 14px;
+      padding: 0 14px 14px;
       color: var(--muted);
     }
 
     footer {
-      width: min(1180px, calc(100% - 32px));
+      width: min(1120px, calc(100% - 28px));
       margin: 0 auto;
-      padding: 26px 0 44px;
+      padding: 24px 0 42px;
       color: var(--muted);
-      font-size: 0.92rem;
+      font-size: 0.88rem;
     }
 
-    @media (max-width: 920px) {
-      .hero-grid,
-      .day-summary,
-      .route-card-body {
-        grid-template-columns: 1fr;
-      }
-
-      .hero {
-        min-height: auto;
-      }
-
-      .overview-panel {
-        background: rgba(7, 30, 37, 0.5);
-      }
-    }
-
-    @media (max-width: 680px) {
-      body {
-        font-size: 16px;
-      }
-
-      .top-nav {
-        gap: 8px;
-      }
-
-      .brand {
-        max-width: 7em;
+    @media (max-width: 760px) {
+      .app-nav strong {
+        max-width: 8em;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
       }
 
-      .top-nav a:not(.brand) {
-        padding: 6px 8px;
-        font-size: 0.82rem;
-      }
-
       .hero {
-        padding: 34px 16px 24px;
-      }
-
-      .hero-grid {
-        gap: 18px;
-      }
-
-      .overview-panel dl > div {
-        grid-template-columns: 78px minmax(0, 1fr);
+        padding: 62px 18px 24px;
       }
 
       main {
-        width: min(100% - 20px, 1180px);
-        padding-top: 24px;
+        width: min(100% - 20px, 1120px);
+        padding-top: 22px;
       }
 
-      .day-nav-wrap {
-        top: 49px;
-        margin-top: 18px;
-      }
-
-      .day-summary {
-        padding: 14px;
-      }
-
-      .hero-photo,
-      .hero-photo img {
-        min-height: 172px;
-      }
-
-      .summary-route ol {
-        display: grid;
-        gap: 4px;
-      }
-
-      .summary-route li {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr);
-        gap: 2px;
-      }
-
-      .desktop-arrow { display: none; }
-      .mobile-arrow { display: inline; }
-
-      .summary-route .route-time {
-        display: none;
-      }
-
-      .restaurant-grid,
-      .photo-grid {
+      .day-list {
         grid-template-columns: 1fr;
       }
 
-      .summary-chips {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
+      .day-card {
+        gap: 7px;
+        padding: 13px;
       }
 
-      .day-detail > summary {
-        padding: 12px 14px;
+      .priority-grid,
+      .meal-summary,
+      .ferry-columns {
+        grid-template-columns: 1fr;
       }
 
-      .day-detail-body {
-        padding: 14px;
+      .main-photo img {
+        max-height: 240px;
       }
 
-      .timeline {
-        padding: 10px 12px;
+      .route-flow {
+        display: grid;
+        gap: 3px;
+      }
+
+      .route-flow i {
+        transform: rotate(90deg);
+        width: fit-content;
       }
 
       .timeline li {
-        grid-template-columns: 68px minmax(0, 1fr);
-        gap: 8px;
+        grid-template-columns: 64px minmax(0, 1fr);
       }
 
       .timeline .tag {
@@ -1499,16 +1172,70 @@ def render_page(days: list[Day]) -> str:
       html { scroll-behavior: auto; }
     }
     """
+
     script = """
     (function () {
-      var cards = Array.from(document.querySelectorAll(".day-card[data-date]"));
-      if (!cards.length) return;
-      var today = new Date();
-      var iso = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, "0") + "-" + String(today.getDate()).padStart(2, "0");
-      var target = cards.find(function (card) { return card.dataset.date === iso; }) || cards[0];
-      target.classList.add("is-current");
-      var link = document.getElementById("today-link");
-      if (link) link.setAttribute("href", "#" + target.id);
+      var cards = Array.from(document.querySelectorAll("[data-date]"));
+      var selectedSection = document.querySelector("[data-selected-day-section]");
+      var panels = Array.from(document.querySelectorAll("[data-day-panel]"));
+      var links = Array.from(document.querySelectorAll("[data-select-day]"));
+      var navLinks = Array.from(document.querySelectorAll(".date-rail a"));
+      if (!panels.length) return;
+
+      function tripTargetDate() {
+        var today = new Date();
+        var iso = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, "0") + "-" + String(today.getDate()).padStart(2, "0");
+        return panels.some(function (panel) { return panel.dataset.dayPanel === iso; }) ? iso : panels[0].dataset.dayPanel;
+      }
+
+      function selectDay(day, shouldScroll) {
+        panels.forEach(function (panel) {
+          panel.hidden = panel.dataset.dayPanel !== day;
+        });
+        if (selectedSection) selectedSection.hidden = false;
+        cards.forEach(function (card) {
+          card.classList.toggle("active", card.dataset.date === day);
+        });
+        navLinks.forEach(function (link) {
+          link.classList.toggle("active", link.dataset.selectDay === day);
+        });
+        var todayLink = document.getElementById("today-link");
+        if (todayLink) todayLink.setAttribute("href", "#detail-" + day);
+        if (shouldScroll) {
+          var panel = document.querySelector('[data-day-panel="' + day + '"]');
+          if (panel) panel.scrollIntoView({ behavior: shouldScroll === "smooth" ? "smooth" : "auto", block: "start" });
+        }
+      }
+
+      function resetSelection() {
+        panels.forEach(function (panel) { panel.hidden = true; });
+        if (selectedSection) selectedSection.hidden = true;
+        cards.forEach(function (card) { card.classList.remove("active"); });
+        navLinks.forEach(function (link) { link.classList.remove("active"); });
+      }
+
+      var targetDate = tripTargetDate();
+      links.forEach(function (link) {
+        if (link.id === "today-link" || link.dataset.selectToday === "true") {
+          link.dataset.selectDay = targetDate;
+          link.setAttribute("href", "#detail-" + targetDate);
+        }
+      });
+
+      links.forEach(function (link) {
+        link.addEventListener("click", function (event) {
+          event.preventDefault();
+          selectDay(link.dataset.selectDay, "smooth");
+          history.replaceState(null, "", "#detail-" + link.dataset.selectDay);
+        });
+      });
+
+      var initial = location.hash.replace("#detail-", "");
+      if (panels.some(function (panel) { return panel.dataset.dayPanel === initial; })) {
+        selectDay(initial, "auto");
+      } else {
+        resetSelection();
+      }
     }());
     """
 
@@ -1517,70 +1244,61 @@ def render_page(days: list[Day]) -> str:
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>北海道家族旅行ガイド 2026</title>
+  <title>北海道 家族旅行 2026</title>
   <style>
 {style}
   </style>
 </head>
 <body>
-  <a class="skip-link" href="#days">日別一覧へ移動</a>
-  <nav class="top-nav" aria-label="ページ内ナビゲーション">
-    <a class="brand" href="#overview">北海道ガイド</a>
-    <div class="nav-links">
-      <a href="#overview">概要</a>
-      <a href="#days">DAY一覧</a>
-      <a id="today-link" href="#day-{esc(days[0].date)}">今日</a>
-      <a href="{esc(PDF_URL)}">PDF</a>
-      <a href="{esc(PPTX_URL)}">PowerPoint</a>
+  <nav class="app-nav" aria-label="ページ内ナビゲーション">
+    <strong>北海道 家族旅行</strong>
+    <div>
+      <a class="nav-pill" id="today-link" href="#detail-{esc(days[0].date)}" data-select-day="{esc(days[0].date)}">今日</a>
+      <a class="nav-pill" href="#days">日程一覧</a>
     </div>
   </nav>
 
-  <header class="hero" id="overview">
-    <div class="hero-grid">
-      <div>
-        <p class="eyebrow">HOKKAIDO FAMILY TRAVEL GUIDE</p>
-        <h1>北海道家族旅行ガイド 2026</h1>
-        <p class="hero-lead">フェリーで北の大地へ。湖畔、花畑、峡谷、知床の森をめぐる13日間を、旅の前にも旅の途中にも読みやすくまとめました。</p>
+  <header class="hero" id="top">
+    <div class="hero-inner">
+      <h1>北海道 家族旅行<br>2026</h1>
+      <p class="hero-date">7/31 - 8/12</p>
+      <p class="hero-route">印西 → 仙台 → 北海道 → 苫小牧</p>
+      <p class="hero-note">今日はどこへ行くか、何時に出るか、食事と注意点をすぐ見られる家族用ガイドです。</p>
+      <div class="hero-actions">
+        <a href="#detail-{esc(days[0].date)}" data-select-day="{esc(days[0].date)}" data-select-today="true">今日の予定を見る</a>
+        <a href="#days">日程一覧</a>
       </div>
-      <aside class="overview-panel" aria-label="旅行全体サマリ">
-        <dl>
-          <div><dt>期間</dt><dd>2026年7月31日 - 8月12日 / 13日間</dd></div>
-          <div><dt>ルート</dt><dd>印西 → 仙台港 → 苫小牧 → 道央 → 道東 → 苫小牧 → 仙台 → 印西</dd></div>
-          <div><dt>宿泊地</dt><dd>フェリー → 洞爺湖 → 札幌 → 層雲峡 → 中標津 → 帯広 → フェリー</dd></div>
-        </dl>
-        <div class="hero-links" aria-label="成果物リンク">
-          <a id="hero-today-link" href="#day-{esc(days[0].date)}" onclick="document.getElementById('today-link')?.click(); return false;">今日の予定を見る</a>
-          <a href="#days">全日程を見る</a>
-          <a href="{esc(PDF_URL)}">PDF</a>
-          <a href="{esc(PPTX_URL)}">PowerPoint</a>
-          <a href="{esc(GITHUB_URL)}">GitHub</a>
-        </div>
-      </aside>
     </div>
   </header>
 
   <main>
-    <section aria-labelledby="summary-title">
-      <p class="section-kicker">TRIP SUMMARY</p>
-      <h2 class="section-title" id="summary-title">まず全体像をつかむ</h2>
-      <p class="lead">日別カードは、出発・到着、主なルート、食事エリア、ハイライトだけを先に確認できます。詳しい時刻表や写真、メモは必要な日だけ開いて見られます。</p>
+    <section aria-labelledby="overview-title">
+      <p class="section-label">旅の概要</p>
+      <h2 class="section-title" id="overview-title">旅の流れ</h2>
+      <p class="lead">仙台からフェリーで北海道へ渡り、洞爺湖、札幌、富良野・美瑛、層雲峡、道東、知床、帯広をめぐります。</p>
     </section>
 
-    <section class="day-nav-wrap" aria-label="日付を選ぶ">
-      <nav class="day-nav" aria-label="日別リンク">
-        {nav_items}
-      </nav>
+    <nav class="date-rail" aria-label="日付を選ぶ">
+      {date_nav}
+    </nav>
+
+    <section id="days" aria-labelledby="days-title">
+      <p class="section-label">日程一覧</p>
+      <h2 class="section-title" id="days-title">日別サマリ</h2>
+      <div class="day-list">
+        {day_cards}
+      </div>
     </section>
 
-    <section id="days">
-      <p class="section-kicker">DAY BY DAY</p>
-      <h2 class="section-title">日別サマリ一覧</h2>
-      {day_sections}
+    <section class="selected-day" aria-live="polite" aria-labelledby="selected-title" data-selected-day-section hidden>
+      <p class="section-label">選択中の日程</p>
+      <h2 class="section-title" id="selected-title">選択した日の詳細</h2>
+      {day_panels}
     </section>
   </main>
 
   <footer>
-    <p>北海道家族旅行ガイド 2026 / inzaikun/hokkaido-trip-plan</p>
+    <p>家族で見返すための北海道旅行ガイド</p>
   </footer>
   <script>{script}</script>
 </body>
@@ -1588,12 +1306,16 @@ def render_page(days: list[Day]) -> str:
 """
 
 
+def normalize_output(text: str) -> str:
+    return "\n".join(line.rstrip() for line in text.splitlines()) + "\n"
+
+
 def main() -> None:
     days = [parse_day(path) for path in sorted(ITINERARY_DIR.glob("*.md"))]
     if not days:
         raise SystemExit("No itinerary day files found.")
     OUT.parent.mkdir(parents=True, exist_ok=True)
-    OUT.write_text(render_page(days), encoding="utf-8")
+    OUT.write_text(normalize_output(render_page(days)), encoding="utf-8")
     print(f"Generated {OUT} from {len(days)} day files")
 
 
