@@ -58,7 +58,10 @@ jobs:
           assert public_html.exists() and public_html.stat().st_size > 0
           prs = Presentation(pptx)
           assert len(prs.slides) >= 5
-          assert "時刻ベース詳細スケジュール" in public_html.read_text(encoding="utf-8")
+          html = public_html.read_text(encoding="utf-8")
+          assert "日別サマリ一覧" in html
+          assert "時刻表" in html
+          assert "詳細を見る" in html
           print(f"slides={len(prs.slides)} pdf_bytes={pdf.stat().st_size}")
           PY
 

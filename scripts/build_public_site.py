@@ -10,9 +10,8 @@ from urllib.parse import quote
 from guidebook_common import (
     guide_spots,
     hero_photo,
-    meal_recommendations,
+    map_url,
     route_map_filename,
-    route_map_points,
     route_map_url,
     route_points,
     short_text,
@@ -27,6 +26,9 @@ ITINERARY_DIR = ROOT / "itinerary" / "days"
 OUT = ROOT / "docs" / "index.html"
 RAW_IMAGE_BASE = "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/images/"
 RAW_MAP_BASE = "https://raw.githubusercontent.com/inzaikun/hokkaido-trip-plan/main/maps/"
+GITHUB_URL = "https://github.com/inzaikun/hokkaido-trip-plan"
+PDF_URL = GITHUB_URL + "/raw/main/output/hokkaido-family-travel-guide.pdf"
+PPTX_URL = GITHUB_URL + "/raw/main/output/hokkaido-family-travel-guide.pptx"
 COVER_IMAGE_NAME = "cover.png"
 WEEKDAYS = ["月", "火", "水", "木", "金", "土", "日"]
 
@@ -193,15 +195,164 @@ def render_photo(day: Day) -> str:
     if photo:
         return (
             f'<figure class="hero-photo">'
-            f'<img src="{image_src(photo.image)}" alt="{esc(photo.place)}">'
+            f'<img src="{image_src(photo.image)}" alt="{esc(photo.place)}" loading="lazy">'
             f'<figcaption>{esc(photo.place)}</figcaption>'
             f"</figure>"
         )
     return (
-        f'<div class="hero-photo placeholder">'
-        f'<span>{esc(day.hero)}</span>'
-        f'<small>写真準備中</small>'
+        f'<div class="hero-photo quiet-placeholder" aria-label="{esc(day.hero)}">'
+        f"<span>{esc(day.hero)}</span>"
         f"</div>"
+    )
+
+
+def first_time(day: Day) -> str:
+    return day.timeline[0].time if day.timeline else "-"
+
+
+def last_time(day: Day) -> str:
+    return day.timeline[-1].time if day.timeline else "-"
+
+
+def parse_duration_minutes(text: str) -> int:
+    text = text.strip()
+    total = 0
+    hour_match = re.search(r"(\d+)時間", text)
+    minute_match = re.search(r"(\d+)分", text)
+    if hour_match:
+        total += int(hour_match.group(1)) * 60
+    if minute_match:
+        total += int(minute_match.group(1))
+    elif "一晩" in text:
+        total += 0
+    return total
+
+
+def travel_minutes(day: Day) -> int:
+    return sum(
+        parse_duration_minutes(item.duration)
+        for item in day.timeline
+        if item.kind == "移動"
+    )
+
+
+def travel_time_label(minutes: int) -> str:
+    if minutes <= 0:
+        return "移動時間は当日調整"
+    hours, mins = divmod(minutes, 60)
+    if hours and mins:
+        return f"走行 約{hours}時間{mins}分"
+    if hours:
+        return f"走行 約{hours}時間"
+    return f"走行 約{mins}分"
+
+
+def travel_load(day: Day) -> str:
+    minutes = travel_minutes(day)
+    if minutes >= 300:
+        return "高"
+    if minutes >= 180:
+        return "中"
+    return "低"
+
+
+def meal_area(day: Day, meal: str) -> str:
+    for restaurant in day.restaurants:
+        if meal in restaurant.meal:
+            return restaurant.area or restaurant.name
+    for item in day.timeline:
+        if meal in item.kind:
+            return item.place
+    return "当日選択"
+
+
+def highlights(day: Day, limit: int = 3) -> list[str]:
+    results: list[str] = []
+
+    def add(place: str) -> None:
+        place = place.strip()
+        if place and place not in results:
+            results.append(place)
+
+    for photo in day.photos:
+        add(photo.place)
+        if len(results) >= limit:
+            return results[:limit]
+    for item in day.timeline:
+        if item.kind == "観光":
+            add(item.place)
+            if len(results) >= limit:
+                return results[:limit]
+    for point in route_points(day, max_points=7):
+        add(point["place"])
+        if len(results) >= limit:
+            return results[:limit]
+    return results[:limit]
+
+
+def compact_route(day: Day) -> list[dict[str, str]]:
+    return route_points(day, max_points=7)
+
+
+def render_route_line(day: Day) -> str:
+    points = compact_route(day)
+    if not points:
+        return ""
+    items = []
+    for index, point in enumerate(points):
+        leg = point.get("leg") or ""
+        connector = ""
+        if index < len(points) - 1:
+            connector = (
+                '<span class="route-arrow" aria-hidden="true">'
+                '<span class="desktop-arrow">→</span><span class="mobile-arrow">↓</span>'
+                "</span>"
+            )
+            if leg:
+                connector += f'<small class="route-time">{esc(leg)}</small>'
+        note = f'<em>{esc(point["note"])}</em>' if point.get("note") else ""
+        items.append(
+            '<li>'
+            f'<strong>{esc(point["place"])}</strong>{note}'
+            f"{connector}"
+            "</li>"
+        )
+    return (
+        '<div class="summary-route">'
+        "<p>Today&apos;s Route</p>"
+        f'<ol>{"".join(items)}</ol>'
+        "</div>"
+    )
+
+
+def render_summary_chips(day: Day) -> str:
+    minutes = travel_minutes(day)
+    chips = [
+        ("出発", first_time(day)),
+        ("終了予定", last_time(day)),
+        ("移動負荷", travel_load(day)),
+        ("走行", travel_time_label(minutes).replace("走行 ", "")),
+        ("昼", meal_area(day, "昼食")),
+        ("夜", meal_area(day, "夕食")),
+    ]
+    return (
+        '<dl class="summary-chips">'
+        + "".join(
+            f"<div><dt>{esc(label)}</dt><dd>{esc(value)}</dd></div>"
+            for label, value in chips
+        )
+        + "</dl>"
+    )
+
+
+def render_highlights(day: Day) -> str:
+    items = highlights(day)
+    if not items:
+        return ""
+    return (
+        '<div class="highlights"><p>HIGHLIGHT</p><ul>'
+        + "".join(f"<li>{esc(item)}</li>" for item in items)
+        + "</ul></div>"
     )
 
 
@@ -214,7 +365,7 @@ def render_timeline(day: Day) -> str:
             f'<span class="tag {kind_class(item.kind)}">{esc(item.kind)}</span>'
             "<div>"
             f"<strong>{esc(item.place)}</strong>"
-            f'<p title="{esc(item.detail)}">{render_text(short_text(item.detail, 86))}</p>'
+            f"<p>{render_text(item.detail)}</p>"
             f"<small>{esc(item.duration)}</small>"
             "</div>"
             "</li>"
@@ -222,17 +373,18 @@ def render_timeline(day: Day) -> str:
     return "\n".join(items)
 
 
-def render_restaurants(day: Day) -> str:
+def render_restaurant_cards(day: Day) -> str:
     if not day.restaurants:
         return '<p class="empty">候補はこれから追記します。</p>'
     rows = []
     for item in day.restaurants:
         rows.append(
-            "<li>"
-            f'<span>{esc(item.meal)}</span>'
-            f"<strong>{esc(item.name)}</strong>"
-            f"<p>{esc(item.area)} / {esc(item.memo)}</p>"
-            "</li>"
+            '<article class="restaurant-card">'
+            f'<p>{esc(item.meal)} / {esc(item.area)}</p>'
+            f"<h5>{esc(item.name)}</h5>"
+            f"<span>{esc(item.memo)}</span>"
+            f'<a href="{esc(map_url(item.name, item.area))}" target="_blank" rel="noreferrer">Google Mapsで見る</a>'
+            "</article>"
         )
     return "\n".join(rows)
 
@@ -243,12 +395,12 @@ def render_side_trip(day: Day) -> str:
         return ""
     spot = spots[0]
     if spot["image"]:
-        visual = f'<img src="{image_src(spot["image"])}" alt="{esc(spot["place"])}">'
+        visual = f'<img src="{image_src(spot["image"])}" alt="{esc(spot["place"])}" loading="lazy">'
     else:
-        visual = f'<div class="spot-placeholder">{esc(spot["place"])}</div>'
+        visual = f'<div class="spot-placeholder" aria-label="{esc(spot["place"])}"></div>'
     return (
-        '<section class="side-trip-card">'
-        "<h3>より道スポット</h3>"
+        '<section class="side-trip-card" aria-label="より道スポット">'
+        "<h4>より道スポット</h4>"
         "<figure>"
         f"{visual}"
         "<figcaption>"
@@ -279,8 +431,8 @@ def render_route_sketch(day: Day) -> str:
     )
 
 
-def render_route(day: Day) -> str:
-    points = route_points(day, max_points=8)
+def render_route_detail(day: Day) -> str:
+    points = compact_route(day)
     if not points:
         return ""
     rows = []
@@ -297,8 +449,8 @@ def render_route(day: Day) -> str:
             "</li>"
         )
     return (
-        '<section class="route-card">'
-        '<div class="card-title-row"><h3>Today\'s Map</h3>'
+        '<section class="detail-section route-card">'
+        '<div class="card-title-row"><h4>Today\'s Route</h4>'
         f'<a href="{esc(route_map_url(day))}" target="_blank" rel="noreferrer">Google Map</a></div>'
         '<div class="route-card-body">'
         f"{render_route_sketch(day)}"
@@ -308,401 +460,665 @@ def render_route(day: Day) -> str:
     )
 
 
-def render_theme(day: Day) -> str:
-    return (
-        '<section class="theme-card">'
-        "<h3>Today's Theme</h3>"
-        f"<p>{esc(today_theme(day))}</p>"
-        "</section>"
-    )
-
-
-def render_recommendations(day: Day) -> str:
-    items = []
-    for rec in meal_recommendations(day)[:2]:
-        items.append(
-            '<article class="meal-card">'
-            f'<p class="meal-label">{esc(rec["label"])}</p>'
-            f'<h4>{esc(rec["name"])}</h4>'
-            f'<p class="stars" aria-label="おすすめ度5">{esc(rec["stars"])}</p>'
-            f'<dl><div><dt>予算</dt><dd>{esc(rec["budget"])}</dd></div>'
-            f'<div><dt>人気メニュー</dt><dd>{esc(rec["popular"])}</dd></div></dl>'
-            f'<p>{esc(short_text(rec["memo"], 48))}</p>'
-            "</article>"
-        )
-    if not items:
-        return ""
-    return '<section class="meal-recs"><h3>ごはん候補</h3>' + "".join(items) + "</section>"
-
-
-def render_tips(day: Day) -> str:
+def render_tip_list(day: Day) -> str:
     tips = todays_tips(day)
     if not tips:
-        return ""
+        return '<p class="empty">当日の天候と体調に合わせて調整します。</p>'
     return (
-        '<section class="tips-card">'
-        "<h3>Today's Tips</h3>"
         "<ul>"
         + "\n".join(f"<li>{esc(tip)}</li>" for tip in tips)
         + "</ul>"
-        "</section>"
     )
+
+
+def render_photo_grid(day: Day) -> str:
+    photos = [photo for photo in day.photos if photo.image][:4]
+    if not photos:
+        return '<p class="empty">写真は追加予定です。</p>'
+    return (
+        '<div class="photo-grid">'
+        + "".join(
+            "<figure>"
+            f'<img src="{image_src(photo.image)}" alt="{esc(photo.place)}" loading="lazy">'
+            "<figcaption>"
+            f"<strong>{esc(photo.place)}</strong>"
+            f"<span>{esc(short_text(photo.caption, 70))}</span>"
+            f"<small>{esc(photo.credit)}</small>"
+            "</figcaption>"
+            "</figure>"
+            for photo in photos
+        )
+        + "</div>"
+    )
+
+
+def render_nested_details(title: str, body: str, css_class: str = "", open_attr: bool = False) -> str:
+    opened = " open" if open_attr else ""
+    class_name = f' class="inner-detail {css_class}"' if css_class else ' class="inner-detail"'
+    return f"<details{class_name}{opened}><summary>{esc(title)}</summary>{body}</details>"
 
 
 def render_day(day: Day) -> str:
     return f"""
-      <article class="day" id="day-{esc(day.date)}">
-        <header class="day-header">
-          <div>
-            <p class="day-label">DAY {esc(day.day)} / {formatted_date(day.date)}</p>
-            <h2>{esc(day.title)}</h2>
-            <p class="area">{esc(day.area)}</p>
-          </div>
+      <article class="day-card" id="day-{esc(day.date)}" data-date="{esc(day.date)}">
+        <header class="day-summary">
           {render_photo(day)}
+          <div class="summary-copy">
+            <p class="day-label">DAY {esc(day.day)} / {formatted_date(day.date)}</p>
+            <h3>{esc(day.title)}</h3>
+            {render_route_line(day)}
+            {render_summary_chips(day)}
+            {render_highlights(day)}
+          </div>
         </header>
-        <div class="guide-intro">
-          {render_route(day)}
-          {render_theme(day)}
-        </div>
-        <div class="day-layout">
-          <section class="timeline-wrap">
-            <h3>時刻ベース詳細スケジュール</h3>
-            <ol class="timeline">
-              {render_timeline(day)}
-            </ol>
-          </section>
-          <aside class="side-panel">
-            {render_recommendations(day)}
-            {render_side_trip(day)}
-            {render_tips(day)}
-          </aside>
-        </div>
+        <details class="day-detail">
+          <summary>詳細を見る</summary>
+          <div class="day-detail-body">
+            <section class="theme-card">
+              <h4>今日のテーマ</h4>
+              <p>{esc(today_theme(day))}</p>
+            </section>
+            {render_route_detail(day)}
+            {render_nested_details(
+                "時刻表",
+                '<ol class="timeline">' + render_timeline(day) + "</ol>",
+                "timeline-detail",
+                True,
+            )}
+            {render_nested_details(
+                "食事候補",
+                '<div class="restaurant-grid">' + render_restaurant_cards(day) + "</div>" + render_side_trip(day),
+                "meal-detail",
+            )}
+            {render_nested_details(
+                "写真で見るスポット",
+                render_photo_grid(day),
+                "photo-detail",
+            )}
+            {render_nested_details(
+                "注意点・雨天プラン",
+                render_tip_list(day),
+                "note-detail",
+            )}
+          </div>
+        </details>
       </article>
 """
 
 
 def render_page(days: list[Day]) -> str:
     nav_items = "\n".join(
-        f'<a href="#day-{esc(day.date)}"><strong>Day {esc(day.day)}</strong><span>{formatted_date(day.date)}</span><em>{esc(day.area)}</em></a>'
+        f'<a href="#day-{esc(day.date)}"><strong>Day {esc(day.day)}</strong><span>{formatted_date(day.date)}</span></a>'
         for day in days
     )
     day_sections = "\n".join(render_day(day) for day in days)
-
-    return f"""<!doctype html>
-<html lang="ja">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>北海道家族旅行ガイド 2026</title>
-  <style>
-    :root {{
+    style = """
+    :root {
       color-scheme: light;
       --ink: #172026;
-      --muted: #66717c;
-      --line: #d7e0e7;
-      --paper: #f7f4ee;
+      --muted: #5f6f78;
+      --line: #d7e2e4;
+      --paper: #faf7ef;
       --surface: #ffffff;
-      --mist: #e7f1f4;
-      --lake: #146b7c;
-      --forest: #3f6b45;
-      --berry: #9b3d4e;
-      --sun: #c47a24;
-      --sky: #3e7fa8;
-    }}
+      --mist: #eaf3f2;
+      --navy: #123846;
+      --lake: #176f82;
+      --forest: #3f7451;
+      --sun: #b9772a;
+      --berry: #9a4753;
+      --shadow: 0 14px 34px rgba(18, 56, 70, 0.08);
+    }
 
-    * {{ box-sizing: border-box; }}
+    * { box-sizing: border-box; }
 
-    html {{ scroll-behavior: smooth; }}
+    html { scroll-behavior: smooth; }
 
-    body {{
+    body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "YuGothic", "Noto Sans JP", sans-serif;
       color: var(--ink);
       background: var(--paper);
-      line-height: 1.7;
-    }}
+      line-height: 1.68;
+      overflow-x: hidden;
+    }
 
-    a {{
+    a {
       color: var(--lake);
       text-decoration-thickness: 1px;
       text-underline-offset: 3px;
-    }}
+    }
 
-    .hero {{
-      min-height: 58vh;
+    img { max-width: 100%; }
+
+    .skip-link {
+      position: absolute;
+      left: 12px;
+      top: -44px;
+      z-index: 20;
+      padding: 8px 12px;
+      background: var(--navy);
+      color: #fff;
+    }
+
+    .skip-link:focus { top: 12px; }
+
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px clamp(14px, 4vw, 48px);
+      border-bottom: 1px solid rgba(215, 226, 228, 0.9);
+      background: rgba(250, 247, 239, 0.92);
+      backdrop-filter: blur(12px);
+    }
+
+    .brand {
+      flex: 0 0 auto;
+      color: var(--navy);
+      font-weight: 900;
+      text-decoration: none;
+    }
+
+    .top-nav .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-left: auto;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .top-nav .nav-links::-webkit-scrollbar { display: none; }
+
+    .top-nav a:not(.brand),
+    .hero-links a,
+    .detail-link {
+      flex: 0 0 auto;
+      padding: 7px 10px;
+      border: 1px solid rgba(23, 111, 130, 0.28);
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.76);
+      color: var(--navy);
+      font-size: 0.88rem;
+      font-weight: 800;
+      text-decoration: none;
+    }
+
+    .hero {
       display: grid;
       align-items: end;
-      padding: 46px clamp(18px, 5vw, 72px);
+      min-height: min(560px, 72vh);
+      padding: clamp(42px, 9vw, 92px) clamp(18px, 5vw, 72px) 30px;
       background:
-        linear-gradient(180deg, rgba(11, 40, 47, 0.14), rgba(11, 40, 47, 0.78)),
-        url("{image_src(COVER_IMAGE_NAME)}") center/cover;
+        linear-gradient(180deg, rgba(9, 33, 42, 0.12), rgba(9, 33, 42, 0.82)),
+        url(\"""" + image_src(COVER_IMAGE_NAME) + """\") center/cover;
       color: #fff;
-    }}
+    }
 
-    .hero > div {{
-      max-width: 980px;
-    }}
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(280px, 0.88fr);
+      gap: clamp(20px, 4vw, 44px);
+      align-items: end;
+      width: min(1180px, 100%);
+    }
 
-    .hero h1 {{
+    .eyebrow {
+      margin: 0 0 10px;
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      max-width: 820px;
       margin: 0;
-      max-width: 980px;
-      font-size: clamp(2.2rem, 6vw, 5rem);
+      font-size: clamp(2.2rem, 6vw, 4.75rem);
       line-height: 1.04;
       letter-spacing: 0;
-    }}
+    }
 
-    .hero p {{
-      max-width: 820px;
-      margin: 16px 0 0;
-      font-size: clamp(1rem, 2vw, 1.25rem);
-    }}
+    .hero-lead {
+      max-width: 760px;
+      margin: 14px 0 0;
+      font-size: clamp(1rem, 2vw, 1.18rem);
+    }
 
-    main {{
+    .overview-panel {
+      display: grid;
+      gap: 10px;
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      border-radius: 8px;
+      background: rgba(7, 30, 37, 0.42);
+      color: #fff;
+    }
+
+    .overview-panel dl {
+      display: grid;
+      gap: 8px;
+      margin: 0;
+    }
+
+    .overview-panel dl > div {
+      display: grid;
+      grid-template-columns: 88px minmax(0, 1fr);
+      gap: 10px;
+      align-items: baseline;
+    }
+
+    .overview-panel dt {
+      color: rgba(255, 255, 255, 0.72);
+      font-size: 0.86rem;
+      font-weight: 900;
+    }
+
+    .overview-panel dd {
+      margin: 0;
+      font-weight: 800;
+    }
+
+    .hero-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+
+    .hero-links a {
+      color: #fff;
+      border-color: rgba(255, 255, 255, 0.44);
+      background: rgba(255, 255, 255, 0.14);
+    }
+
+    main {
       width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
-      padding: 42px 0 72px;
-    }}
+      padding: 34px 0 72px;
+    }
 
-    .section-title {{
-      margin: 0 0 16px;
+    .section-kicker {
+      margin: 0 0 5px;
+      color: var(--lake);
+      font-size: 0.84rem;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .section-title {
+      margin: 0;
+      color: var(--navy);
       font-size: clamp(1.45rem, 3vw, 2.25rem);
       line-height: 1.2;
       letter-spacing: 0;
-    }}
+    }
 
-    .lead {{
+    .lead {
       max-width: 860px;
-      margin: 0;
-      color: var(--muted);
-    }}
-
-    .toc {{
-      margin: 34px 0;
-      padding: 28px 0;
-      border-top: 1px solid var(--line);
-      border-bottom: 1px solid var(--line);
-    }}
-
-    .day-nav {{
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 18px;
-    }}
-
-    .day-nav a {{
-      min-height: 92px;
-      padding: 12px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--surface);
-      text-decoration: none;
-    }}
-
-    .day-nav strong,
-    .day-nav span,
-    .day-nav em {{
-      display: block;
-    }}
-
-    .day-nav strong {{
-      color: var(--lake);
-      font-size: 0.9rem;
-    }}
-
-    .day-nav span {{
-      color: var(--ink);
-      font-weight: 800;
-    }}
-
-    .day-nav em {{
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 0.85rem;
-      font-style: normal;
-    }}
-
-    .day {{
-      margin-top: 28px;
-      padding: clamp(18px, 3vw, 30px);
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--surface);
-    }}
-
-    .day-header {{
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(260px, 390px);
-      gap: 24px;
-      align-items: stretch;
-    }}
-
-    .day-label {{
-      margin: 0 0 10px;
-      color: var(--lake);
-      font-weight: 800;
-      letter-spacing: 0;
-    }}
-
-    .day h2 {{
-      margin: 0;
-      font-size: clamp(1.55rem, 3vw, 2.4rem);
-      line-height: 1.2;
-      letter-spacing: 0;
-    }}
-
-    .area {{
       margin: 10px 0 0;
       color: var(--muted);
-      font-weight: 700;
-    }}
+    }
 
-    .hero-photo {{
-      min-height: 220px;
+    .day-nav-wrap {
+      position: sticky;
+      top: 53px;
+      z-index: 8;
+      margin: 24px 0 28px;
+      padding: 10px 0;
+      background: linear-gradient(180deg, var(--paper) 0%, rgba(250, 247, 239, 0.9) 78%, rgba(250, 247, 239, 0) 100%);
+    }
+
+    .day-nav {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+      scrollbar-width: thin;
+    }
+
+    .day-nav a {
+      flex: 0 0 auto;
+      min-width: 90px;
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--navy);
+      text-decoration: none;
+    }
+
+    .day-nav strong,
+    .day-nav span {
+      display: block;
+      white-space: nowrap;
+    }
+
+    .day-nav strong {
+      color: var(--lake);
+      font-size: 0.78rem;
+    }
+
+    .day-nav span {
+      font-size: 0.9rem;
+      font-weight: 900;
+    }
+
+    .days {
+      display: grid;
+      gap: 18px;
+      margin-top: 18px;
+    }
+
+    .day-card {
+      scroll-margin-top: 120px;
+      overflow: clip;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      box-shadow: var(--shadow);
+    }
+
+    .day-card.is-current {
+      border-color: rgba(23, 111, 130, 0.75);
+      box-shadow: 0 0 0 3px rgba(23, 111, 130, 0.16), var(--shadow);
+    }
+
+    .day-summary {
+      display: grid;
+      grid-template-columns: minmax(230px, 34%) minmax(0, 1fr);
+      gap: clamp(16px, 3vw, 26px);
+      padding: clamp(16px, 3vw, 26px);
+    }
+
+    .hero-photo {
+      min-height: 245px;
       margin: 0;
       border-radius: 8px;
       overflow: hidden;
       background: var(--mist);
       position: relative;
-    }}
+    }
 
-    .hero-photo img {{
+    .hero-photo img {
       width: 100%;
       height: 100%;
-      min-height: 220px;
+      min-height: 245px;
       object-fit: cover;
       display: block;
-    }}
+    }
 
-    .hero-photo figcaption {{
+    .hero-photo figcaption {
       position: absolute;
-      left: 12px;
-      bottom: 12px;
+      left: 10px;
+      bottom: 10px;
+      max-width: calc(100% - 20px);
       padding: 4px 8px;
       border-radius: 4px;
-      background: rgba(23, 32, 38, 0.72);
+      background: rgba(18, 56, 70, 0.74);
       color: #fff;
-      font-size: 0.9rem;
-      font-weight: 700;
-    }}
+      font-size: 0.84rem;
+      font-weight: 800;
+    }
 
-    .placeholder {{
+    .quiet-placeholder {
+      min-height: 190px;
       display: grid;
       place-items: center;
-      text-align: center;
-      color: var(--lake);
-    }}
-
-    .placeholder span {{
-      display: block;
-      font-size: 1.35rem;
-      font-weight: 900;
-    }}
-
-    .placeholder small {{
-      display: block;
-      color: var(--muted);
-      font-weight: 700;
-    }}
-
-    .guide-intro {{
-      display: grid;
-      grid-template-columns: minmax(0, 1.22fr) minmax(260px, 0.78fr);
-      gap: 18px;
-      margin-top: 22px;
-      align-items: stretch;
-    }}
-
-    .route-card,
-    .theme-card,
-    .meal-card,
-    .tips-card {{
-      border-radius: 8px;
-      border: 1px solid rgba(20, 107, 124, 0.18);
-      background: linear-gradient(180deg, #fff, #fbfaf6);
-      box-shadow: 0 12px 26px rgba(23, 32, 38, 0.06);
-    }}
-
-    .route-card,
-    .theme-card {{
       padding: 18px;
-    }}
+      color: var(--lake);
+      text-align: center;
+      font-weight: 900;
+    }
 
-    .card-title-row {{
+    .day-label {
+      margin: 0 0 7px;
+      color: var(--lake);
+      font-size: 0.86rem;
+      font-weight: 900;
+    }
+
+    .summary-copy h3 {
+      margin: 0;
+      color: var(--navy);
+      font-size: clamp(1.35rem, 3vw, 2.15rem);
+      line-height: 1.22;
+      letter-spacing: 0;
+    }
+
+    .route-copy {
+      margin: 9px 0 0;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .summary-route {
+      margin-top: 14px;
+      padding: 12px;
+      border: 1px solid rgba(23, 111, 130, 0.18);
+      border-radius: 8px;
+      background: #f5fbfa;
+    }
+
+    .summary-route p,
+    .highlights p {
+      margin: 0 0 7px;
+      color: var(--lake);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0;
+    }
+
+    .summary-route ol {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .summary-route li {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+      color: var(--navy);
+      font-weight: 900;
+    }
+
+    .summary-route li strong {
+      overflow-wrap: anywhere;
+    }
+
+    .summary-route em {
+      padding: 1px 6px;
+      border-radius: 4px;
+      background: #f1e5cf;
+      color: #7c531e;
+      font-size: 0.72rem;
+      font-style: normal;
+    }
+
+    .route-arrow {
+      color: var(--forest);
+      font-weight: 900;
+    }
+
+    .mobile-arrow { display: none; }
+
+    .route-time {
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+
+    .summary-chips {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      margin: 14px 0 0;
+    }
+
+    .summary-chips div {
+      min-width: 0;
+      padding: 8px 9px;
+      border: 1px solid rgba(215, 226, 228, 0.9);
+      border-radius: 6px;
+      background: #fff;
+    }
+
+    .summary-chips dt {
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 900;
+    }
+
+    .summary-chips dd {
+      margin: 1px 0 0;
+      color: var(--ink);
+      font-size: 0.94rem;
+      font-weight: 900;
+      overflow-wrap: anywhere;
+    }
+
+    .highlights {
+      margin-top: 14px;
+    }
+
+    .highlights ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .highlights li {
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: #eef6ee;
+      color: var(--forest);
+      font-weight: 900;
+      font-size: 0.9rem;
+    }
+
+    .day-detail {
+      border-top: 1px solid var(--line);
+    }
+
+    .day-detail > summary {
+      cursor: pointer;
+      padding: 13px clamp(16px, 3vw, 26px);
+      color: var(--navy);
+      font-weight: 900;
+      list-style-position: inside;
+    }
+
+    .day-detail[open] > summary {
+      border-bottom: 1px solid var(--line);
+      background: #fbf9f3;
+    }
+
+    .day-detail-body {
+      display: grid;
+      gap: 14px;
+      padding: clamp(16px, 3vw, 26px);
+    }
+
+    .theme-card,
+    .route-card,
+    .inner-detail {
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: #fffdf8;
+    }
+
+    .theme-card {
+      padding: 16px;
+    }
+
+    .theme-card h4,
+    .card-title-row h4 {
+      margin: 0 0 8px;
+      color: var(--lake);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 1.16rem;
+    }
+
+    .theme-card p {
+      margin: 0;
+      color: var(--ink);
+    }
+
+    .route-card {
+      padding: 16px;
+    }
+
+    .card-title-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
       margin-bottom: 12px;
-    }}
+    }
 
-    .card-title-row h3 {{
-      margin: 0;
-    }}
+    .card-title-row h4 { margin: 0; }
 
-    .card-title-row a {{
+    .card-title-row a,
+    .restaurant-card a,
+    .side-trip-card a {
       flex: 0 0 auto;
-      border-radius: 999px;
-      padding: 4px 10px;
+      border-radius: 6px;
+      padding: 4px 9px;
       background: var(--lake);
       color: #fff;
       font-size: 0.78rem;
       font-weight: 900;
       text-decoration: none;
-    }}
+    }
 
-    .route-card h3,
-    .theme-card h3,
-    .meal-recs h3,
-    .tips-card h3,
-    .side-trip-card h3 {{
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      margin-bottom: 12px;
-      color: var(--lake);
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 1.22rem;
-    }}
-
-    .route-card-body {{
+    .route-card-body {
       display: grid;
-      grid-template-columns: minmax(260px, 1.15fr) minmax(180px, 0.85fr);
+      grid-template-columns: minmax(280px, 1.1fr) minmax(210px, 0.9fr);
       gap: 16px;
       align-items: stretch;
-    }}
+    }
 
-    .sketch-map {{
+    .sketch-map {
       min-height: 240px;
       overflow: hidden;
       border-radius: 8px;
-      border: 1px solid rgba(20, 107, 124, 0.18);
-      background: #d5eaf0;
-    }}
+      border: 1px solid rgba(23, 111, 130, 0.18);
+      background: #d9ebef;
+    }
 
-    .sketch-map img {{
+    .sketch-map img {
       display: block;
       width: 100%;
       height: 100%;
       min-height: 240px;
       object-fit: cover;
-    }}
+    }
 
-    .route-map {{
+    .route-map {
       margin: 0;
       padding: 0;
       list-style: none;
-    }}
+    }
 
-    .route-point {{
+    .route-point {
       position: relative;
       display: grid;
-      grid-template-columns: minmax(0, 1fr);
       gap: 4px;
       padding-left: 26px;
-    }}
+    }
 
-    .route-point::before {{
+    .route-point::before {
       content: "";
       position: absolute;
       left: 4px;
@@ -710,26 +1126,22 @@ def render_page(days: list[Day]) -> str:
       width: 12px;
       height: 12px;
       border: 3px solid var(--lake);
-      border-radius: 999px;
+      border-radius: 50%;
       background: var(--surface);
       box-shadow: 0 0 0 4px #e8f3f4;
-    }}
+    }
 
-    .route-point strong {{
-      font-size: 1rem;
-    }}
-
-    .route-point > span {{
+    .route-point > span {
       width: fit-content;
       padding: 1px 8px;
-      border-radius: 999px;
+      border-radius: 4px;
       color: #fff;
       background: var(--sun);
       font-size: 0.75rem;
       font-weight: 900;
-    }}
+    }
 
-    .route-leg {{
+    .route-leg {
       min-height: 20px;
       display: grid;
       grid-template-columns: 2px minmax(0, 1fr);
@@ -738,349 +1150,431 @@ def render_page(days: list[Day]) -> str:
       color: var(--muted);
       font-size: 0.78rem;
       font-weight: 800;
-    }}
+    }
 
-    .route-leg i {{
+    .route-leg i {
       display: block;
       width: 2px;
       min-height: 100%;
       background: repeating-linear-gradient(to bottom, var(--lake), var(--lake) 5px, transparent 5px, transparent 10px);
-    }}
+    }
 
-    .theme-card p {{
-      margin: 0;
-      font-size: 1rem;
-      line-height: 1.75;
-    }}
+    .inner-detail {
+      overflow: hidden;
+    }
 
-    .day-layout {{
+    .inner-detail > summary {
+      cursor: pointer;
+      padding: 12px 14px;
+      color: var(--navy);
+      font-weight: 900;
+      list-style-position: inside;
+    }
+
+    .inner-detail[open] > summary {
+      border-bottom: 1px solid var(--line);
+      background: #f8fbf8;
+    }
+
+    .timeline {
       display: grid;
-      grid-template-columns: minmax(0, 1.35fr) minmax(260px, 0.65fr);
-      gap: 22px;
-      margin-top: 24px;
-      align-items: start;
-    }}
-
-    h3 {{
-      margin: 0 0 14px;
-      font-size: 1.15rem;
-      letter-spacing: 0;
-    }}
-
-    .timeline {{
-      display: grid;
-      gap: 6px;
+      gap: 0;
       margin: 0;
-      padding: 0;
+      padding: 12px 14px;
       list-style: none;
-    }}
+    }
 
-    .timeline li {{
+    .timeline li {
       display: grid;
-      grid-template-columns: 72px 64px minmax(0, 1fr);
+      grid-template-columns: 78px 62px minmax(0, 1fr);
       gap: 12px;
-      padding: 10px 0;
+      padding: 11px 0;
       border-top: 1px solid var(--line);
-    }}
+    }
 
-    .timeline li:first-child {{
+    .timeline li:first-child {
       border-top: 0;
       padding-top: 0;
-    }}
+    }
 
-    .timeline time {{
-      font-weight: 900;
+    .timeline time {
       color: var(--ink);
+      font-weight: 900;
       overflow-wrap: anywhere;
-    }}
+    }
 
-    .tag {{
+    .tag {
       align-self: start;
-      min-width: 54px;
+      min-width: 52px;
       padding: 2px 7px;
-      border-radius: 999px;
+      border-radius: 6px;
       text-align: center;
       color: #fff;
       font-size: 0.78rem;
       font-weight: 800;
-    }}
+    }
 
-    .move {{ background: var(--sky); }}
-    .see {{ background: var(--forest); }}
-    .food {{ background: var(--sun); }}
-    .rest {{ background: var(--lake); }}
-    .prep {{ background: var(--berry); }}
-    .other {{ background: var(--muted); }}
+    .move { background: #3e7fa8; }
+    .see { background: var(--forest); }
+    .food { background: var(--sun); }
+    .rest { background: var(--lake); }
+    .prep { background: var(--berry); }
+    .other { background: var(--muted); }
 
-    .timeline strong {{
+    .timeline strong {
       display: block;
-      font-size: 1rem;
-    }}
+      color: var(--navy);
+    }
 
-    .timeline p {{
+    .timeline p {
       margin: 3px 0;
       color: var(--muted);
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-    }}
+    }
 
-    .timeline small {{
-      color: var(--lake);
-      font-weight: 800;
-    }}
-
-    .side-panel {{
-      display: grid;
-      gap: 14px;
-    }}
-
-    .side-panel section {{
-      padding: 0;
-    }}
-
-    .restaurants {{
-      display: grid;
-      gap: 12px;
-      margin: 0;
-      padding: 0;
-      list-style: none;
-    }}
-
-    .restaurants li {{
-      padding-top: 12px;
-      border-top: 1px solid rgba(63, 107, 69, 0.18);
-    }}
-
-    .restaurants li:first-child {{ border-top: 0; padding-top: 0; }}
-
-    .restaurants span {{
-      display: inline-block;
-      margin-bottom: 3px;
-      color: var(--berry);
-      font-size: 0.84rem;
-      font-weight: 900;
-    }}
-
-    .restaurants strong {{
-      display: block;
-    }}
-
-    .restaurants p,
-    .empty {{
-      margin: 3px 0 0;
-      color: var(--muted);
-    }}
-
-    .notes ul {{
-      margin: 0;
-      padding-left: 1.1em;
-      color: var(--muted);
-    }}
-
-    .notes li + li {{
-      margin-top: 6px;
-    }}
-
-    .meal-recs {{
-      display: grid;
-      gap: 12px;
-    }}
-
-    .meal-card {{
-      padding: 13px;
-      background: #fffaf0;
-    }}
-
-    .meal-card h4 {{
-      margin: 2px 0 2px;
-      font-size: 0.98rem;
-    }}
-
-    .meal-label {{
-      margin: 0;
-      color: var(--berry);
-      font-weight: 900;
-      font-size: 0.86rem;
-    }}
-
-    .stars {{
-      margin: 0 0 5px;
-      color: #d27d22;
-      letter-spacing: 0;
-      font-weight: 900;
-      font-size: 0.82rem;
-    }}
-
-    .meal-card dl,
-    .spot-meta {{
-      display: grid;
-      gap: 4px;
-      margin: 0 0 5px;
-    }}
-
-    .meal-card dl div,
-    .spot-meta div {{
-      display: grid;
-      grid-template-columns: 76px minmax(0, 1fr);
-      gap: 8px;
-    }}
-
-    .meal-card dt,
-    .spot-meta dt {{
+    .timeline small {
       color: var(--lake);
       font-weight: 900;
-    }}
+    }
 
-    .meal-card dd,
-    .spot-meta dd {{
-      margin: 0;
-      color: var(--ink);
-    }}
+    .restaurant-grid,
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      padding: 12px 14px;
+    }
 
-    .meal-card p:last-child {{
-      margin: 8px 0 0;
-      color: var(--muted);
-    }}
-
-    .side-trip-card {{
-      padding: 14px;
+    .restaurant-card {
+      display: grid;
+      gap: 5px;
+      padding: 12px;
+      border: 1px solid rgba(215, 226, 228, 0.9);
       border-radius: 8px;
-      border: 1px solid rgba(20, 107, 124, 0.18);
-      background: #f8f2e8;
-    }}
+      background: #fff;
+    }
 
-    .side-trip-card figure {{
+    .restaurant-card p,
+    .restaurant-card h5,
+    .restaurant-card span {
+      margin: 0;
+    }
+
+    .restaurant-card p {
+      color: var(--berry);
+      font-size: 0.8rem;
+      font-weight: 900;
+    }
+
+    .restaurant-card h5 {
+      color: var(--navy);
+      font-size: 1rem;
+      line-height: 1.35;
+    }
+
+    .restaurant-card span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .restaurant-card a {
+      justify-self: start;
+      margin-top: 3px;
+    }
+
+    .side-trip-card {
+      margin: 0 14px 14px;
+      padding: 12px;
+      border: 1px solid rgba(23, 111, 130, 0.16);
+      border-radius: 8px;
+      background: #f7f1e7;
+    }
+
+    .side-trip-card h4 {
+      margin: 0 0 8px;
+      color: var(--lake);
+    }
+
+    .side-trip-card figure,
+    .photo-grid figure {
       margin: 0;
       overflow: hidden;
       border-radius: 8px;
-      background: var(--surface);
-    }}
+      background: #fff;
+    }
 
-    .side-trip-card img {{
+    .side-trip-card img,
+    .photo-grid img {
       display: block;
       width: 100%;
       aspect-ratio: 16 / 9;
       object-fit: cover;
-    }}
+    }
 
-    .side-trip-card figcaption {{
+    .side-trip-card figcaption,
+    .photo-grid figcaption {
       display: grid;
-      gap: 5px;
-      padding: 11px;
-    }}
+      gap: 4px;
+      padding: 10px;
+    }
 
-    .side-trip-card figcaption strong {{
-      color: var(--ink);
-      line-height: 1.35;
-    }}
-
-    .side-trip-card figcaption span {{
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
+    .side-trip-card figcaption span,
+    .photo-grid figcaption span,
+    .photo-grid small {
       color: var(--muted);
-      font-size: 0.9rem;
-      line-height: 1.55;
-    }}
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
 
-    .tips-card {{
-      padding: 14px;
-      background: #f4f8ef;
-    }}
-
-    .tips-card ul {{
-      margin: 0;
-      padding-left: 1.1em;
-      color: var(--ink);
-    }}
-
-    .tips-card li + li {{
-      margin-top: 6px;
-    }}
-
-    .spot-placeholder {{
-      width: 100%;
-      aspect-ratio: 16 / 10;
+    .spot-meta {
       display: grid;
-      place-items: center;
-      padding: 14px;
-      background: var(--mist);
-      color: var(--lake);
-      text-align: center;
-      font-weight: 900;
-    }}
+      gap: 3px;
+      margin: 0 0 5px;
+    }
 
-    footer {{
+    .spot-meta div {
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 8px;
+    }
+
+    .spot-meta dt {
+      color: var(--lake);
+      font-weight: 900;
+    }
+
+    .spot-meta dd {
+      margin: 0;
+    }
+
+    .spot-placeholder {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, #e7f2f2, #f7f1e7);
+    }
+
+    .note-detail ul {
+      margin: 0;
+      padding: 12px 14px 12px 2em;
+      color: var(--ink);
+    }
+
+    .note-detail li + li { margin-top: 6px; }
+
+    .empty {
+      margin: 0;
+      padding: 12px 14px;
+      color: var(--muted);
+    }
+
+    footer {
       width: min(1180px, calc(100% - 32px));
       margin: 0 auto;
       padding: 26px 0 44px;
       color: var(--muted);
-      font-size: 0.94rem;
-    }}
+      font-size: 0.92rem;
+    }
 
-    @media (max-width: 900px) {{
-      .day-nav,
-      .day-header,
-      .guide-intro,
-      .day-layout,
-      .route-card-body {{
+    @media (max-width: 920px) {
+      .hero-grid,
+      .day-summary,
+      .route-card-body {
         grid-template-columns: 1fr;
-      }}
+      }
 
-    }}
+      .hero {
+        min-height: auto;
+      }
 
-    @media (max-width: 620px) {{
-      .hero {{
-        min-height: 46vh;
-        padding: 34px 18px;
-      }}
+      .overview-panel {
+        background: rgba(7, 30, 37, 0.5);
+      }
+    }
 
-      main {{
+    @media (max-width: 680px) {
+      body {
+        font-size: 16px;
+      }
+
+      .top-nav {
+        gap: 8px;
+      }
+
+      .brand {
+        max-width: 7em;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .top-nav a:not(.brand) {
+        padding: 6px 8px;
+        font-size: 0.82rem;
+      }
+
+      .hero {
+        padding: 34px 16px 24px;
+      }
+
+      .hero-grid {
+        gap: 18px;
+      }
+
+      .overview-panel dl > div {
+        grid-template-columns: 78px minmax(0, 1fr);
+      }
+
+      main {
         width: min(100% - 20px, 1180px);
-      }}
+        padding-top: 24px;
+      }
 
-      .timeline li {{
-        grid-template-columns: 64px minmax(0, 1fr);
-      }}
+      .day-nav-wrap {
+        top: 49px;
+        margin-top: 18px;
+      }
 
-      .timeline .tag {{
-        grid-column: 2;
+      .day-summary {
+        padding: 14px;
+      }
+
+      .hero-photo,
+      .hero-photo img {
+        min-height: 172px;
+      }
+
+      .summary-route ol {
+        display: grid;
+        gap: 4px;
+      }
+
+      .summary-route li {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 2px;
+      }
+
+      .desktop-arrow { display: none; }
+      .mobile-arrow { display: inline; }
+
+      .summary-route .route-time {
+        display: none;
+      }
+
+      .restaurant-grid,
+      .photo-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .summary-chips {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .day-detail > summary {
+        padding: 12px 14px;
+      }
+
+      .day-detail-body {
+        padding: 14px;
+      }
+
+      .timeline {
+        padding: 10px 12px;
+      }
+
+      .timeline li {
+        grid-template-columns: 68px minmax(0, 1fr);
+        gap: 8px;
+      }
+
+      .timeline .tag {
         justify-self: start;
-      }}
+      }
 
-      .timeline li > div {{
+      .timeline li > div {
         grid-column: 1 / -1;
-      }}
-    }}
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+    """
+    script = """
+    (function () {
+      var cards = Array.from(document.querySelectorAll(".day-card[data-date]"));
+      if (!cards.length) return;
+      var today = new Date();
+      var iso = today.getFullYear() + "-" + String(today.getMonth() + 1).padStart(2, "0") + "-" + String(today.getDate()).padStart(2, "0");
+      var target = cards.find(function (card) { return card.dataset.date === iso; }) || cards[0];
+      target.classList.add("is-current");
+      var link = document.getElementById("today-link");
+      if (link) link.setAttribute("href", "#" + target.id);
+    }());
+    """
+
+    return f"""<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>北海道家族旅行ガイド 2026</title>
+  <style>
+{style}
   </style>
 </head>
 <body>
-  <header class="hero">
-    <div>
-      <h1>北海道家族旅行ガイド 2026</h1>
-      <p>フェリーで北の大地へ。湖、花畑、峡谷、知床の森をつなぐ13日間を、移動時間と食事候補まで読める家族旅行ガイドにまとめました。</p>
+  <a class="skip-link" href="#days">日別一覧へ移動</a>
+  <nav class="top-nav" aria-label="ページ内ナビゲーション">
+    <a class="brand" href="#overview">北海道ガイド</a>
+    <div class="nav-links">
+      <a href="#overview">概要</a>
+      <a href="#days">DAY一覧</a>
+      <a id="today-link" href="#day-{esc(days[0].date)}">今日</a>
+      <a href="{esc(PDF_URL)}">PDF</a>
+      <a href="{esc(PPTX_URL)}">PowerPoint</a>
+    </div>
+  </nav>
+
+  <header class="hero" id="overview">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">HOKKAIDO FAMILY TRAVEL GUIDE</p>
+        <h1>北海道家族旅行ガイド 2026</h1>
+        <p class="hero-lead">フェリーで北の大地へ。湖畔、花畑、峡谷、知床の森をめぐる13日間を、旅の前にも旅の途中にも読みやすくまとめました。</p>
+      </div>
+      <aside class="overview-panel" aria-label="旅行全体サマリ">
+        <dl>
+          <div><dt>期間</dt><dd>2026年7月31日 - 8月12日 / 13日間</dd></div>
+          <div><dt>ルート</dt><dd>印西 → 仙台港 → 苫小牧 → 道央 → 道東 → 苫小牧 → 仙台 → 印西</dd></div>
+          <div><dt>宿泊地</dt><dd>フェリー → 洞爺湖 → 札幌 → 層雲峡 → 中標津 → 帯広 → フェリー</dd></div>
+        </dl>
+        <div class="hero-links" aria-label="成果物リンク">
+          <a id="hero-today-link" href="#day-{esc(days[0].date)}" onclick="document.getElementById('today-link')?.click(); return false;">今日の予定を見る</a>
+          <a href="#days">全日程を見る</a>
+          <a href="{esc(PDF_URL)}">PDF</a>
+          <a href="{esc(PPTX_URL)}">PowerPoint</a>
+          <a href="{esc(GITHUB_URL)}">GitHub</a>
+        </div>
+      </aside>
     </div>
   </header>
 
   <main>
-    <section>
-      <h2 class="section-title">旅のハイライト</h2>
-      <p class="lead">仙台港から船で渡り、洞爺湖の湖畔、札幌の街歩き、富良野・美瑛の花と丘、層雲峡の峡谷、道東の湖と知床へ。読むだけで旅の流れが浮かぶよう、1日ごとの見どころと動き方を整理しています。</p>
+    <section aria-labelledby="summary-title">
+      <p class="section-kicker">TRIP SUMMARY</p>
+      <h2 class="section-title" id="summary-title">まず全体像をつかむ</h2>
+      <p class="lead">日別カードは、出発・到着、主なルート、食事エリア、ハイライトだけを先に確認できます。詳しい時刻表や写真、メモは必要な日だけ開いて見られます。</p>
     </section>
 
-    <section class="toc">
-      <h2 class="section-title">DAY別ガイド目次</h2>
-      <p class="lead">気になる日を選ぶと、ルート、見どころ、食事候補、時刻入りスケジュールへ移動します。</p>
+    <section class="day-nav-wrap" aria-label="日付を選ぶ">
       <nav class="day-nav" aria-label="日別リンク">
         {nav_items}
       </nav>
     </section>
 
     <section id="days">
-      <h2 class="section-title">13日間の詳細ガイド</h2>
+      <p class="section-kicker">DAY BY DAY</p>
+      <h2 class="section-title">日別サマリ一覧</h2>
       {day_sections}
     </section>
   </main>
@@ -1088,6 +1582,7 @@ def render_page(days: list[Day]) -> str:
   <footer>
     <p>北海道家族旅行ガイド 2026 / inzaikun/hokkaido-trip-plan</p>
   </footer>
+  <script>{script}</script>
 </body>
 </html>
 """
